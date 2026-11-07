@@ -16,6 +16,7 @@ import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.Optional;
 
+@SuppressWarnings("NonExtendableApiUsage")
 @Mixin(value = RecipeLayout.class, remap = false)
 public abstract class RecipeLayoutMixin<R> implements IRecipeLayoutDrawable<R> {
 
@@ -23,7 +24,7 @@ public abstract class RecipeLayoutMixin<R> implements IRecipeLayoutDrawable<R> {
                    at = @At(value = "INVOKE", target = "Lmezz/jei/library/gui/recipes/RecipeLayout;getSlotUnderMouse(DD)Ljava/util/Optional;"))
     private Optional<RecipeSlotUnderMouse> modularui$disableIngredientTooltipRender(RecipeLayout<R> self, double mouseX, double mouseY,
                                                                                     Operation<Optional<RecipeSlotUnderMouse>> original) {
-        if (self.getRecipeCategory() instanceof ModularUIJeiCategory<R>){
+        if (self.getRecipeCategory() instanceof ModularUIJeiCategory<R>) {
             return Optional.empty();
         }
         return original.call(self, mouseX, mouseY);
