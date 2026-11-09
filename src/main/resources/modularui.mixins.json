@@ -14,7 +14,6 @@
     "client.StringSplitterAccessor",
     "emi.EmiRenderHelperMixin",
     "emi.RecipeScreenMixin",
-    "jei.RecipeLayoutBuilderAccessor",
     "jei.RecipeLayoutBuilderMixin",
     "jei.RecipeLayoutMixin",
     "jei.RecipeSlotAccessor",
