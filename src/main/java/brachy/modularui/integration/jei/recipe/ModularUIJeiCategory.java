@@ -4,8 +4,6 @@ import brachy.modularui.ModularUI;
 import brachy.modularui.api.drawable.IRichTextBuilder;
 import brachy.modularui.api.widget.ITooltip;
 import brachy.modularui.api.widget.IWidget;
-import brachy.modularui.core.mixins.jei.RecipeLayoutAccessor;
-import brachy.modularui.core.mixins.jei.RecipeLayoutBuilderAccessor;
 import brachy.modularui.drawable.text.RichText;
 import brachy.modularui.integration.jei.JeiRecipeViewerSlot;
 import brachy.modularui.integration.jei.ModularUIJeiPlugin;
@@ -36,6 +34,7 @@ import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder;
 import mezz.jei.api.gui.widgets.IRecipeWidget;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import mezz.jei.library.gui.recipes.layout.builder.RecipeLayoutBuilder;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.MustBeInvokedByOverriders;
@@ -149,10 +148,6 @@ public abstract class ModularUIJeiCategory<T> implements IRecipeCategory<T> {
     public IWidget transformWidget(IRecipeExtrasBuilder builder, IWidget widget) {
         if (!(widget instanceof JeiRecipeViewerSlot<?, ?> recipeViewerSlot)) return widget;
 
-        if (builder instanceof RecipeLayoutAccessor accessor) {
-            recipeViewerSlot.setCycler(accessor.modularui$getCycleTicker());
-        }
-
         String name = recipeViewerSlot.getName();
         assert name != null; // the slots should always have a name assigned in createRecipeSlotForWidget()
         // the JEI slot should also always exist as it's created in the same method
@@ -170,7 +165,6 @@ public abstract class ModularUIJeiCategory<T> implements IRecipeCategory<T> {
     public IWidget createRecipeSlotForWidget(IRecipeLayoutBuilder builder, IWidget widget, T recipe, IFocusGroup focuses, MutableInt index) {
         if (!(widget instanceof JeiRecipeViewerSlot recipeViewerSlot)) return widget;
 
-        recipeViewerSlot.setIngredientManager(((RecipeLayoutBuilderAccessor) builder).modularui$getIngredientManager());
         recipeViewerSlot.setRecipeCategory(this);
         recipeViewerSlot.setRecipe(recipe);
         recipeViewerSlot.setFocuses(focuses);
@@ -201,7 +195,8 @@ public abstract class ModularUIJeiCategory<T> implements IRecipeCategory<T> {
     public void setRecipe(IRecipeLayoutBuilder builder, T recipe, IFocusGroup focuses) {
         // guard against JEMI issues by explicitly checking for JEI's implementation
         // this is also done to skip having to create the whole widget tree when JEI is only looking up the recipe's ingredients
-        if (builder instanceof RecipeLayoutBuilderAccessor) {
+        // Check the mod first so compatibility runtimes without JEI do not load its builder class.
+        if (ModularUI.Mods.JEI.isLoaded() && builder instanceof RecipeLayoutBuilder<?>) {
             ModularScreen screen = createScreen(recipe);
             MutableInt index = new MutableInt(0);
             screen.getMainPanel().visitTransformAllChildren(widget -> createRecipeSlotForWidget(builder, widget, recipe, focuses, index));
