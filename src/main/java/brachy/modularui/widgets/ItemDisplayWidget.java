@@ -40,8 +40,8 @@ public class ItemDisplayWidget extends Widget<ItemDisplayWidget> implements Ingr
     }
 
     @Override
-    protected WidgetThemeEntry<?> getWidgetThemeInternal(ITheme theme) {
-        return theme.getItemSlotTheme();
+    protected WidgetThemeEntry<?> getWidgetThemeEntryInternal(ITheme theme) {
+        return theme.getItemSlotThemeEntry();
     }
 
     @Override

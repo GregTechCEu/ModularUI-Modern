@@ -204,8 +204,8 @@ public class ModularPanel<W extends ModularPanel<W>> extends ParentWidget<W> imp
     }
 
     @Override
-    public WidgetThemeEntry<?> getWidgetThemeInternal(ITheme theme) {
-        return theme.getPanelTheme();
+    public WidgetThemeEntry<?> getWidgetThemeEntryInternal(ITheme theme) {
+        return theme.getPanelThemeEntry();
     }
 
     @Override

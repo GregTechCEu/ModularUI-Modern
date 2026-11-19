@@ -35,8 +35,8 @@ public class ToggleButton extends AbstractCycleButtonWidget<ToggleButton> {
     }
 
     @Override
-    public WidgetThemeEntry<?> getWidgetThemeInternal(ITheme theme) {
-        return theme.getToggleButtonTheme();
+    public WidgetThemeEntry<?> getWidgetThemeEntryInternal(ITheme theme) {
+        return theme.getToggleButtonThemeEntry();
     }
 
     @Override

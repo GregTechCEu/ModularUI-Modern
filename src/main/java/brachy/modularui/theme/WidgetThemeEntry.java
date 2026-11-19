@@ -1,10 +1,22 @@
 package brachy.modularui.theme;
 
+import brachy.modularui.api.ITheme;
 import brachy.modularui.api.IThemeApi;
 
 import com.mojang.serialization.DynamicOps;
 import com.mojang.serialization.RecordBuilder;
 
+/**
+ * A widget theme entry contains the current data for a specific {@link WidgetThemeKey}.
+ *
+ * @see WidgetThemeKey
+ * @see ITheme
+ *
+ * @param key The {@link WidgetThemeKey} which this theme data is for.
+ * @param theme The theme data.
+ * @param hoverTheme Theme data to be used when this widget is being hovered over.
+ * @param <T> The class of the theme data.
+ */
 public record WidgetThemeEntry<T extends WidgetTheme>(WidgetThemeKey<T> key, T theme, T hoverTheme) {
 
     public WidgetThemeEntry(WidgetThemeKey<T> key, T theme) {

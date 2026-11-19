@@ -27,65 +27,65 @@ public abstract class AbstractTheme implements ITheme {
     }
 
     @Override
-    public WidgetThemeEntry<WidgetTheme> getFallback() {
+    public WidgetThemeEntry<WidgetTheme> getFallbackEntry() {
         if (fallback == null) {
-            fallback = getWidgetTheme(IThemeApi.FALLBACK);
+            fallback = getWidgetThemeEntry(IThemeApi.FALLBACK);
         }
         return fallback;
     }
 
     @Override
-    public WidgetThemeEntry<WidgetTheme> getPanelTheme() {
+    public WidgetThemeEntry<WidgetTheme> getPanelThemeEntry() {
         if (panel == null) {
-            panel = getWidgetTheme(IThemeApi.PANEL);
+            panel = getWidgetThemeEntry(IThemeApi.PANEL);
         }
         return panel;
     }
 
     @Override
-    public WidgetThemeEntry<WidgetTheme> getButtonTheme() {
+    public WidgetThemeEntry<WidgetTheme> getButtonThemeEntry() {
         if (button == null) {
-            button = getWidgetTheme(IThemeApi.BUTTON);
+            button = getWidgetThemeEntry(IThemeApi.BUTTON);
         }
         return button;
     }
 
     @Override
-    public WidgetThemeEntry<WidgetTheme> getScrollbarTheme() {
+    public WidgetThemeEntry<WidgetTheme> getScrollbarThemeEntry() {
         if (scrollbar == null) {
-            scrollbar = getWidgetTheme(IThemeApi.SCROLLBAR);
+            scrollbar = getWidgetThemeEntry(IThemeApi.SCROLLBAR);
         }
         return scrollbar;
     }
 
     @Override
-    public WidgetThemeEntry<SlotTheme> getItemSlotTheme() {
+    public WidgetThemeEntry<SlotTheme> getItemSlotThemeEntry() {
         if (itemSlot == null) {
-            itemSlot = getWidgetTheme(IThemeApi.ITEM_SLOT);
+            itemSlot = getWidgetThemeEntry(IThemeApi.ITEM_SLOT);
         }
         return itemSlot;
     }
 
     @Override
-    public WidgetThemeEntry<SlotTheme> getFluidSlotTheme() {
+    public WidgetThemeEntry<SlotTheme> getFluidSlotThemeEntry() {
         if (fluidSlot == null) {
-            fluidSlot = getWidgetTheme(IThemeApi.FLUID_SLOT);
+            fluidSlot = getWidgetThemeEntry(IThemeApi.FLUID_SLOT);
         }
         return fluidSlot;
     }
 
     @Override
-    public WidgetThemeEntry<TextFieldTheme> getTextFieldTheme() {
+    public WidgetThemeEntry<TextFieldTheme> getTextFieldThemeEntry() {
         if (textField == null) {
-            textField = getWidgetTheme(IThemeApi.TEXT_FIELD);
+            textField = getWidgetThemeEntry(IThemeApi.TEXT_FIELD);
         }
         return textField;
     }
 
     @Override
-    public WidgetThemeEntry<SelectableTheme> getToggleButtonTheme() {
+    public WidgetThemeEntry<SelectableTheme> getToggleButtonThemeEntry() {
         if (toggleButtonTheme == null) {
-            toggleButtonTheme = getWidgetTheme(IThemeApi.TOGGLE_BUTTON);
+            toggleButtonTheme = getWidgetThemeEntry(IThemeApi.TOGGLE_BUTTON);
         }
         return toggleButtonTheme;
     }

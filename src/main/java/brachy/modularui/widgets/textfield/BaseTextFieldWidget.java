@@ -111,7 +111,7 @@ public class BaseTextFieldWidget<W extends BaseTextFieldWidget<W>> extends Abstr
     @Override
     public void preDraw(ModularGuiContext context, boolean transformed) {
         if (transformed) {
-            WidgetThemeEntry<TextFieldTheme> entry = getWidgetTheme(getPanel().getTheme(), TextFieldTheme.class);
+            WidgetThemeEntry<TextFieldTheme> entry = getWidgetThemeEntry(getPanel().getTheme(), TextFieldTheme.class);
             TextFieldTheme widgetTheme = entry.theme();
             this.renderer.setColor(this.textColor != null ? this.textColor : widgetTheme.getTextColor());
             this.renderer.setCursorColor(this.textColor != null ? this.textColor : widgetTheme.getTextColor());
@@ -144,8 +144,8 @@ public class BaseTextFieldWidget<W extends BaseTextFieldWidget<W>> extends Abstr
     }
 
     @Override
-    public WidgetThemeEntry<?> getWidgetThemeInternal(ITheme theme) {
-        return theme.getTextFieldTheme();
+    public WidgetThemeEntry<?> getWidgetThemeEntryInternal(ITheme theme) {
+        return theme.getTextFieldThemeEntry();
     }
 
     @Override

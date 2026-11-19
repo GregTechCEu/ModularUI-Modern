@@ -41,7 +41,7 @@ public class Menu<W extends Menu<W>> extends ParentWidget<W> implements IMenuPar
     }
 
     @Override
-    protected WidgetThemeEntry<?> getWidgetThemeInternal(ITheme theme) {
-        return theme.getWidgetTheme(IThemeApi.PANEL);
+    protected WidgetThemeEntry<?> getWidgetThemeEntryInternal(ITheme theme) {
+        return theme.getWidgetThemeEntry(IThemeApi.PANEL);
     }
 }

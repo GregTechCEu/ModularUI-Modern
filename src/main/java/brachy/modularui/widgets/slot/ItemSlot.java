@@ -124,19 +124,19 @@ public class ItemSlot extends Widget<ItemSlot> implements IVanillaSlot, Interact
     }
 
     @Override
-    public WidgetThemeEntry<?> getWidgetThemeInternal(ITheme theme) {
+    public WidgetThemeEntry<?> getWidgetThemeEntryInternal(ITheme theme) {
         PlayerSlotType playerSlotType = this.syncHandler != null ? this.syncHandler.getPlayerSlotType() : null;
-        if (playerSlotType == null) return theme.getWidgetTheme(IThemeApi.ITEM_SLOT);
+        if (playerSlotType == null) return theme.getWidgetThemeEntry(IThemeApi.ITEM_SLOT);
         return switch (playerSlotType) {
-            case HOTBAR -> theme.getWidgetTheme(IThemeApi.ITEM_SLOT_PLAYER_HOTBAR);
-            case MAIN_INVENTORY -> theme.getWidgetTheme(IThemeApi.ITEM_SLOT_PLAYER_MAIN_INV);
-            case OFFHAND -> theme.getWidgetTheme(IThemeApi.ITEM_SLOT_PLAYER_OFFHAND);
-            case ARMOR -> theme.getWidgetTheme(IThemeApi.ITEM_SLOT_PLAYER_ARMOR);
+            case HOTBAR -> theme.getWidgetThemeEntry(IThemeApi.ITEM_SLOT_PLAYER_HOTBAR);
+            case MAIN_INVENTORY -> theme.getWidgetThemeEntry(IThemeApi.ITEM_SLOT_PLAYER_MAIN_INV);
+            case OFFHAND -> theme.getWidgetThemeEntry(IThemeApi.ITEM_SLOT_PLAYER_OFFHAND);
+            case ARMOR -> theme.getWidgetThemeEntry(IThemeApi.ITEM_SLOT_PLAYER_ARMOR);
         };
     }
 
     public int getSlotHoverColor() {
-        WidgetThemeEntry<SlotTheme> theme = getWidgetTheme(getPanel().getTheme(), SlotTheme.class);
+        WidgetThemeEntry<SlotTheme> theme = getWidgetThemeEntry(getPanel().getTheme(), SlotTheme.class);
         return theme.theme().getSlotHoverColor();
     }
 

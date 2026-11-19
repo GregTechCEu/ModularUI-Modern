@@ -37,8 +37,8 @@ public abstract class AbstractFluidDisplayWidget<W extends AbstractFluidDisplayW
     }
 
     @Override
-    protected WidgetThemeEntry<?> getWidgetThemeInternal(ITheme theme) {
-        return theme.getFluidSlotTheme();
+    protected WidgetThemeEntry<?> getWidgetThemeEntryInternal(ITheme theme) {
+        return theme.getFluidSlotThemeEntry();
     }
 
     @Override

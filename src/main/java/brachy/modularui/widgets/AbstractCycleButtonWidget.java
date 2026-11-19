@@ -202,8 +202,8 @@ public class AbstractCycleButtonWidget<W extends AbstractCycleButtonWidget<W>> e
     }
 
     @Override
-    public WidgetThemeEntry<?> getWidgetThemeInternal(ITheme theme) {
-        return theme.getButtonTheme();
+    public WidgetThemeEntry<?> getWidgetThemeEntryInternal(ITheme theme) {
+        return theme.getButtonThemeEntry();
     }
 
     @Override

@@ -26,13 +26,13 @@ public class DefaultTheme extends AbstractTheme {
     }
 
     @Override
-    public @UnmodifiableView Collection<WidgetThemeEntry<?>> getWidgetThemes() {
+    public @UnmodifiableView Collection<WidgetThemeEntry<?>> getWidgetThemeEntries() {
         initialize();
         return Collections.unmodifiableCollection(this.widgetThemes.values());
     }
 
     @Override
-    public <T extends WidgetTheme> WidgetThemeEntry<T> getWidgetTheme(WidgetThemeKey<T> key) {
+    public <T extends WidgetTheme> WidgetThemeEntry<T> getWidgetThemeEntry(WidgetThemeKey<T> key) {
         initialize();
         WidgetThemeEntry<T> widgetTheme = this.widgetThemes.getTheme(key);
         while (widgetTheme == null && key.isSubWidgetTheme()) {

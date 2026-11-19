@@ -117,7 +117,7 @@ public class TestMachine {
                             .child(new ParentWidget<>()
                                     .coverChildren(176, 30)
                                     .padding(7)
-                                    .widgetTheme(IThemeApi.PANEL)
+                                    .widgetThemeKey(IThemeApi.PANEL)
                                     .child(Recipes.buildMachineUI(panel, this.inputItems, this.outputItems, this.inputFluids, this.outputFluids, new DoubleSyncValue(this::getProgress), false))
                                     .child(new ParentWidget<>()
                                             .coverChildren()
@@ -145,7 +145,7 @@ public class TestMachine {
                             .child(new SingleChildWidget<>()
                                     .coverChildren()
                                     .padding(7)
-                                    .widgetTheme(IThemeApi.PANEL)
+                                    .widgetThemeKey(IThemeApi.PANEL)
                                     .child(SlotGroupWidget.playerInventory(false))));
         }
 

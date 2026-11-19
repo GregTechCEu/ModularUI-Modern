@@ -171,12 +171,12 @@ public class FluidSlot extends AbstractFluidDisplayWidget<FluidSlot>
     }
 
     @Override
-    public WidgetThemeEntry<?> getWidgetThemeInternal(ITheme theme) {
-        return theme.getFluidSlotTheme();
+    public WidgetThemeEntry<?> getWidgetThemeEntryInternal(ITheme theme) {
+        return theme.getFluidSlotThemeEntry();
     }
 
     public int getSlotHoverColor() {
-        WidgetThemeEntry<SlotTheme> theme = getWidgetTheme(getPanel().getTheme(), SlotTheme.class);
+        WidgetThemeEntry<SlotTheme> theme = getWidgetThemeEntry(getPanel().getTheme(), SlotTheme.class);
         return theme.theme().getSlotHoverColor();
     }
 

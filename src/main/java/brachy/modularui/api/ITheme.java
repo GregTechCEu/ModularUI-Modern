@@ -20,7 +20,13 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * A theme is parsed from JSON and contains style information like color or background texture.
+ * A theme is parsed from JSON and contains style information like color or background texture.<br>
+ *
+ * A theme consists of data for multiple widget theme keys ({@link WidgetThemeKey},
+ * where each theme key represents the theme data for a specific type of widget (e.g. item slot, fluid slot, etc).<br>
+ *
+ * @see WidgetThemeKey
+ * @see WidgetThemeEntry
  */
 public interface ITheme {
 
@@ -30,9 +36,9 @@ public interface ITheme {
             var mapBuilder = ops.mapBuilder();
             mapBuilder.add("id", ops.createString(input.getId()));
             mapBuilder.add("parent", ops.createString(input.getParentTheme().getId()));
-            input.getFallback().encode(ops, mapBuilder, true);
+            input.getFallbackEntry().encode(ops, mapBuilder, true);
             Map<String, Set<WidgetTheme>> encodedThemes = new Object2ObjectOpenHashMap<>();
-            for (WidgetThemeEntry<?> entry : input.getWidgetThemes()) {
+            for (WidgetThemeEntry<?> entry : input.getWidgetThemeEntries()) {
                 if (entry.key() == IThemeApi.FALLBACK) continue;
                 var set = encodedThemes.computeIfAbsent(entry.key().getName(), k -> new ObjectOpenHashSet<>());
                 if (entry.key().isSubWidgetTheme() && set.contains(entry.theme()) && set.contains(entry.hoverTheme())) continue;
@@ -70,23 +76,23 @@ public interface ITheme {
     ITheme getParentTheme();
 
     @UnmodifiableView
-    Collection<WidgetThemeEntry<?>> getWidgetThemes();
+    Collection<WidgetThemeEntry<?>> getWidgetThemeEntries();
 
-    WidgetThemeEntry<WidgetTheme> getFallback();
+    WidgetThemeEntry<WidgetTheme> getFallbackEntry();
 
-    WidgetThemeEntry<WidgetTheme> getPanelTheme();
+    WidgetThemeEntry<WidgetTheme> getPanelThemeEntry();
 
-    WidgetThemeEntry<WidgetTheme> getButtonTheme();
+    WidgetThemeEntry<WidgetTheme> getButtonThemeEntry();
 
-    WidgetThemeEntry<WidgetTheme> getScrollbarTheme();
+    WidgetThemeEntry<WidgetTheme> getScrollbarThemeEntry();
 
-    WidgetThemeEntry<SlotTheme> getItemSlotTheme();
+    WidgetThemeEntry<SlotTheme> getItemSlotThemeEntry();
 
-    WidgetThemeEntry<SlotTheme> getFluidSlotTheme();
+    WidgetThemeEntry<SlotTheme> getFluidSlotThemeEntry();
 
-    WidgetThemeEntry<TextFieldTheme> getTextFieldTheme();
+    WidgetThemeEntry<TextFieldTheme> getTextFieldThemeEntry();
 
-    WidgetThemeEntry<SelectableTheme> getToggleButtonTheme();
+    WidgetThemeEntry<SelectableTheme> getToggleButtonThemeEntry();
 
-    <T extends WidgetTheme> WidgetThemeEntry<T> getWidgetTheme(WidgetThemeKey<T> key);
+    <T extends WidgetTheme> WidgetThemeEntry<T> getWidgetThemeEntry(WidgetThemeKey<T> key);
 }

@@ -17,7 +17,7 @@ public class ButtonWidget<W extends ButtonWidget<W>> extends SingleChildWidget<W
 
     public static ButtonWidget<?> panelCloseButton() {
         ButtonWidget<?> buttonWidget = new ButtonWidget<>();
-        return buttonWidget.widgetTheme(IThemeApi.CLOSE_BUTTON)
+        return buttonWidget.widgetThemeKey(IThemeApi.CLOSE_BUTTON)
                 .top(4).right(4)
                 .overlay(GuiTextures.CROSS_TINY)
                 .onMousePressed((context, button) -> {
@@ -42,8 +42,8 @@ public class ButtonWidget<W extends ButtonWidget<W>> extends SingleChildWidget<W
     private InteractionSyncHandler syncHandler;
 
     @Override
-    public WidgetThemeEntry<?> getWidgetThemeInternal(ITheme theme) {
-        return theme.getButtonTheme();
+    public WidgetThemeEntry<?> getWidgetThemeEntryInternal(ITheme theme) {
+        return theme.getButtonThemeEntry();
     }
 
     @Override
