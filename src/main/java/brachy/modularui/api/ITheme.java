@@ -7,12 +7,16 @@ import brachy.modularui.theme.WidgetTheme;
 import brachy.modularui.theme.WidgetThemeEntry;
 import brachy.modularui.theme.WidgetThemeKey;
 
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.DynamicOps;
 import com.mojang.serialization.Encoder;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
+
+import net.minecraft.util.ExtraCodecs;
+
 import org.jetbrains.annotations.UnmodifiableView;
 
 import java.util.Collection;
@@ -29,6 +33,10 @@ import java.util.Set;
  * @see WidgetThemeEntry
  */
 public interface ITheme {
+
+    Codec<ITheme> REFERENCE_CODEC = Codec.STRING.comapFlatMap(id -> IThemeApi.get().hasTheme(id) ?
+            DataResult.success(IThemeApi.get().getTheme(id)) : DataResult.error(() -> "Unknown theme: " + id),
+            ITheme::getId);
 
     Encoder<ITheme> ENCODER = new Encoder<>() {
         @Override

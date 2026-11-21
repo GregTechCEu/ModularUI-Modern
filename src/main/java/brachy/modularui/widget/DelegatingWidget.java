@@ -1,5 +1,6 @@
 package brachy.modularui.widget;
 
+import brachy.modularui.api.ITheme;
 import brachy.modularui.api.layout.IViewportStack;
 import brachy.modularui.api.widget.IDelegatingWidget;
 import brachy.modularui.api.widget.IWidget;
@@ -8,6 +9,7 @@ import brachy.modularui.widget.sizer.Area;
 import brachy.modularui.widget.sizer.StandardResizer;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -102,7 +104,12 @@ public class DelegatingWidget extends AbstractWidget implements IDelegatingWidge
     }
 
     @Override
-    public IWidget getDelegate() {
+    public @Nullable IWidget getDelegate() {
         return delegate.getOrNull();
+    }
+
+    @Override
+    public ITheme getTheme() {
+        return getDelegate() != null ? getDelegate().getTheme() : ITheme.getDefault();
     }
 }

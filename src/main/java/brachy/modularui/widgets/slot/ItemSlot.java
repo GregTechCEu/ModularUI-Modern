@@ -136,8 +136,8 @@ public class ItemSlot extends Widget<ItemSlot> implements IVanillaSlot, Interact
     }
 
     public int getSlotHoverColor() {
-        WidgetThemeEntry<SlotTheme> theme = getWidgetThemeEntry(getPanel().getTheme(), SlotTheme.class);
-        return theme.theme().getSlotHoverColor();
+        WidgetThemeEntry<SlotTheme> entry = getWidgetThemeEntry(getTheme(), SlotTheme.class);
+        return entry.theme().getSlotHoverColor();
     }
 
     @Override

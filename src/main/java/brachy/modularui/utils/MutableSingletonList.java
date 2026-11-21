@@ -1,6 +1,7 @@
 package brachy.modularui.utils;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -28,7 +29,7 @@ public class MutableSingletonList<T> implements List<T> {
         return value;
     }
 
-    public T getOrNull() {
+    public @Nullable T getOrNull() {
         return hasValue ? value : null;
     }
 

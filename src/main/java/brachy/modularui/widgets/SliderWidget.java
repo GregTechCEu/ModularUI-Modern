@@ -101,7 +101,7 @@ public class SliderWidget extends Widget<SliderWidget> implements Interactable {
     @Override
     public void draw(ModularGuiContext context, WidgetThemeEntry<?> widgetTheme) {
         if (this.handleDrawable != null) {
-            this.handleDrawable.draw(context, this.sliderArea, getPanel().getTheme().getButtonThemeEntry().theme());
+            this.handleDrawable.draw(context, this.sliderArea, getTheme().getButtonThemeEntry().theme());
         }
     }
 

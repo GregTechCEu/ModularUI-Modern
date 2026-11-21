@@ -75,6 +75,7 @@ public class Widget<W extends Widget<W>> extends AbstractWidget implements IPosi
             .addOpt("hoverBackgroundOverlay", Widget::setHoverBackgroundOverlay, Widget::getHoverBackground, IDrawable.CODEC, null)
             .addOpt("hoverOverlay", Widget::hoverOverlay, Widget::getHoverOverlay, IDrawable.CODEC, null)
             .addOpt("widgetThemeKey", Widget::widgetThemeKey, Widget::getWidgetThemeKeyOverride, WidgetThemeKey.CODEC, null)
+            .addOpt("themeOverride", Widget::themeOverride, Widget::getThemeOverride, ITheme.REFERENCE_CODEC, null)
             .addOpt("excludeAreaInRecipeViewer", Widget::excludeAreaInRecipeViewer, Widget::isExcludeAreaInRecipeViewer, Codec.BOOL, false)
             .addOpt("tooltip", Widget::setTooltip, Widget::getTooltip, RichTooltip.CODEC, null)
             .addFieldsOf(StandardResizer.COMPACT_CODEC, Widget::resizer)
@@ -151,6 +152,9 @@ public class Widget<W extends Widget<W>> extends AbstractWidget implements IPosi
     @Getter
     @Nullable
     private WidgetThemeKey<?> widgetThemeKeyOverride = null;
+    @Getter
+    @Nullable
+    private ITheme themeOverride = null;
     // listener
     @Getter
     @Setter(AccessLevel.PRIVATE)
@@ -366,6 +370,7 @@ public class Widget<W extends Widget<W>> extends AbstractWidget implements IPosi
         if (this.tooltip == null) {
             this.tooltip = new RichTooltip().parent(this);
         }
+
         return this.tooltip;
     }
 
@@ -394,6 +399,12 @@ public class Widget<W extends Widget<W>> extends AbstractWidget implements IPosi
         if (this.tooltip != null) {
             this.tooltip.markDirty();
         }
+    }
+
+    @Override
+    public ITheme getTheme() {
+        if (themeOverride != null) return themeOverride;
+        return getParent().getTheme();
     }
 
     /**
@@ -464,13 +475,36 @@ public class Widget<W extends Widget<W>> extends AbstractWidget implements IPosi
 
     /**
      * Sets an override widget theme key to use instead of the default one for this widget.
-     * This will change of the appearance of this widget according to the widget theme.
+     * This will change of the appearance of this widget according to the widget theme key.
+     * May cause an exception if the given theme key is not compatible with the widget.
      *
      * @param s the widget theme key (see constants in {@link IThemeApi})
      * @return this
      */
     public W widgetThemeKey(WidgetThemeKey<?> s) {
         this.widgetThemeKeyOverride = s;
+        return getThis();
+    }
+
+    /**
+     * Sets an override theme to use for this widget and its children.
+     * This will change the appearance of this widget according to the theme.
+     * @param theme The theme to use.
+     * @return this
+     */
+    public W themeOverride(ITheme theme) {
+        this.themeOverride = theme;
+        return getThis();
+    }
+
+    /**
+     * Sets an override theme to use for this widget and its children.
+     * This will change the appearance of this widget according to the theme.
+     * @param theme The theme to use.
+     * @return this
+     */
+    public W themeOverride(String theme) {
+        this.themeOverride = IThemeApi.get().getTheme(theme);
         return getThis();
     }
 
@@ -790,12 +824,12 @@ public class Widget<W extends Widget<W>> extends AbstractWidget implements IPosi
 
     @Override
     public int getDefaultWidth() {
-        return isValid() ? getWidgetThemeEntry(getPanel().getTheme()).theme().getDefaultWidth() : 18;
+        return isValid() ? getWidgetThemeEntry(getTheme()).theme().getDefaultWidth() : 18;
     }
 
     @Override
     public int getDefaultHeight() {
-        return isValid() ? getWidgetThemeEntry(getPanel().getTheme()).theme().getDefaultHeight() : 18;
+        return isValid() ? getWidgetThemeEntry(getTheme()).theme().getDefaultHeight() : 18;
     }
 
     @Override
@@ -928,6 +962,7 @@ public class Widget<W extends Widget<W>> extends AbstractWidget implements IPosi
             this.disableThemeBackground = widget.disableThemeBackground;
             this.disableHoverThemeBackground = widget.disableHoverThemeBackground;
             this.widgetThemeKeyOverride = widget.widgetThemeKeyOverride;
+            this.themeOverride = widget.themeOverride;
         }
         return getThis();
     }
@@ -1027,6 +1062,7 @@ public class Widget<W extends Widget<W>> extends AbstractWidget implements IPosi
                 Objects.equals(this.overlay, o.overlay) &&
                 Objects.equals(this.hoverOverlay, o.hoverOverlay) &&
                 this.widgetThemeKeyOverride == o.widgetThemeKeyOverride &&
+                this.themeOverride == o.themeOverride &&
                 this.excludeAreaInRecipeViewer == o.excludeAreaInRecipeViewer &&
                 Objects.equals(this.tooltip, o.tooltip) &&
                 resizer().isEqual(o.resizer());

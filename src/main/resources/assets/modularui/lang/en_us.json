@@ -20,7 +20,7 @@
     "modularui.debug.mouse_pos": "§7Mouse Pos: §3%d§7, §3%d",
     "modularui.debug.fps": "§7FPS: §3%d",
     "modularui.debug.theme_id": "§7Theme ID: §6%s",
-    "modularui.debug.widget_theme": "§7Widget Theme: §6%s",
+    "modularui.debug.widget_theme_key": "§7Widget Theme Key: §6%s",
     "modularui.debug.size": "§7Size: §3%d§7, §3%d",
     "modularui.debug.pos_rel": "§7Pos: §3%d§7, §3%d§7  Rel: §3%d§7, §3%d",
     "modularui.debug.widget": "§7Widget: §6%s",
