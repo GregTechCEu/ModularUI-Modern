@@ -88,6 +88,8 @@ lombok {
 }
 
 test {
+    enabled = gradle.startParameter.taskNames.contains('test')
+
     useJUnitPlatform()
 
     systemProperty "unit.testing", "true"
