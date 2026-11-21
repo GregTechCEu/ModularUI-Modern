@@ -443,7 +443,7 @@ public class Widget<W extends Widget<W>> extends AbstractWidget implements IPosi
      * {@link #getWidgetThemeEntryInternal(ITheme)}
      *
      * @param theme        theme to get widget theme entry from
-     * @param expectedType type of the widget theme data to expectm used for validation
+     * @param expectedType type of the widget theme data to expect, used for validation
      * @return widget theme entry this widget will use
      */
     @SuppressWarnings("unchecked")
@@ -504,6 +504,9 @@ public class Widget<W extends Widget<W>> extends AbstractWidget implements IPosi
      * @return this
      */
     public W themeOverride(String theme) {
+        if (!IThemeApi.get().hasTheme(theme)) {
+            throw new IllegalArgumentException("No theme with id '" + theme + "' exists.");
+        }
         this.themeOverride = IThemeApi.get().getTheme(theme);
         return getThis();
     }

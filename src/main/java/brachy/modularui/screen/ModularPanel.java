@@ -876,12 +876,6 @@ public class ModularPanel<W extends ModularPanel<W>> extends ParentWidget<W> imp
         return getThis();
     }
 
-    public W themeOverride(String id) {
-        this.themeOverride = id;
-        this.theme = null;
-        return getThis();
-    }
-
     @Deprecated
     @Override
     public W name(String name) {

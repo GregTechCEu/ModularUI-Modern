@@ -110,6 +110,6 @@ public class DelegatingWidget extends AbstractWidget implements IDelegatingWidge
 
     @Override
     public ITheme getTheme() {
-        return getDelegate() != null ? getDelegate().getTheme() : ITheme.getDefault();
+        return getParent().getTheme();
     }
 }
