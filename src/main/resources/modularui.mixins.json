@@ -16,7 +16,6 @@
     "emi.RecipeScreenMixin",
     "jei.RecipeLayoutBuilderMixin",
     "jei.RecipeLayoutMixin",
-    "jei.RecipeSlotAccessor",
     "rei.DefaultDisplayViewingScreenMixin",
     "rei.EntryWidgetAccessor"
   ],
