@@ -117,13 +117,15 @@ public class DebugOverlay extends CustomModularScreen {
                                                         .child(toggleOption(10, "Any", "showParent"))
                                                         .child(toggleOption(11, "Pos", "showParentPos"))
                                                         .child(toggleOption(12, "Size", "showParentSize"))
-                                                        .child(toggleOption(13, "Widget Theme", "showParentWidgetTheme"))
+                                                        .child(toggleOption(13, "Widget Theme",
+                                                                "showParentWidgetTheme"))
                                                         .child(toggleOption(14, "Outline", "showParentOutline")))))));
     }
 
     public static IWidget toggleOption(int i, String name, String field) {
         Object config = ModularUIConfig.CONFIG.getValues().get(List.of("dev", field));
-        if (!(config instanceof ForgeConfigSpec.ConfigValue<?> configValue) || !(configValue.get() instanceof Boolean)) {
+        if (!(config instanceof ForgeConfigSpec.ConfigValue<?> configValue) ||
+                !(configValue.get() instanceof Boolean)) {
             throw new IllegalArgumentException("Config field 'dev.%s' is not a boolean value!".formatted(field));
         }
         @SuppressWarnings("unchecked")

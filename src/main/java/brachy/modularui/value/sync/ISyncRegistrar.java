@@ -47,7 +47,8 @@ public interface ISyncRegistrar<S extends ISyncRegistrar<S>> {
         return dynamicSyncHandler(key, 0, widgetProvider);
     }
 
-    default DynamicSyncHandler dynamicSyncHandler(String key, int id, DynamicSyncHandler.IWidgetProvider widgetProvider) {
+    default DynamicSyncHandler dynamicSyncHandler(String key, int id,
+                                                  DynamicSyncHandler.IWidgetProvider widgetProvider) {
         DynamicSyncHandler syncHandler = new DynamicSyncHandler().widgetProvider(widgetProvider);
         syncValue(key, id, syncHandler);
         return syncHandler;
@@ -55,12 +56,14 @@ public interface ISyncRegistrar<S extends ISyncRegistrar<S>> {
 
     IPanelHandler syncedPanel(String key, boolean subPanel, PanelSyncHandler.IPanelBuilder panelBuilder);
 
-    @Nullable IPanelHandler findPanelHandlerNullable(String key);
+    @Nullable
+    IPanelHandler findPanelHandlerNullable(String key);
 
     default @NotNull IPanelHandler findPanelHandler(String key) {
         IPanelHandler panelHandler = findPanelHandlerNullable(key);
         if (panelHandler == null) {
-            throw new NoSuchElementException("Expected to find panel sync handler with key '" + key + "', but none was found.");
+            throw new NoSuchElementException(
+                    "Expected to find panel sync handler with key '" + key + "', but none was found.");
         }
         return panelHandler;
     }
@@ -134,10 +137,12 @@ public interface ISyncRegistrar<S extends ISyncRegistrar<S>> {
     }
 
     default ItemSlotSyncHandler getOrCreateSlot(String name, int id, Supplier<ModularSlot> slotSupplier) {
-        return getOrCreateSyncHandler(name, id, ItemSlotSyncHandler.class, () -> new ItemSlotSyncHandler(slotSupplier.get()));
+        return getOrCreateSyncHandler(name, id, ItemSlotSyncHandler.class,
+                () -> new ItemSlotSyncHandler(slotSupplier.get()));
     }
 
-    @Nullable SyncHandler<?> findSyncHandlerNullable(String name, int id);
+    @Nullable
+    SyncHandler<?> findSyncHandlerNullable(String name, int id);
 
     default @Nullable SyncHandler<?> findSyncHandlerNullable(String name) {
         return findSyncHandlerNullable(name, 0);
@@ -146,7 +151,8 @@ public interface ISyncRegistrar<S extends ISyncRegistrar<S>> {
     default @NotNull SyncHandler<?> findSyncHandler(String name, int id) {
         SyncHandler<?> syncHandler = findSyncHandlerNullable(name, id);
         if (syncHandler == null) {
-            throw new NoSuchElementException("Expected to find sync handler with key '" + makeSyncKey(name, id) + "', but none was found.");
+            throw new NoSuchElementException(
+                    "Expected to find sync handler with key '" + makeSyncKey(name, id) + "', but none was found.");
         }
         return syncHandler;
     }
@@ -170,11 +176,12 @@ public interface ISyncRegistrar<S extends ISyncRegistrar<S>> {
     default <T extends SyncHandler<?>> @NotNull T findSyncHandler(String name, int id, Class<T> type) {
         SyncHandler<?> syncHandler = findSyncHandlerNullable(name, id);
         if (syncHandler == null) {
-            throw new NoSuchElementException("Expected to find sync handler with key '" + makeSyncKey(name, id) + "', but none was found.");
+            throw new NoSuchElementException(
+                    "Expected to find sync handler with key '" + makeSyncKey(name, id) + "', but none was found.");
         }
         if (!type.isAssignableFrom(syncHandler.getClass())) {
-            throw new ClassCastException("Expected to find sync handler with key '" + makeSyncKey(name, id) + "' of type '" + type.getName()
-                    + "', but found type '" + syncHandler.getClass().getName() + "'.");
+            throw new ClassCastException("Expected to find sync handler with key '" + makeSyncKey(name, id) +
+                    "' of type '" + type.getName() + "', but found type '" + syncHandler.getClass().getName() + "'.");
         }
         return type.cast(syncHandler);
     }
@@ -195,7 +202,8 @@ public interface ISyncRegistrar<S extends ISyncRegistrar<S>> {
         return Optional.ofNullable(findSyncHandlerNullable(name, type));
     }
 
-    default <T extends SyncHandler<?>> @NotNull Optional<T> findSyncHandlerOptional(String name, int id, Class<T> type) {
+    default <T extends SyncHandler<?>> @NotNull Optional<T> findSyncHandlerOptional(String name, int id,
+                                                                                    Class<T> type) {
         return Optional.ofNullable(findSyncHandlerNullable(name, id, type));
     }
 

@@ -7,7 +7,8 @@ import net.minecraft.network.FriendlyByteBuf;
 import lombok.Getter;
 import lombok.Setter;
 
-public abstract class ValueSyncHandler<T, S extends ValueSyncHandler<T, S>> extends SyncHandler<S> implements IValueSyncHandler<T> {
+public abstract class ValueSyncHandler<T, S extends ValueSyncHandler<T, S>> extends SyncHandler<S>
+                                      implements IValueSyncHandler<T> {
 
     public static final int SYNC_VALUE = 0;
 

@@ -26,7 +26,8 @@ public class DynamicComponent implements Component, IDrawable {
     private long time = -1;
     private final Supplier<Component> supplier;
     private Style style = Style.EMPTY;
-    @Getter private float scale = 1f;
+    @Getter
+    private float scale = 1f;
     private Component lastComp;
 
     public DynamicComponent(Supplier<Component> supplier) {

@@ -35,30 +35,38 @@ public class Flow extends ParentWidget<Flow> implements ILayoutWidget {
     /**
      * The main axis on which to align children.
      */
-    @Getter private final GuiAxis axis;
+    @Getter
+    private final GuiAxis axis;
     /**
      * How the children should be laid out on the main axis.
      */
-    @Getter private Alignment.MainAxis mainAxisAlignment = Alignment.MainAxis.START;
+    @Getter
+    private Alignment.MainAxis mainAxisAlignment = Alignment.MainAxis.START;
     /**
      * How the children should be laid out on the cross axis.
      */
-    @Getter private Alignment.CrossAxis crossAxisAlignment = Alignment.CrossAxis.CENTER;
+    @Getter
+    private Alignment.CrossAxis crossAxisAlignment = Alignment.CrossAxis.CENTER;
     /**
      * Additional space between each child on main axis.
      * Does not work with {@link Alignment.MainAxis#SPACE_BETWEEN} and {@link Alignment.MainAxis#SPACE_AROUND}.
      */
-    @Getter private int childPadding = 0;
-    @Getter private int crossAxisChildPadding = 0;
+    @Getter
+    private int childPadding = 0;
+    @Getter
+    private int crossAxisChildPadding = 0;
     /**
      * Whether disabled child widgets should be collapsed for display.
      */
-    @Getter private boolean collapseDisabledChildren = false;
+    @Getter
+    private boolean collapseDisabledChildren = false;
     /**
      * Whether the children list should be laid out in reverse order
      */
-    @Getter private boolean reverseLayout = false;
-    @Getter private boolean wrap = false;
+    @Getter
+    private boolean reverseLayout = false;
+    @Getter
+    private boolean wrap = false;
     private final List<IWidget> ignoredWidgets = new ArrayList<>();
     private final List<SimpleFlow> layoutWidgets = new ArrayList<>();
 

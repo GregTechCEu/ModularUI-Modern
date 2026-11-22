@@ -71,7 +71,7 @@ public class SelectableTheme extends WidgetTheme {
     }
 
     public static class Builder<T extends SelectableTheme, B extends SelectableTheme.Builder<T, B>>
-            extends WidgetThemeBuilder<T, B> {
+                               extends WidgetThemeBuilder<T, B> {
 
         public B selectedColor(int color) {
             add(IThemeApi.SELECTED_COLOR, ThemeBuilder.colorJson(color));

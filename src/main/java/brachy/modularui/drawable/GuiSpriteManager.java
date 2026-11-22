@@ -13,7 +13,8 @@ import org.jetbrains.annotations.NotNull;
  * 1.21 has this class in vanilla, it can be used via {@code Minecraft.getGuiSprites()}.<br>
  * Here in 1.20 land, though, we have to implement it ourselves.
  * <p>
- * Note that the atlas JSON <i>should</i> be kept, as MC 1.21 only adds textures in gui/sprites to the atlas. We want all of them.
+ * Note that the atlas JSON <i>should</i> be kept, as MC 1.21 only adds textures in gui/sprites to the atlas. We want
+ * all of them.
  */
 public class GuiSpriteManager extends TextureAtlasHolder {
 
@@ -45,5 +46,4 @@ public class GuiSpriteManager extends TextureAtlasHolder {
     public @NotNull TextureAtlasSprite getSprite(@NotNull ResourceLocation location) {
         return super.getSprite(location);
     }
-
 }

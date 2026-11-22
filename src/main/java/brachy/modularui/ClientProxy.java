@@ -22,7 +22,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.Timer;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
 import net.minecraftforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -33,6 +32,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import lombok.Getter;
 
 import java.util.function.Function;
@@ -73,7 +73,7 @@ public class ClientProxy extends CommonProxy {
     }
 
     private void onClientStartup(FMLClientSetupEvent event) {
-        //noinspection deprecation,RedundantCast
+        // noinspection deprecation,RedundantCast
         event.enqueueWork(() -> MenuScreens.register(ModularUIMenuTypes.MODULAR_CONTAINER.get(),
                 (MenuScreens.ScreenConstructor<ModularContainerMenu, ContainerScreenWrapper>) ContainerScreenWrapper::new));
     }

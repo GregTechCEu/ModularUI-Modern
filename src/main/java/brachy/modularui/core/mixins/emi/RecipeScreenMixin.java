@@ -16,7 +16,8 @@ import java.util.List;
 @Mixin(value = RecipeScreen.class, remap = false)
 public class RecipeScreenMixin {
 
-    @Shadow private List<WidgetGroup> currentPage;
+    @Shadow
+    private List<WidgetGroup> currentPage;
 
     @Inject(method = "mouseScrolled", at = @At("HEAD"), remap = true, cancellable = true)
     private void mui$mouseScrolled(double mouseX, double mouseY, double amount, CallbackInfoReturnable<Boolean> cir) {
@@ -45,7 +46,8 @@ public class RecipeScreenMixin {
     }
 
     @Inject(method = "mouseDragged", at = @At("HEAD"), remap = true, cancellable = true)
-    private void mui$mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY, CallbackInfoReturnable<Boolean> cir) {
+    private void mui$mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY,
+                                  CallbackInfoReturnable<Boolean> cir) {
         for (WidgetGroup group : currentPage) {
             for (Widget widget : group.widgets) {
                 if (widget instanceof ModularUIEmiRecipe.UIWrapperWidget wrapperWidget) {
@@ -56,5 +58,4 @@ public class RecipeScreenMixin {
             }
         }
     }
-
 }

@@ -30,13 +30,15 @@ import lombok.Getter;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class RenderLevel implements LevelTimeAccess {
 
-    @Getter private final ISchema schema;
+    @Getter
+    private final ISchema schema;
     private final Level level;
     private final RenderFilter renderFilter;
     private final Thread thread;

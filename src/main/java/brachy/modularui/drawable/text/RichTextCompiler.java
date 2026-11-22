@@ -108,7 +108,8 @@ public class RichTextCompiler {
     }
 
     private boolean iterateFormatted(String content, int skip, Style style) {
-        return FontRenderHelper.iterateFormatted(content, skip, style, Style.EMPTY, this.lineBreakFinder, this.lineBreakFinder);
+        return FontRenderHelper.iterateFormatted(content, skip, style, Style.EMPTY, this.lineBreakFinder,
+                this.lineBreakFinder);
     }
 
     private void compileText(Component component) {
@@ -195,7 +196,7 @@ public class RichTextCompiler {
         if (s.isEmpty()) return;
         this.h = Math.max(this.h, this.fr.lineHeight);
         this.x += width;
-        //if (s.length() > 1) s = this.fr.bidirectionalShaping(s); // TODO: this turns ", " into " ," for some reason
+        // if (s.length() > 1) s = this.fr.bidirectionalShaping(s); // TODO: this turns ", " into " ," for some reason
         this.currentLine.add(FormattedCharSequence.forward(s, style));
     }
 

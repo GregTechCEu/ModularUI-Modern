@@ -10,9 +10,9 @@ import brachy.modularui.widget.Widget;
 import net.minecraft.Util;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.material.Fluid;
-import com.mojang.serialization.Codec;
 import net.minecraftforge.fluids.FluidStack;
 
+import com.mojang.serialization.Codec;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -29,7 +29,8 @@ import java.util.List;
 public class FluidDrawable implements IDrawable {
 
     public static final MutableObjectCodec<FluidDrawable> CODEC = MutableObjectCodec.drawableBuilder(FluidDrawable::new)
-            .add("fluids", FluidDrawable::fluids, FluidDrawable::getFluidList, CodecUtil.listLike(FluidStack.CODEC)).alias("fluid")
+            .add("fluids", FluidDrawable::fluids, FluidDrawable::getFluidList, CodecUtil.listLike(FluidStack.CODEC))
+            .alias("fluid")
             .addOpt("cycleTime", FluidDrawable::cycleTime, FluidDrawable::cycleTime, Codec.INT, 1000)
             .build();
 

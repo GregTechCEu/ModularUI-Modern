@@ -21,7 +21,8 @@ public interface IDraggable {
     /**
      * Gets called every frame after everything else is rendered.
      * Is only called when {@link #isMoving()} is true.
-     * Translate to the mouse pos and draw with {@link WidgetTree#drawTree(IWidget, ModularGuiContext, boolean, boolean)}.
+     * Translate to the mouse pos and draw with
+     * {@link WidgetTree#drawTree(IWidget, ModularGuiContext, boolean, boolean)}.
      *
      * @param graphics
      * @param partialTicks difference from last from

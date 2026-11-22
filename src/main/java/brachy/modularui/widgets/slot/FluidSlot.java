@@ -12,9 +12,9 @@ import brachy.modularui.screen.RichTooltip;
 import brachy.modularui.screen.viewport.ModularGuiContext;
 import brachy.modularui.theme.SlotTheme;
 import brachy.modularui.theme.WidgetThemeEntry;
+import brachy.modularui.utils.MouseData;
 import brachy.modularui.utils.handlers.fluid.EmptyFluidTank;
 import brachy.modularui.utils.handlers.fluid.IMultiTankFluidHandler;
-import brachy.modularui.utils.MouseData;
 import brachy.modularui.value.sync.FluidSlotSyncHandler;
 import brachy.modularui.widgets.AbstractFluidDisplayWidget;
 
@@ -24,14 +24,14 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
-import com.mojang.blaze3d.platform.InputConstants;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraftforge.common.SoundActions;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fml.ModList;
 
+import com.mojang.blaze3d.platform.InputConstants;
+import com.mojang.blaze3d.systems.RenderSystem;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -39,7 +39,7 @@ import org.jetbrains.annotations.Nullable;
 import java.text.DecimalFormat;
 
 public class FluidSlot extends AbstractFluidDisplayWidget<FluidSlot>
-        implements Interactable, GhostIngredientSlot<FluidStack>, IngredientProvider<FluidStack> {
+                       implements Interactable, GhostIngredientSlot<FluidStack>, IngredientProvider<FluidStack> {
 
     public static final int DEFAULT_SIZE = 18;
     public static final String UNIT_BUCKET = "B";
@@ -53,7 +53,8 @@ public class FluidSlot extends AbstractFluidDisplayWidget<FluidSlot>
 
     private FluidSlotSyncHandler syncHandler;
 
-    @Getter private boolean alwaysShowFull = true;
+    @Getter
+    private boolean alwaysShowFull = true;
 
     public FluidSlot() {
         tooltip().autoUpdate(true);
@@ -188,7 +189,8 @@ public class FluidSlot extends AbstractFluidDisplayWidget<FluidSlot>
         }
         ItemStack cursorStack = MCHelper.getPlayer().containerMenu.getCarried();
         if (this.syncHandler.phantom() ||
-                (!cursorStack.isEmpty() && cursorStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM, null).isPresent())) {
+                (!cursorStack.isEmpty() &&
+                        cursorStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM, null).isPresent())) {
             MouseData mouseData = MouseData.create(button);
             this.syncHandler.syncToServer(FluidSlotSyncHandler.SYNC_CLICK, mouseData::writeToPacket);
         }

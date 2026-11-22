@@ -31,7 +31,6 @@ import brachy.modularui.widget.sizer.StandardResizer;
 import brachy.modularui.widgets.slot.ItemSlot;
 
 import com.mojang.serialization.Codec;
-
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -65,18 +64,23 @@ public class Widget<W extends Widget<W>> extends AbstractWidget implements IPosi
             .addOpt("name", Widget::name, Widget::getName, Codec.STRING, null)
             .addOpt("enabled", Widget::setEnabled, Widget::isEnabled, Codec.BOOL, true)
             .addOpt("syncKey", Widget::setSyncKey, Widget::getSyncKey, Codec.STRING, null)
-            .addOpt("disableThemeBackground", Widget::disableThemeBackground, Widget::isDisableThemeBackground, Codec.BOOL, false)
-            .addOpt("disableHoverThemeBackground", Widget::disableHoverThemeBackground, Widget::isDisableHoverThemeBackground, Codec.BOOL, false)
+            .addOpt("disableThemeBackground", Widget::disableThemeBackground, Widget::isDisableThemeBackground,
+                    Codec.BOOL, false)
+            .addOpt("disableHoverThemeBackground", Widget::disableHoverThemeBackground,
+                    Widget::isDisableHoverThemeBackground, Codec.BOOL, false)
             .addOpt("shadow", Widget::shadow, Widget::getShadow, IDrawable.CODEC, null)
             .addOpt("background", Widget::setBackground, Widget::getBackground, IDrawable.CODEC, null)
             .addOpt("backgroundOverlay", Widget::setBackground, Widget::getBackground, IDrawable.CODEC, null)
             .addOpt("overlay", Widget::overlay, Widget::getOverlay, IDrawable.CODEC, null)
             .addOpt("hoverBackground", Widget::setHoverBackground, Widget::getHoverBackground, IDrawable.CODEC, null)
-            .addOpt("hoverBackgroundOverlay", Widget::setHoverBackgroundOverlay, Widget::getHoverBackground, IDrawable.CODEC, null)
+            .addOpt("hoverBackgroundOverlay", Widget::setHoverBackgroundOverlay, Widget::getHoverBackground,
+                    IDrawable.CODEC, null)
             .addOpt("hoverOverlay", Widget::hoverOverlay, Widget::getHoverOverlay, IDrawable.CODEC, null)
-            .addOpt("widgetThemeKey", Widget::widgetThemeKey, Widget::getWidgetThemeKeyOverride, WidgetThemeKey.CODEC, null)
+            .addOpt("widgetThemeKey", Widget::widgetThemeKey, Widget::getWidgetThemeKeyOverride, WidgetThemeKey.CODEC,
+                    null)
             .addOpt("themeOverride", Widget::themeOverride, Widget::getThemeOverride, ITheme.REFERENCE_CODEC, null)
-            .addOpt("excludeAreaInRecipeViewer", Widget::excludeAreaInRecipeViewer, Widget::isExcludeAreaInRecipeViewer, Codec.BOOL, false)
+            .addOpt("excludeAreaInRecipeViewer", Widget::excludeAreaInRecipeViewer, Widget::isExcludeAreaInRecipeViewer,
+                    Codec.BOOL, false)
             .addOpt("tooltip", Widget::setTooltip, Widget::getTooltip, RichTooltip.CODEC, null)
             .addFieldsOf(StandardResizer.COMPACT_CODEC, Widget::resizer)
             .addFieldOf(Area.CODEC, Widget::getArea, "margin")
@@ -87,7 +91,8 @@ public class Widget<W extends Widget<W>> extends AbstractWidget implements IPosi
             .build();
 
     // other
-    @Getter private boolean excludeAreaInRecipeViewer = false;
+    @Getter
+    private boolean excludeAreaInRecipeViewer = false;
     // sizing
     @Getter
     private BiConsumer<W, IViewportStack> transform;
@@ -312,7 +317,8 @@ public class Widget<W extends Widget<W>> extends AbstractWidget implements IPosi
     @Override
     public void drawForeground(ModularGuiContext context) {
         RichTooltip tooltip = getTooltip();
-        if (tooltip != null && !context.getUISettings().drawTooltipExternally() && isHoveringFor(tooltip.showUpTimer())) {
+        if (tooltip != null && !context.getUISettings().drawTooltipExternally() &&
+                isHoveringFor(tooltip.showUpTimer())) {
             tooltip.draw(context);
         }
     }
@@ -424,7 +430,8 @@ public class Widget<W extends Widget<W>> extends AbstractWidget implements IPosi
     }
 
     /**
-     * Returns the actual used widget theme entry. Uses {@link #widgetThemeKey(String)} if it has been set, otherwise calls
+     * Returns the actual used widget theme entry. Uses {@link #widgetThemeKey(String)} if it has been set, otherwise
+     * calls
      * {@link #getWidgetThemeEntryInternal(ITheme)}
      *
      * @param theme theme to get widget theme from
@@ -439,7 +446,8 @@ public class Widget<W extends Widget<W>> extends AbstractWidget implements IPosi
     }
 
     /**
-     * Returns the actual used widget theme entry. Uses {@link #widgetThemeKey(String)} if it has been set, otherwise calls
+     * Returns the actual used widget theme entry. Uses {@link #widgetThemeKey(String)} if it has been set, otherwise
+     * calls
      * {@link #getWidgetThemeEntryInternal(ITheme)}
      *
      * @param theme        theme to get widget theme entry from
@@ -489,6 +497,7 @@ public class Widget<W extends Widget<W>> extends AbstractWidget implements IPosi
     /**
      * Sets an override theme to use for this widget and its children.
      * This will change the appearance of this widget according to the theme.
+     * 
      * @param theme The theme to use.
      * @return this
      */
@@ -500,6 +509,7 @@ public class Widget<W extends Widget<W>> extends AbstractWidget implements IPosi
     /**
      * Sets an override theme to use for this widget and its children.
      * This will change the appearance of this widget according to the theme.
+     * 
      * @param theme The theme to use.
      * @return this
      */
@@ -512,7 +522,8 @@ public class Widget<W extends Widget<W>> extends AbstractWidget implements IPosi
     }
 
     /**
-     * Sets a shadow. Shadows are drawn before the background and don't actually have to be shadows. This doesn't effect theme backgrounds
+     * Sets a shadow. Shadows are drawn before the background and don't actually have to be shadows. This doesn't effect
+     * theme backgrounds
      * and doesn't change when hovered.
      *
      * @param shadow background to use.
@@ -526,10 +537,12 @@ public class Widget<W extends Widget<W>> extends AbstractWidget implements IPosi
     /**
      * Sets a background. The theme background will be drawn before this override.
      * <p>
-     * NOTE: This will NOT disable the theme background. Disable it separately with {@link #disableThemeBackground(boolean)}.
+     * NOTE: This will NOT disable the theme background. Disable it separately with
+     * {@link #disableThemeBackground(boolean)}.
      * </p>
      * This method is meant for unique textures. For generic backgrounds please use themes. Also consider using
-     * {@link #overlay(IDrawable...)} instead. Using {@link IDrawable#EMPTY} will make the background invisible while still overriding
+     * {@link #overlay(IDrawable...)} instead. Using {@link IDrawable#EMPTY} will make the background invisible while
+     * still overriding
      * the widget theme. Background are drawn before the widget and overlays are drawn.
      *
      * @param background background to use.
@@ -541,7 +554,8 @@ public class Widget<W extends Widget<W>> extends AbstractWidget implements IPosi
     }
 
     /**
-     * Sets a background and disables the theme background. See {@link #backgroundOverlay(IDrawable...)} for more information.
+     * Sets a background and disables the theme background. See {@link #backgroundOverlay(IDrawable...)} for more
+     * information.
      *
      * @param background background
      * @return this
@@ -564,20 +578,24 @@ public class Widget<W extends Widget<W>> extends AbstractWidget implements IPosi
     /**
      * Sets a hover background. The hover theme background will be drawn before this override.
      * <p>
-     * NOTE: This will NOT disable the hover theme background. Disable it separately with {@link #disableHoverThemeBackground(boolean)}.
+     * NOTE: This will NOT disable the hover theme background. Disable it separately with
+     * {@link #disableHoverThemeBackground(boolean)}.
      * </p>
      * <p>
      * This method is meant for unique textures. For generic backgrounds please use themes. Also consider using
-     * {@link #hoverOverlay(IDrawable...)} instead. Using {@link IDrawable#EMPTY} will make the background invisible while still
+     * {@link #hoverOverlay(IDrawable...)} instead. Using {@link IDrawable#EMPTY} will make the background invisible
+     * while still
      * overriding the widget theme. Background are drawn before the widget and overlays are drawn.
      * <p>
      * Following argument special cases should be considered:
      * <ul>
-     *     <li>{@code null} will fallback to {@link WidgetThemeEntry#hoverTheme()}</li>
-     *     <li>{@link IDrawable#EMPTY} will make the hover background invisible</li>
-     *     <li>{@link IDrawable#NONE} will use the normal background instead (which is also achieved using {@link #disableHoverBackground()})
-     *     (note that this won't disable the hover theme background)</li>
-     *     <li>multiple drawables, will result in them being drawn on top of each other in the order they are passed to the method</li>
+     * <li>{@code null} will fallback to {@link WidgetThemeEntry#hoverTheme()}</li>
+     * <li>{@link IDrawable#EMPTY} will make the hover background invisible</li>
+     * <li>{@link IDrawable#NONE} will use the normal background instead (which is also achieved using
+     * {@link #disableHoverBackground()})
+     * (note that this won't disable the hover theme background)</li>
+     * <li>multiple drawables, will result in them being drawn on top of each other in the order they are passed to the
+     * method</li>
      * </ul>
      *
      * @param background hover background to use.
@@ -589,7 +607,8 @@ public class Widget<W extends Widget<W>> extends AbstractWidget implements IPosi
     }
 
     /**
-     * Sets a background and disables the theme background. See {@link #backgroundOverlay(IDrawable...)} for more information.
+     * Sets a background and disables the theme background. See {@link #backgroundOverlay(IDrawable...)} for more
+     * information.
      *
      * @param background background
      * @return this
@@ -605,9 +624,11 @@ public class Widget<W extends Widget<W>> extends AbstractWidget implements IPosi
      * <p>
      * Following argument special cases should be considered:
      * <ul>
-     *     <li>{@link IDrawable#EMPTY} will make the hover overlay invisible</li>
-     *     <li>{@code null} and {@link IDrawable#NONE} will use the normal overlay instead (which is also achieved using {@link #disableHoverOverlay()})</li>
-     *     <li>multiple drawables, will result in them being drawn on top of each other in the order they are passed to the method</li>
+     * <li>{@link IDrawable#EMPTY} will make the hover overlay invisible</li>
+     * <li>{@code null} and {@link IDrawable#NONE} will use the normal overlay instead (which is also achieved using
+     * {@link #disableHoverOverlay()})</li>
+     * <li>multiple drawables, will result in them being drawn on top of each other in the order they are passed to the
+     * method</li>
      * </ul>
      *
      * @param overlay hover overlay to use.
@@ -629,13 +650,21 @@ public class Widget<W extends Widget<W>> extends AbstractWidget implements IPosi
     }
 
     // background setter for codec
-    private void setBackground(IDrawable d) {setBackground(d, true, false);}
+    private void setBackground(IDrawable d) {
+        setBackground(d, true, false);
+    }
 
-    private void setHoverBackground(IDrawable d) {setBackground(d, true, true);}
+    private void setHoverBackground(IDrawable d) {
+        setBackground(d, true, true);
+    }
 
-    private void setBackgroundOverlay(IDrawable d) {setBackground(d, false, false);}
+    private void setBackgroundOverlay(IDrawable d) {
+        setBackground(d, false, false);
+    }
 
-    private void setHoverBackgroundOverlay(IDrawable d) {setBackground(d, false, true);}
+    private void setHoverBackgroundOverlay(IDrawable d) {
+        setBackground(d, false, true);
+    }
 
     private void setBackground(IDrawable drawable, boolean disableTheme, boolean hover) {
         if (drawable != null) {
@@ -784,7 +813,7 @@ public class Widget<W extends Widget<W>> extends AbstractWidget implements IPosi
         return getThis();
     }
 
-    @SuppressWarnings({"rawtypes", "unchecked"})
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     private void setOnUpdateListener(Consumer listener) {
         onUpdateListener(listener);
     }
@@ -848,7 +877,7 @@ public class Widget<W extends Widget<W>> extends AbstractWidget implements IPosi
         return getThis();
     }
 
-    @SuppressWarnings({"rawtypes", "unchecked"})
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     private void setTransform(BiConsumer listener) {
         transform(listener);
     }
@@ -998,7 +1027,7 @@ public class Widget<W extends Widget<W>> extends AbstractWidget implements IPosi
      * This can be used to further configure widgets in ways not directly allowed by the builder functions.
      * <p>
      * For example, adding a click action to a progress widget changes from this:
-     * {@snippet lang="java":
+     * {@snippet lang = "java":
      *     ProgressWidget progressWidget = new ProgressWidget()
      *            .value()
      *            .texture();
@@ -1012,19 +1041,19 @@ public class Widget<W extends Widget<W>> extends AbstractWidget implements IPosi
      *             //...
      * }
      * to this:
-     * {@snippet lang="java":
-     *     parentWidget.child(new ProgressWidget()
-     *             .value()
-     *             .texture()
-     *             .configure(w -> {
-     *                 w.listenGuiAction((IGuiAction.MousePressed) (ctx, button) -> {
-     *                     if (!ctx.isMouseAbove(w)) return false;
-     *                     //...
-     *                     return true;
-     *                 });
-     *             }))
-     *             .child()
-     *             //...
+     * {@snippet lang = "java":
+     * parentWidget.child(new ProgressWidget()
+     *         .value()
+     *         .texture()
+     *         .configure(w -> {
+     *             w.listenGuiAction((IGuiAction.MousePressed) (ctx, button) -> {
+     *                 if (!ctx.isMouseAbove(w)) return false;
+     *                 // ...
+     *                 return true;
+     *             });
+     *         }))
+     *         .child()
+     * // ...
      * }
      *
      * @param configurator the configuration function

@@ -52,7 +52,8 @@ import java.util.function.Supplier;
  * This class is like a window in windows. It can hold any amount of widgets. It may also be draggable.
  * To open another panel on top of the main panel you must use
  * {@link IPanelHandler#simple(ModularPanel, SecondaryPanel.IPanelBuilder, boolean)}
- * or {@link PanelSyncManager#syncedPanel(String, boolean, PanelSyncHandler.IPanelBuilder)} if the panel should be synced.
+ * or {@link PanelSyncManager#syncedPanel(String, boolean, PanelSyncHandler.IPanelBuilder)} if the panel should be
+ * synced.
  */
 public class ModularPanel<W extends ModularPanel<W>> extends ParentWidget<W> implements IViewport, IDragResizeable {
 
@@ -99,7 +100,8 @@ public class ModularPanel<W extends ModularPanel<W>> extends ParentWidget<W> imp
     /**
      * True if this panel can be dragged. Never works on the main panel.
      */
-    @Getter private boolean draggable = true;
+    @Getter
+    private boolean draggable = true;
     private boolean disablePanelsBelow = false;
     private boolean closeOnOutOfBoundsClick = false;
 
@@ -177,7 +179,8 @@ public class ModularPanel<W extends ModularPanel<W>> extends ParentWidget<W> imp
             }
             getAnimator().onFinish(() -> {
                 if (this.screen != null) {
-                    // can happen when multiple panels close at once and animation is enabled, but NEA is currently not ported so screen
+                    // can happen when multiple panels close at once and animation is enabled, but NEA is currently not
+                    // ported so screen
                     // before sub panels can finish animating
                     this.screen.getPanelManager().closePanel(this);
                 }
@@ -287,7 +290,8 @@ public class ModularPanel<W extends ModularPanel<W>> extends ParentWidget<W> imp
 
     @Override
     public boolean isExcludeAreaInRecipeViewer() {
-        return super.isExcludeAreaInRecipeViewer() || (!getScreen().isOverlay() && !this.invisible && !resizer().isFullSize());
+        return super.isExcludeAreaInRecipeViewer() ||
+                (!getScreen().isOverlay() && !this.invisible && !resizer().isFullSize());
     }
 
     @MustBeInvokedByOverriders

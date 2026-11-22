@@ -12,5 +12,4 @@ public final class RecipeViewerUtils {
     public static Component getCategoryTitle(ResourceLocation categoryId) {
         return Component.translatable(categoryId.toLanguageKey(CATEGORY_LANGUAGE_KEY_PREFIX));
     }
-
 }

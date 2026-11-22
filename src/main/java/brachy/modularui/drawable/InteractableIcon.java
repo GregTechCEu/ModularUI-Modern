@@ -3,7 +3,6 @@ package brachy.modularui.drawable;
 import brachy.modularui.api.drawable.IIcon;
 import brachy.modularui.api.widget.IGuiAction;
 import brachy.modularui.api.widget.Interactable;
-
 import brachy.modularui.screen.viewport.GuiContext;
 
 import lombok.Getter;

@@ -70,19 +70,23 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Various test and demos for synced widgets, slots and JEI interactions. Anything that doesn't fall into any of those categories goes into
+ * Various test and demos for synced widgets, slots and JEI interactions. Anything that doesn't fall into any of those
+ * categories goes into
  * {@link TestGuis}.
  */
 public class TestBlockEntity extends AbstractBlockEntity implements IUIHolder<PosGuiData> {
 
-    private static final Object2IntMap<Item> handlerSizeMap = new Object2IntOpenHashMap<>() {{
-        put(Items.DIAMOND, 9);
-        put(Items.EMERALD, 9);
-        put(Items.GOLD_INGOT, 7);
-        put(Items.IRON_INGOT, 6);
-        put(Items.CLAY_BALL, 2);
-        defaultReturnValue(3);
-    }};
+    private static final Object2IntMap<Item> handlerSizeMap = new Object2IntOpenHashMap<>() {
+
+        {
+            put(Items.DIAMOND, 9);
+            put(Items.EMERALD, 9);
+            put(Items.GOLD_INGOT, 7);
+            put(Items.IRON_INGOT, 6);
+            put(Items.CLAY_BALL, 2);
+            defaultReturnValue(3);
+        }
+    };
 
     private long time = 0;
     private final int duration = 80;
@@ -93,6 +97,7 @@ public class TestBlockEntity extends AbstractBlockEntity implements IUIHolder<Po
     private final ItemStackHandler storage = new ItemStackHandler(9);
     private final ItemStackHandler smallStorage = new ItemStackHandler(9);
     private final ItemStackHandler oversizedStorage = new ItemStackHandler(3) {
+
         @Override
         public int getSlotLimit(int slot) {
             return 10000;
@@ -107,7 +112,6 @@ public class TestBlockEntity extends AbstractBlockEntity implements IUIHolder<Po
 
     public TestBlockEntity(BlockPos pos, BlockState blockState) {
         super(TestRegistration.BE_TYPE.get(), pos, blockState);
-
     }
 
     @Override
@@ -117,11 +121,12 @@ public class TestBlockEntity extends AbstractBlockEntity implements IUIHolder<Po
 
     @Override
     public ModularPanel<?> buildUI(PosGuiData guiData, PanelSyncManager syncManager, UISettings settings) {
-        //settings.customContainer(() -> new CraftingModularContainer(3, 3, this.craftingInventory));
-        //settings.customGui(() -> TestGuiContainer::new);
+        // settings.customContainer(() -> new CraftingModularContainer(3, 3, this.craftingInventory));
+        // settings.customGui(() -> TestGuiContainer::new);
 
         syncManager.registerSlotGroup("item_inv", 3);
-        syncManager.registerSlotGroup(new SlotGroup("crafting", 3, SlotGroup.STORAGE_SLOT_PRIO * 2).setAllowSorting(false));
+        syncManager.registerSlotGroup(
+                new SlotGroup("crafting", 3, SlotGroup.STORAGE_SLOT_PRIO * 2).setAllowSorting(false));
         IntSyncValue cycleStateValue = new IntSyncValue(() -> this.cycleState, val -> this.cycleState = val).allowC2S();
         syncManager.getHyperVisor().syncValue("cycle_state", cycleStateValue);
         syncManager.syncValue("progress", new DoubleSyncValue(() -> (double) this.progress / this.duration));
@@ -141,18 +146,21 @@ public class TestBlockEntity extends AbstractBlockEntity implements IUIHolder<Po
                     ItemStack itemStack = packet.readItem();
                     if (itemStack.isEmpty()) return new EmptyWidget();
                     Item item = itemStack.getItem();
-                    ItemStackHandler handler = stackHandlerMap.computeIfAbsent(item, k -> new ItemStackHandler(handlerSizeMap.getInt(k)));
+                    ItemStackHandler handler = stackHandlerMap.computeIfAbsent(item,
+                            k -> new ItemStackHandler(handlerSizeMap.getInt(k)));
                     String name = ForgeRegistries.ITEMS.getKey(item).toString();
                     Flow flow = Flow.row();
                     for (int i = 0; i < handler.getSlots(); i++) {
                         int finalI = i;
                         flow.child(new ItemSlot()
-                                .syncHandler(syncManager1.getOrCreateSyncHandler(name, i, ItemSlotSyncHandler.class, () -> new ItemSlotSyncHandler(new ModularSlot(handler, finalI)))));
+                                .syncHandler(syncManager1.getOrCreateSyncHandler(name, i, ItemSlotSyncHandler.class,
+                                        () -> new ItemSlotSyncHandler(new ModularSlot(handler, finalI)))));
                     }
                     return flow;
                 });
 
-        DynamicLinkedSyncHandler<GenericListSyncHandler<Integer>> dynamicLinkedSyncHandler = new DynamicLinkedSyncHandler<>(numberListSyncHandler)
+        DynamicLinkedSyncHandler<GenericListSyncHandler<Integer>> dynamicLinkedSyncHandler = new DynamicLinkedSyncHandler<>(
+                numberListSyncHandler)
                 .widgetProvider((syncManager1, value1) -> {
                     List<Integer> vals = value1.getValue();
                     return Flow.row()
@@ -205,7 +213,8 @@ public class TestBlockEntity extends AbstractBlockEntity implements IUIHolder<Po
                                         .key('O', new ItemSlot().slot(new ModularCraftingSlot(this.craftingInventory, 9)
                                                 .inputInventory(this.craftingInventory)
                                                 .gridSize(3, 3)))
-                                        .key('D', new ItemDisplayWidget().syncHandler("display_item").displayAmount(true))
+                                        .key('D',
+                                                new ItemDisplayWidget().syncHandler("display_item").displayAmount(true))
                                         .slotGroup("crafting")
                                         .build()
                                         .margin(5, 5, 20, 5)
@@ -229,10 +238,13 @@ public class TestBlockEntity extends AbstractBlockEntity implements IUIHolder<Po
                                                         .name("buttons_and_values_col")
                                                         .widthRel(0.5f)
                                                         .mainAxisAlignment(Alignment.MainAxis.SPACE_BETWEEN)
-                                                        .child(Text.str("Storage slots").asWidget().scale(0.7f).padding(1))
+                                                        .child(Text.str("Storage slots").asWidget().scale(0.7f)
+                                                                .padding(1))
                                                         .child(SlotGroupWidget.builder()
                                                                 .matrix("III", "III")
-                                                                .key('I', i -> new ItemSlot().slot(new ModularSlot(this.storage, i)))
+                                                                .key('I',
+                                                                        i -> new ItemSlot()
+                                                                                .slot(new ModularSlot(this.storage, i)))
                                                                 .slotGroup("item_inv")
                                                                 .build()
                                                                 .placeSortButtonsTopRightVertical())
@@ -242,14 +254,20 @@ public class TestBlockEntity extends AbstractBlockEntity implements IUIHolder<Po
                                                                 .tooltip(tooltip -> {
                                                                     tooltip.showUpTimer(10);
                                                                     tooltip.addLine(Text.str("Test Line g"));
-                                                                    tooltip.addLine(Text.str("An image inside of a tooltip:"));
-                                                                    tooltip.addDrawableLine(GuiTextures.MUI_LOGO.asIcon().size(50).alignment(Alignment.TopCenter));
+                                                                    tooltip.addLine(
+                                                                            Text.str("An image inside of a tooltip:"));
+                                                                    tooltip.addDrawableLine(
+                                                                            GuiTextures.MUI_LOGO.asIcon().size(50)
+                                                                                    .alignment(Alignment.TopCenter));
                                                                     tooltip.addLine(Text.str("And here a circle:"));
                                                                     tooltip.addDrawableLine(new Circle()
-                                                                                    .color(Color.RED.darker(2), Color.RED.brighter(2))
-                                                                                    .asIcon()
-                                                                                    .size(20))
-                                                                            .addDrawableLine(new ItemDrawable(new ItemStack(Items.DIAMOND)).asIcon())
+                                                                            .color(Color.RED.darker(2),
+                                                                                    Color.RED.brighter(2))
+                                                                            .asIcon()
+                                                                            .size(20))
+                                                                            .addDrawableLine(new ItemDrawable(
+                                                                                    new ItemStack(Items.DIAMOND))
+                                                                                    .asIcon())
                                                                             .pos(RichTooltip.Pos.LEFT);
                                                                 })
                                                                 .onMousePressed((context, mouseButton) -> {
@@ -263,77 +281,99 @@ public class TestBlockEntity extends AbstractBlockEntity implements IUIHolder<Po
                                                                 .reverseLayout(false)
                                                                 .child(new ToggleButton()
                                                                         .valueWrapped(cycleStateValue, 0)
-                                                                        .overlay(GuiTextures.CYCLE_BUTTON_DEMO.getSubArea(0, 0, 1, 1 / 3f)))
+                                                                        .overlay(GuiTextures.CYCLE_BUTTON_DEMO
+                                                                                .getSubArea(0, 0, 1, 1 / 3f)))
                                                                 .child(new ToggleButton()
                                                                         .valueWrapped(cycleStateValue, 1)
-                                                                        .overlay(GuiTextures.CYCLE_BUTTON_DEMO.getSubArea(0, 1 / 3f, 1, 2 / 3f)))
+                                                                        .overlay(GuiTextures.CYCLE_BUTTON_DEMO
+                                                                                .getSubArea(0, 1 / 3f, 1, 2 / 3f)))
                                                                 .child(new ToggleButton()
                                                                         .valueWrapped(cycleStateValue, 2)
-                                                                        .overlay(GuiTextures.CYCLE_BUTTON_DEMO.getSubArea(0, 2 / 3f, 1, 1))))
+                                                                        .overlay(GuiTextures.CYCLE_BUTTON_DEMO
+                                                                                .getSubArea(0, 2 / 3f, 1, 1))))
                                                         .child(Flow.row()
                                                                 .name("progress_row")
                                                                 .coverChildrenHeight()
                                                                 .mainAxisAlignment(Alignment.MainAxis.SPACE_AROUND)
                                                                 .child(new ProgressWidget()
                                                                         .syncHandler("progress")
-                                                                        .texture(GuiTextures.PROGRESS_ARROW, ProgressDrawable.Direction.RIGHT)
+                                                                        .texture(GuiTextures.PROGRESS_ARROW,
+                                                                                ProgressDrawable.Direction.RIGHT)
                                                                         .size(20))
                                                                 .child(CompositeProgress.circularLike4Slice(
-                                                                                GuiTextures.PROGRESS_CYCLE.getSubArea(0, 0f, 1, 0.5f),
-                                                                                GuiTextures.PROGRESS_CYCLE.getSubArea(0, 0.5f, 1, 1f),
-                                                                                CircularProgressDrawable.Direction.CW)
+                                                                        GuiTextures.PROGRESS_CYCLE.getSubArea(0, 0f, 1,
+                                                                                0.5f),
+                                                                        GuiTextures.PROGRESS_CYCLE.getSubArea(0, 0.5f,
+                                                                                1, 1f),
+                                                                        CircularProgressDrawable.Direction.CW)
                                                                         .asWidget()
                                                                         .syncHandler("progress")
-                                                                        .size(20)))
-                                                )
+                                                                        .size(20))))
                                                 .child(Flow.col()
                                                         .name("slots_col")
                                                         .widthRel(0.5f)
                                                         .heightRelOffset(1f, -6) // space for player sort buttons
                                                         .mainAxisAlignment(Alignment.MainAxis.SPACE_BETWEEN)
-                                                        .child(Text.str("Oversized slots").asWidget().scale(0.7f).padding(1))
+                                                        .child(Text.str("Oversized slots").asWidget().scale(0.7f)
+                                                                .padding(1))
                                                         .child(SlotGroupWidget.builder()
                                                                 .matrix("III")
-                                                                .key('I', i -> new ItemSlot().slot(new ModularSlot(this.oversizedStorage, i).ignoreMaxStackSize(true)))
+                                                                .key('I', i -> new ItemSlot()
+                                                                        .slot(new ModularSlot(this.oversizedStorage, i)
+                                                                                .ignoreMaxStackSize(true)))
                                                                 .build())
-                                                        .child(Text.str("Phantom slots").asWidget().scale(0.7f).padding(1))
+                                                        .child(Text.str("Phantom slots").asWidget().scale(0.7f)
+                                                                .padding(1))
                                                         .child(SlotGroupWidget.builder()
                                                                 .matrix("III")
-                                                                .key('I', i -> new PhantomItemSlot().slot(new ModularSlot(this.phantomStorage, i).ignoreMaxStackSize(true)))
+                                                                .key('I',
+                                                                        i -> new PhantomItemSlot().slot(
+                                                                                new ModularSlot(this.phantomStorage, i)
+                                                                                        .ignoreMaxStackSize(true)))
                                                                 .build())
-                                                        .child(Text.str("Fluid slots").asWidget().scale(0.7f).padding(1))
+                                                        .child(Text.str("Fluid slots").asWidget().scale(0.7f)
+                                                                .padding(1))
                                                         .child(SlotGroupWidget.builder()
                                                                 .matrix("FFF")
-                                                                .key('F', i -> new FluidSlot().syncHandler(new FluidSlotSyncHandler(this.fluidStorage, i)))
+                                                                .key('F', i -> new FluidSlot().syncHandler(
+                                                                        new FluidSlotSyncHandler(this.fluidStorage, i)))
                                                                 .build())
-                                                        .child(Text.str("Phantom Fluid slots").asWidget().scale(0.7f).padding(1))
+                                                        .child(Text.str("Phantom Fluid slots").asWidget().scale(0.7f)
+                                                                .padding(1))
                                                         .child(SlotGroupWidget.builder()
                                                                 .matrix("FFF")
-                                                                .key('F', i -> new FluidSlot().syncHandler(new FluidSlotSyncHandler(this.phantomFluidStorage, i).phantom(true)))
-                                                                .build())
-                                                )))
+                                                                .key('F',
+                                                                        i -> new FluidSlot()
+                                                                                .syncHandler(new FluidSlotSyncHandler(
+                                                                                        this.phantomFluidStorage, i)
+                                                                                        .phantom(true)))
+                                                                .build()))))
                                 .addPage(new ParentWidget<>()
                                         .name("dynamic_sync_page")
                                         .sizeRel(1f)
                                         .child(Flow.col()
                                                 .name("dynamic widgets")
-                                                .child(Text.str("Dynamic synced widget demo. Items act as keys to a unique storage with different amount of slots.").asWidget().scale(0.7f))
+                                                .child(Text.str(
+                                                        "Dynamic synced widget demo. Items act as keys to a unique storage with different amount of slots.")
+                                                        .asWidget().scale(0.7f))
                                                 .child(new ItemSlot()
                                                         .slot(new ModularSlot(this.storageInventory0, 0)
                                                                 .changeListener(((oldItem, newItem, client, init) -> {
-                                                                    if (client && !ItemStack.isSameItemSameTags(oldItem, newItem)) {
-                                                                        dynamicSyncHandler.notifyUpdate(packet -> packet.writeItemStack(newItem, false));
+                                                                    if (client && !ItemStack.isSameItemSameTags(oldItem,
+                                                                            newItem)) {
+                                                                        dynamicSyncHandler.notifyUpdate(packet -> packet
+                                                                                .writeItemStack(newItem, false));
                                                                     }
                                                                 }))))
                                                 .child(new DynamicWidget<>()
                                                         .widthRel(1f)
                                                         .syncHandler(dynamicSyncHandler))
-                                                .child(Text.str("Dynamic linked sync handler demo.").asWidget().scale(0.7f).marginTop(6))
+                                                .child(Text.str("Dynamic linked sync handler demo.").asWidget()
+                                                        .scale(0.7f).marginTop(6))
                                                 .child(new DynamicWidget<>()
                                                         .widthRel(1f)
                                                         .coverChildrenHeight()
-                                                        .syncHandler(dynamicLinkedSyncHandler))
-                                        )))
+                                                        .syncHandler(dynamicLinkedSyncHandler)))))
                         .child(SlotGroupWidget.playerInventory(false)));
         return panel;
     }
@@ -350,8 +390,8 @@ public class TestBlockEntity extends AbstractBlockEntity implements IUIHolder<Po
         syncManager.registerSlotGroup(slotGroup);
         AtomicInteger number = new AtomicInteger(0);
         syncManager.syncValue("int_value", new IntSyncValue(number::get, number::set));
-        IPanelHandler panelSyncHandler = syncManager.syncedPanel("other_panel_2", true, (syncManager1, syncHandler1) ->
-                openThirdWindow(syncManager1, syncHandler1, number));
+        IPanelHandler panelSyncHandler = syncManager.syncedPanel("other_panel_2", true,
+                (syncManager1, syncHandler1) -> openThirdWindow(syncManager1, syncHandler1, number));
         IntSyncValue num = syncManager.getHyperVisor().findSyncHandler("cycle_state", IntSyncValue.class);
         panel.child(ButtonWidget.panelCloseButton())
                 .child(new ButtonWidget<>()
@@ -381,7 +421,8 @@ public class TestBlockEntity extends AbstractBlockEntity implements IUIHolder<Po
         return panel;
     }
 
-    public ModularPanel<?> openThirdWindow(PanelSyncManager syncManager, IPanelHandler syncHandler, AtomicInteger integer) {
+    public ModularPanel<?> openThirdWindow(PanelSyncManager syncManager, IPanelHandler syncHandler,
+                                           AtomicInteger integer) {
         ModularPanel<?> panel = new ModularPanel<>("third_window")
                 .disablePanelsBelow(false)
                 .closeOnOutOfBoundsClick(false)
@@ -413,7 +454,6 @@ public class TestBlockEntity extends AbstractBlockEntity implements IUIHolder<Po
             }
         }
     }
-
 
     @Override
     public CompoundTag serializeNBT() {

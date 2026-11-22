@@ -20,7 +20,8 @@ public class ReiRecipeViewerSlot<I> extends RecipeViewerSlotWidget<I, ReiRecipeV
 
     private static final Point ONE = new Point(1, 1);
 
-    @Getter private Slot slotWidget;
+    @Getter
+    private Slot slotWidget;
 
     public ReiRecipeViewerSlot(Class<I> ingredientClass) {
         super(ingredientClass);
@@ -59,15 +60,18 @@ public class ReiRecipeViewerSlot<I> extends RecipeViewerSlotWidget<I, ReiRecipeV
 
     @Override
     public void draw(ModularGuiContext context, WidgetThemeEntry<?> widgetTheme) {
-        this.slotWidget.render(context.getGraphics(), context.getMouseX(), context.getMouseY(), context.getRenderPartialTicks());
+        this.slotWidget.render(context.getGraphics(), context.getMouseX(), context.getMouseY(),
+                context.getRenderPartialTicks());
         if (this.isHovering() && slotWidget instanceof EntryWidgetAccessor accessor) {
-            accessor.modularui$invokeDrawHighlighted(context.getGraphics(), context.getMouseX(), context.getMouseY(), context.getRenderPartialTicks());
+            accessor.modularui$invokeDrawHighlighted(context.getGraphics(), context.getMouseX(), context.getMouseY(),
+                    context.getRenderPartialTicks());
         }
     }
 
     @Override
     public Result onMousePressed(int button) {
-        return this.slotWidget.mouseClicked(getContext().getMouseX(), getContext().getMouseY(), button) ? Result.SUCCESS : Result.ACCEPT;
+        return this.slotWidget.mouseClicked(getContext().getMouseX(), getContext().getMouseY(), button) ?
+                Result.SUCCESS : Result.ACCEPT;
     }
 
     @Override

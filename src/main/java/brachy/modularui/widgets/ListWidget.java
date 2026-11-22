@@ -33,14 +33,19 @@ import java.util.function.IntFunction;
  * @param <W> type of this widget
  */
 public class ListWidget<I extends IWidget, W extends ListWidget<I, W>> extends AbstractScrollWidget<I, W>
-        implements ILayoutWidget, IParentWidget<I, W> {
+                       implements ILayoutWidget, IParentWidget<I, W> {
 
-    @Getter private ScrollData scrollData;
-    @Getter private IIcon childSeparator;
+    @Getter
+    private ScrollData scrollData;
+    @Getter
+    private IIcon childSeparator;
     private final IntList separatorPositions = new IntArrayList();
-    @Getter private boolean collapseDisabledChildren = true;
-    @Getter private boolean wrapTight = false;
-    @Getter private Alignment.CrossAxis crossAxisAlignment = Alignment.CrossAxis.CENTER;
+    @Getter
+    private boolean collapseDisabledChildren = true;
+    @Getter
+    private boolean wrapTight = false;
+    @Getter
+    private Alignment.CrossAxis crossAxisAlignment = Alignment.CrossAxis.CENTER;
     private Unit mainAxisMaxSize;
     /**
      * Whether the children list should be laid out in reverse.
@@ -302,8 +307,10 @@ public class ListWidget<I extends IWidget, W extends ListWidget<I, W>> extends A
     }
 
     /**
-     * Sets if disabled children should be collapsed. This means that if a child changes enabled state, this widget gets notified and
-     * re-layouts its children. Children which are disabled will not be considered during layout, so that the list will not appear to have
+     * Sets if disabled children should be collapsed. This means that if a child changes enabled state, this widget gets
+     * notified and
+     * re-layouts its children. Children which are disabled will not be considered during layout, so that the list will
+     * not appear to have
      * empty spots. This is enabled by default on lists.
      *
      * @param doCollapse true if disabled children should be collapsed.

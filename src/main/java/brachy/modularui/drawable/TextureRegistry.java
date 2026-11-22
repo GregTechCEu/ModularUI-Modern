@@ -18,7 +18,9 @@ public class TextureRegistry {
         UITexture current = TEXTURES.put(name, texture);
         REVERSE_TEXTURES.put(texture, name);
         if (current != null && (ModularUI.isDev() || ModularUIConfig.DEBUG_UI.get())) {
-            ModularUI.LOGGER.warn("[DEBUG] Replacing texture with name '{}' and location '{}' with texture with location '{}'", name, current.location, texture.location);
+            ModularUI.LOGGER.warn(
+                    "[DEBUG] Replacing texture with name '{}' and location '{}' with texture with location '{}'", name,
+                    current.location, texture.location);
         }
     }
 
@@ -52,9 +54,12 @@ public class TextureRegistry {
             number++;
             name = baseName + "_" + number;
             if (number == 20 && (ModularUI.isDev() || ModularUIConfig.DEBUG_UI.get())) {
-                ModularUI.LOGGER.warn("[DEBUG] Trying to register a UITexture with location '{}' for at least 20 times. This is likely a bug and should be fixed.", texture.location);
+                ModularUI.LOGGER.warn(
+                        "[DEBUG] Trying to register a UITexture with location '{}' for at least 20 times. This is likely a bug and should be fixed.",
+                        texture.location);
             } else if (number == 10000) {
-                throw new IllegalStateException("Trying to register a UITexture with location '" + texture.location + "' 10000 times.");
+                throw new IllegalStateException(
+                        "Trying to register a UITexture with location '" + texture.location + "' 10000 times.");
             }
         }
         registerTexture(name, texture);

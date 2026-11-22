@@ -27,14 +27,17 @@ import java.util.Arrays;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-public class AbstractCycleButtonWidget<W extends AbstractCycleButtonWidget<W>> extends SingleChildWidget<W> implements Interactable {
+public class AbstractCycleButtonWidget<W extends AbstractCycleButtonWidget<W>> extends SingleChildWidget<W>
+                                      implements Interactable {
 
     private static final State[] EMPTY = new State[0];
 
-    @Getter private int stateCount = 0;
+    @Getter
+    private int stateCount = 0;
     private boolean explicitStateCount = false;
     private boolean hasCount = false;
-    @Getter private IIntValue<?> intValue;
+    @Getter
+    private IIntValue<?> intValue;
     private int lastValue = -1;
     private State[] states = EMPTY;
     protected IWidget fallbackChild = null;
@@ -81,7 +84,9 @@ public class AbstractCycleButtonWidget<W extends AbstractCycleButtonWidget<W>> e
         updateStateCount(index + 1, false);
         if (this.stateCount <= index) {
             if (this.explicitStateCount) {
-                throw new IllegalArgumentException("Could not get state %d of widget %s. The state count was explicitly set to %d.".formatted(index, this, this.stateCount));
+                throw new IllegalArgumentException(
+                        "Could not get state %d of widget %s. The state count was explicitly set to %d."
+                                .formatted(index, this, this.stateCount));
             }
             throw new IllegalStateException("For some reason less states are available then expected.");
         }

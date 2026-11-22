@@ -98,11 +98,13 @@ public class WidgetTree extends TreeUtil {
      * @return the first widget with matching name and class or null if none was found
      */
     @SuppressWarnings("unchecked")
-    public static <T extends IWidget> @Nullable T findFirstWithNameNullable(IWidget parent, String name, Class<T> type) {
+    public static <T extends IWidget> @Nullable T findFirstWithNameNullable(IWidget parent, String name,
+                                                                            Class<T> type) {
         return foreachChildWithResult(parent, w -> w.isNameAndType(name, type) ? (T) w : null, true);
     }
 
-    public static <T extends IWidget> Optional<T> findFirstWithNameOptional(IWidget parent, String name, Class<T> type) {
+    public static <T extends IWidget> Optional<T> findFirstWithNameOptional(IWidget parent, String name,
+                                                                            Class<T> type) {
         return Optional.ofNullable(findFirstWithNameNullable(parent, name, type));
     }
 
@@ -217,7 +219,8 @@ public class WidgetTree extends TreeUtil {
     }
 
     @ApiStatus.Internal
-    public static void collectSyncValues(PanelSyncManager syncManager, String panelName, IWidget panel, boolean includePanel) {
+    public static void collectSyncValues(PanelSyncManager syncManager, String panelName, IWidget panel,
+                                         boolean includePanel) {
         MutableInt id = new MutableInt(0);
         String syncKey = ModularSyncManager.AUTO_SYNC_PREFIX + panelName;
         foreachChildBFS(panel, widget -> {
@@ -233,7 +236,8 @@ public class WidgetTree extends TreeUtil {
     public static int countUnregisteredSyncHandlers(PanelSyncManager syncManager, IWidget parent) {
         MutableInt count = new MutableInt();
         foreachChildBFS(parent, widget -> {
-            if (widget instanceof ISynced<?> synced && synced.isSynced() && !synced.getSyncHandler().isRegistered(syncManager)) {
+            if (widget instanceof ISynced<?> synced && synced.isSynced() &&
+                    !synced.getSyncHandler().isRegistered(syncManager)) {
                 count.increment();
             }
             return true;

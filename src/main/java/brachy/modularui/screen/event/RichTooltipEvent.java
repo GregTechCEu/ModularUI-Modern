@@ -32,13 +32,20 @@ public class RichTooltipEvent {
     @Cancelable
     public static class Gather extends Event {
 
-        @Getter private final IRichTextBuilder<?> tooltip;
-        @Getter protected final ItemStack itemStack;
-        @Getter protected final GuiContext guiContext;
-        @Getter protected int x;
-        @Getter protected int y;
-        @Getter protected int screenWidth;
-        @Getter protected int screenHeight;
+        @Getter
+        private final IRichTextBuilder<?> tooltip;
+        @Getter
+        protected final ItemStack itemStack;
+        @Getter
+        protected final GuiContext guiContext;
+        @Getter
+        protected int x;
+        @Getter
+        protected int y;
+        @Getter
+        protected int screenWidth;
+        @Getter
+        protected int screenHeight;
         @Getter
         @Setter
         protected int maxWidth;

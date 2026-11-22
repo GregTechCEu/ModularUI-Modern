@@ -16,7 +16,8 @@ public class PostfixPercentOperator extends AbstractOperator {
     public static final BigDecimal HUNDRED = new BigDecimal(100);
 
     @Override
-    public EvaluationValue evaluate(Expression expression, Token operatorToken, EvaluationValue... operands) throws EvaluationException {
+    public EvaluationValue evaluate(Expression expression, Token operatorToken,
+                                    EvaluationValue... operands) throws EvaluationException {
         EvaluationValue operand = operands[0];
 
         if (operand.isNumberValue()) {

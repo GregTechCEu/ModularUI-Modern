@@ -27,14 +27,14 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import com.mojang.blaze3d.platform.Lighting;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.serialization.Codec;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.common.MinecraftForge;
 
+import com.mojang.blaze3d.platform.Lighting;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.serialization.Codec;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -72,11 +72,13 @@ public class RichTooltip implements IRichTextBuilder<RichTooltip> {
     @Getter
     @Setter
     private boolean autoUpdate = false;
-    @Getter private int titleMargin = 0;
+    @Getter
+    private int titleMargin = 0;
     private boolean appliedMargin = true;
 
     private int x = 0, y = 0;
-    @Getter private int maxWidth = Integer.MAX_VALUE;
+    @Getter
+    private int maxWidth = Integer.MAX_VALUE;
 
     private boolean dirty;
 
@@ -156,22 +158,26 @@ public class RichTooltip implements IRichTextBuilder<RichTooltip> {
         RichText copy = this.text.copy();
         // rich event to gather additional tooltip
         // this does not trigger vanilla event listeners
-        var richGatherEventPre = new RichTooltipEvent.Gather.Pre(copy, stack, context, mouseX, mouseY, screen.width, screen.height, this.maxWidth);
+        var richGatherEventPre = new RichTooltipEvent.Gather.Pre(copy, stack, context, mouseX, mouseY, screen.width,
+                screen.height, this.maxWidth);
         if (MinecraftForge.EVENT_BUS.post(richGatherEventPre)) return;
         this.maxWidth = richGatherEventPre.getMaxWidth();
 
         // vanilla event to gather additional tooltip
         TooltipLines textLines = copy.getAsText();
-        // wrap the List<Either<Component, TooltipComponent>> in the type vanilla wants. Listeners may add any FormattedText,
-        //  which the wrapper converts into Components.
+        // wrap the List<Either<Component, TooltipComponent>> in the type vanilla wants. Listeners may add any
+        // FormattedText,
+        // which the wrapper converts into Components.
         // noinspection UnstableApiUsage
-        var vanillaGatherEvent = new RenderTooltipEvent.GatherComponents(stack, screen.width, screen.height, textLines.vanillaElementHandler(), this.maxWidth);
+        var vanillaGatherEvent = new RenderTooltipEvent.GatherComponents(stack, screen.width, screen.height,
+                textLines.vanillaElementHandler(), this.maxWidth);
         if (MinecraftForge.EVENT_BUS.post(vanillaGatherEvent)) return;
         this.maxWidth = vanillaGatherEvent.getMaxWidth();
 
         // rich event to gather additional tooltip
         // this does not trigger vanilla event listeners
-        var richGatherEventPost = new RichTooltipEvent.Gather.Post(copy, stack, context, mouseX, mouseY, screen.width, screen.height, this.maxWidth);
+        var richGatherEventPost = new RichTooltipEvent.Gather.Post(copy, stack, context, mouseX, mouseY, screen.width,
+                screen.height, this.maxWidth);
         if (MinecraftForge.EVENT_BUS.post(richGatherEventPost)) return;
         this.maxWidth = richGatherEventPost.getMaxWidth();
 
@@ -461,8 +467,8 @@ public class RichTooltip implements IRichTextBuilder<RichTooltip> {
         if (!(o instanceof RichTooltip that)) return false;
 
         return showUpTimer == that.showUpTimer && autoUpdate == that.autoUpdate &&
-                titleMargin == that.titleMargin && appliedMargin == that.appliedMargin
-                && x == that.x && y == that.y && maxWidth == that.maxWidth &&
+                titleMargin == that.titleMargin && appliedMargin == that.appliedMargin && x == that.x && y == that.y &&
+                maxWidth == that.maxWidth &&
                 text.equals(that.text) && Objects.equals(parent, that.parent) && pos == that.pos &&
                 Objects.equals(tooltipBuilder, that.tooltipBuilder);
     }

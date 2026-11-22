@@ -7,8 +7,6 @@ import brachy.modularui.utils.Alignment;
 import brachy.modularui.utils.serialization.codec.MutableObjectCodec;
 import brachy.modularui.widgets.TextWidget;
 
-import com.demonwav.mcdev.annotations.Translatable;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentContents;
@@ -23,8 +21,9 @@ import net.minecraft.network.chat.contents.ScoreContents;
 import net.minecraft.network.chat.contents.SelectorContents;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.util.ExtraCodecs;
-import com.mojang.serialization.Codec;
 
+import com.demonwav.mcdev.annotations.Translatable;
+import com.mojang.serialization.Codec;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -38,9 +37,11 @@ import java.util.function.UnaryOperator;
 
 public class ModularComponent extends MutableComponent implements Text {
 
-    public static final MutableObjectCodec<ModularComponent> CODEC = MutableObjectCodec.drawableBuilder(ModularComponent.class, "Text")
+    public static final MutableObjectCodec<ModularComponent> CODEC = MutableObjectCodec
+            .drawableBuilder(ModularComponent.class, "Text")
             .wrapped(ExtraCodecs.COMPONENT.xmap(ModularComponent::of, mc -> mc))
-            .addOpt("alignment", ModularComponent::alignment, ModularComponent::getAlignment, Alignment.CODEC, Alignment.Center)
+            .addOpt("alignment", ModularComponent::alignment, ModularComponent::getAlignment, Alignment.CODEC,
+                    Alignment.Center)
             .addOpt("scale", ModularComponent::scale, ModularComponent::getScale, Codec.FLOAT, 1f)
             .addOpt("shadow", ModularComponent::shadow, ModularComponent::getShadow, Codec.BOOL, null)
             .addUnencodable("dynamicColor", ModularComponent::color, ModularComponent::getDynamicColor)
@@ -62,7 +63,8 @@ public class ModularComponent extends MutableComponent implements Text {
         return ModularComponent.create(new TranslatableContents(key, fallback, TranslatableContents.NO_ARGS));
     }
 
-    public static ModularComponent translatableWithFallback(@Translatable String key, @Nullable String fallback, Object... args) {
+    public static ModularComponent translatableWithFallback(@Translatable String key, @Nullable String fallback,
+                                                            Object... args) {
         return ModularComponent.create(new TranslatableContents(key, fallback, args));
     }
 
@@ -74,7 +76,8 @@ public class ModularComponent extends MutableComponent implements Text {
         return ModularComponent.create(new KeybindContents(name));
     }
 
-    public static ModularComponent nbt(String nbtPathPattern, boolean interpreting, Optional<Component> separator, DataSource dataSource) {
+    public static ModularComponent nbt(String nbtPathPattern, boolean interpreting, Optional<Component> separator,
+                                       DataSource dataSource) {
         return ModularComponent.create(new NbtContents(nbtPathPattern, interpreting, separator, dataSource));
     }
 
@@ -95,10 +98,14 @@ public class ModularComponent extends MutableComponent implements Text {
         return new ModularComponent(component.getContents(), component.getSiblings(), component.getStyle());
     }
 
-    @Getter private Alignment alignment = Alignment.CENTER;
-    @Getter private float scale = 1f;
-    @Getter private Boolean shadow;
-    @Getter private IntSupplier dynamicColor;
+    @Getter
+    private Alignment alignment = Alignment.CENTER;
+    @Getter
+    private float scale = 1f;
+    @Getter
+    private Boolean shadow;
+    @Getter
+    private IntSupplier dynamicColor;
 
     protected ModularComponent(ComponentContents contents, List<Component> siblings, Style style) {
         super(contents, siblings, style);
@@ -208,7 +215,7 @@ public class ModularComponent extends MutableComponent implements Text {
     }
 
     @Override
-    public @NotNull ModularComponent withStyle(ChatFormatting @NotNull ... formats) {
+    public @NotNull ModularComponent withStyle(ChatFormatting @NotNull... formats) {
         return (ModularComponent) super.withStyle(formats);
     }
 
@@ -231,7 +238,8 @@ public class ModularComponent extends MutableComponent implements Text {
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (!(obj instanceof ModularComponent other)) return false;
-        return super.equals(other) && this.alignment.equals(other.alignment) && Float.compare(this.scale, other.scale) == 0 &&
+        return super.equals(other) && this.alignment.equals(other.alignment) &&
+                Float.compare(this.scale, other.scale) == 0 &&
                 Objects.equals(this.shadow, other.shadow) && Objects.equals(this.dynamicColor, other.dynamicColor);
     }
 

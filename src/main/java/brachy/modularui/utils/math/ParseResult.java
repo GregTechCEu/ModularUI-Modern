@@ -50,6 +50,7 @@ public class ParseResult {
         return isFailure() ?
                 String.format("%s for Token %s at %d:%d",
                         this.error.getMessage(), this.error.getTokenString(),
-                        this.error.getStartPosition(), this.error.getEndPosition()) : null;
+                        this.error.getStartPosition(), this.error.getEndPosition()) :
+                null;
     }
 }

@@ -1,6 +1,5 @@
 package brachy.modularui.drawable;
 
-import brachy.modularui.utils.MUIRenderTypes;
 import brachy.modularui.ModularUI;
 import brachy.modularui.animation.IAnimatable;
 import brachy.modularui.api.drawable.IDrawable;
@@ -8,13 +7,14 @@ import brachy.modularui.screen.viewport.GuiContext;
 import brachy.modularui.theme.WidgetTheme;
 import brachy.modularui.utils.Color;
 import brachy.modularui.utils.Interpolations;
+import brachy.modularui.utils.MUIRenderTypes;
 import brachy.modularui.utils.serialization.codec.MutableObjectCodec;
 
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.serialization.Codec;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.serialization.Codec;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -178,8 +178,10 @@ public class Rectangle implements IDrawable, IAnimatable<Rectangle> {
         if (!(o instanceof Rectangle rectangle)) return false;
 
         return cornerRadius == rectangle.cornerRadius && colorTL == rectangle.colorTL && colorTR == rectangle.colorTR &&
-                colorBL == rectangle.colorBL && colorBR == rectangle.colorBR && cornerSegments == rectangle.cornerSegments &&
-                Float.compare(borderThickness, rectangle.borderThickness) == 0 && canApplyTheme == rectangle.canApplyTheme;
+                colorBL == rectangle.colorBL && colorBR == rectangle.colorBR &&
+                cornerSegments == rectangle.cornerSegments &&
+                Float.compare(borderThickness, rectangle.borderThickness) == 0 &&
+                canApplyTheme == rectangle.canApplyTheme;
     }
 
     @Override

@@ -2,9 +2,9 @@ package brachy.modularui.drawable.schema;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Mth;
+
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
-
 import lombok.Getter;
 import org.joml.Vector3f;
 
@@ -12,7 +12,8 @@ import java.util.Arrays;
 
 public class Viewport {
 
-    @Getter private final int[] viewport = new int[4];
+    @Getter
+    private final int[] viewport = new int[4];
 
     public void setX(int x) {
         this.viewport[0] = x;
@@ -81,7 +82,8 @@ public class Viewport {
         return (1f - ((viewportY - getY()) / (float) getH())) * nonViewportHeight;
     }
 
-    public Vector3f unscaleFromViewport(float viewportX, float viewportY, float nonViewportWidth, float nonViewportHeight, Vector3f dest) {
+    public Vector3f unscaleFromViewport(float viewportX, float viewportY, float nonViewportWidth,
+                                        float nonViewportHeight, Vector3f dest) {
         dest.x = unscaleXFromViewport(viewportX, nonViewportWidth);
         dest.y = unscaleYFromViewport(viewportY, nonViewportHeight);
         return dest;

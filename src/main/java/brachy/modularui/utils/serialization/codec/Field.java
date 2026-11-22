@@ -6,7 +6,6 @@ import com.mojang.serialization.DynamicOps;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.MapLike;
 import com.mojang.serialization.RecordBuilder;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -19,12 +18,18 @@ import java.util.function.Supplier;
 @Accessors(fluent = true, chain = true)
 public final class Field<T, V> {
 
-    @Getter private final String name;
-    @Getter private final FieldWriter<T, V> fieldWriter;
-    @Getter private final FieldReader<T, V> fieldReader;
-    @Getter private final Codec<V> codec;
-    @Getter private final Supplier<V> defaultSupplier;
-    @Getter private final boolean dynamicSupplier;
+    @Getter
+    private final String name;
+    @Getter
+    private final FieldWriter<T, V> fieldWriter;
+    @Getter
+    private final FieldReader<T, V> fieldReader;
+    @Getter
+    private final Codec<V> codec;
+    @Getter
+    private final Supplier<V> defaultSupplier;
+    @Getter
+    private final boolean dynamicSupplier;
     @Getter
     @Setter
     private String[] altNames;
@@ -35,7 +40,8 @@ public final class Field<T, V> {
     @Setter
     private boolean writeDefault = true;
 
-    Field(String name, FieldWriter<T, V> fieldWriter, FieldReader<T, V> fieldReader, Codec<V> codec, Supplier<V> defaultSupplier, boolean dynamicSupplier) {
+    Field(String name, FieldWriter<T, V> fieldWriter, FieldReader<T, V> fieldReader, Codec<V> codec,
+          Supplier<V> defaultSupplier, boolean dynamicSupplier) {
         this.name = name;
         this.fieldWriter = fieldWriter;
         this.fieldReader = fieldReader;
@@ -70,13 +76,15 @@ public final class Field<T, V> {
         V value = this.fieldReader.readField(holder);
         if (isUnencodable()) {
             if (!isEmpty(value)) {
-                map.withErrorsFrom(DataResult.error(() -> String.format("Field '%s' is unencodeable, but the value is not empty", this.name)));
+                map.withErrorsFrom(DataResult.error(
+                        () -> String.format("Field '%s' is unencodeable, but the value is not empty", this.name)));
             }
             return;
         }
         if (value == null) {
             if (!hasDefault()) {
-                map.withErrorsFrom(DataResult.error(() -> String.format("Field '%s' is not optional, but is trying to encode a null value", this.name)));
+                map.withErrorsFrom(DataResult.error(() -> String
+                        .format("Field '%s' is not optional, but is trying to encode a null value", this.name)));
                 return;
             }
             if (this.encodeWhen == EncodeWhen.ALWAYS) {
@@ -108,7 +116,8 @@ public final class Field<T, V> {
         if (element == null) {
             if (this.encodeWhen == EncodeWhen.NEVER || !this.writeDefault) return null;
             if (!hasDefault()) {
-                return null;//isUnencodable() ? null : String.format("Field '%s' has no value and is not optional", this.name);
+                return null;// isUnencodable() ? null : String.format("Field '%s' has no value and is not optional",
+                            // this.name);
             }
             this.fieldWriter.writeField(holder, getModifiableDefault());
             return null;
@@ -153,7 +162,9 @@ public final class Field<T, V> {
                 value = res.get();
             }
             if (value == null) {
-                return DataResult.error(() -> String.format("Field '%s' is unable to decode instance and the holder has no default value and this property has no default value", this.name));
+                return DataResult.error(() -> String.format(
+                        "Field '%s' is unable to decode instance and the holder has no default value and this property has no default value",
+                        this.name));
             }
         }
         return decoder.decode(ops, dRes.get(), value);
@@ -172,7 +183,9 @@ public final class Field<T, V> {
                 value = res.get();
             }
             if (value == null) {
-                return DataResult.error(() -> String.format("Field '%s' is unable to decode instance and the holder has no default value and this property has no default value", this.name));
+                return DataResult.error(() -> String.format(
+                        "Field '%s' is unable to decode instance and the holder has no default value and this property has no default value",
+                        this.name));
             }
         }
         return decoder.parse(ops, element, value);
@@ -202,7 +215,8 @@ public final class Field<T, V> {
 
     public <O> Field<O, V> copyToType(String newName, Function<O, T> converter) {
         var field = new Field<O, V>(newName, (o, v) -> this.fieldWriter.writeField(converter.apply(o), v),
-                (o) -> this.fieldReader.readField(converter.apply(o)), this.codec, this.defaultSupplier, this.dynamicSupplier);
+                (o) -> this.fieldReader.readField(converter.apply(o)), this.codec, this.defaultSupplier,
+                this.dynamicSupplier);
         field.altNames(this.altNames);
         field.encodeWhen(this.encodeWhen);
         field.writeDefault(this.writeDefault);
@@ -211,7 +225,8 @@ public final class Field<T, V> {
 
     public Field<T, V> copy(String newName) {
         if (this.name.equals(newName)) return this;
-        var field = new Field<>(newName, this.fieldWriter, this.fieldReader, this.codec, this.defaultSupplier, this.dynamicSupplier);
+        var field = new Field<>(newName, this.fieldWriter, this.fieldReader, this.codec, this.defaultSupplier,
+                this.dynamicSupplier);
         field.altNames(this.altNames);
         field.encodeWhen(this.encodeWhen);
         field.writeDefault(this.writeDefault);

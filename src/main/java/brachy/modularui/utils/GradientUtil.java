@@ -23,7 +23,7 @@ public class GradientUtil {
         float g = ((color >> 8) & 0xFF) / 255f;
         // noinspection PointlessBitwiseExpression
         float b = ((color >> 0) & 0xFF) / 255f;
-        return new float[]{r, g, b};
+        return new float[] { r, g, b };
     }
 
     public static int multiplyBlendWithAlpha(int c1, int c2) {
@@ -123,7 +123,7 @@ public class GradientUtil {
             s = (max - min) / (2 - max - min);
         }
 
-        return new float[]{h, s * 100, l * 100};
+        return new float[] { h, s * 100, l * 100 };
     }
 
     public static int toRGB(float[] hsv) {

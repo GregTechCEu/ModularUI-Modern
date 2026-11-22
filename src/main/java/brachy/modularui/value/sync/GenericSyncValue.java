@@ -28,14 +28,20 @@ import java.util.function.Supplier;
  * Example:
  * <code>GenericSyncValue.builder(ItemStack.class)</code>
  * <p>
- * When you work with types which themselves have generic types, then your IDE will likely yell at you. In this case you can use
- * {@link #rawTypeBuilder(Class)}. Only use this if you have to, since you can technically put any class inside there without ModularUI be
- * able to verify it. Since you can't specify the type {@link T} with the type here you need to use the diamond operator.
+ * When you work with types which themselves have generic types, then your IDE will likely yell at you. In this case you
+ * can use
+ * {@link #rawTypeBuilder(Class)}. Only use this if you have to, since you can technically put any class inside there
+ * without ModularUI be
+ * able to verify it. Since you can't specify the type {@link T} with the type here you need to use the diamond
+ * operator.
  * <p>
  * Example: <code>GenericSyncValue.&lt;List&lt;ItemStack&gt;&gt;rawTypeBuilder(List.class)</code>
- * <br>Note that you wouldn't actually use {@link java.util.List List} here. It's just an example for a type with a generic parameter.
+ * <br>
+ * Note that you wouldn't actually use {@link java.util.List List} here. It's just an example for a type with a generic
+ * parameter.
  * <p>
- * If the value is never null you can also use {@link #notNullBuilder()}. This will infer the type with the value supplier.
+ * If the value is never null you can also use {@link #notNullBuilder()}. This will infer the type with the value
+ * supplier.
  * <p>
  * Example: <code>GenericSyncValue.&lt;ItemStack&gt;notNullBuilder()</code>
  * <p>
@@ -139,7 +145,8 @@ public class GenericSyncValue<T> extends AbstractGenericSyncValue<T, GenericSync
 
     /**
      * Creates a builder for a generic sync value. This method should only be used if the type has generic parameters.
-     * The downside of this method is that the compiler can't verify the passed in class. Technically any class can be passed on,
+     * The downside of this method is that the compiler can't verify the passed in class. Technically any class can be
+     * passed on,
      * but issues will arise later down the line.
      *
      * @param type Class of the value to sync. This is used to verify synced value types.
@@ -179,10 +186,14 @@ public class GenericSyncValue<T> extends AbstractGenericSyncValue<T, GenericSync
         }
 
         /**
-         * Sets the getter for the sync value. Usually this returns a field in a {@link net.minecraft.world.level.block.entity.BlockEntity BlockEntity} or
-         * similar. On server side this is called every tick and compared to the sync values cache. If the values are different
+         * Sets the getter for the sync value. Usually this returns a field in a
+         * {@link net.minecraft.world.level.block.entity.BlockEntity BlockEntity} or
+         * similar. On server side this is called every tick and compared to the sync values cache. If the values are
+         * different
          * (determined by {@link #equals(EqualityTest)}), it is synced to the client.
-         * <p><b>This setter is required!</b></p>
+         * <p>
+         * <b>This setter is required!</b>
+         * </p>
          *
          * @param getter function that returns the current value that may be synced
          * @return this builder
@@ -193,10 +204,14 @@ public class GenericSyncValue<T> extends AbstractGenericSyncValue<T, GenericSync
         }
 
         /**
-         * Sets the setter for the sync value. Usually this sets a field in a {@link net.minecraft.world.level.block.entity.BlockEntity BlockEntity} or
-         * similar. This is called when a value is synced in client or server. In many cases this can be null since the synced value is
+         * Sets the setter for the sync value. Usually this sets a field in a
+         * {@link net.minecraft.world.level.block.entity.BlockEntity BlockEntity} or
+         * similar. This is called when a value is synced in client or server. In many cases this can be null since the
+         * synced value is
          * cached inside the sync handler.
-         * <p><b>This setter is optional!</b></p>
+         * <p>
+         * <b>This setter is optional!</b>
+         * </p>
          *
          * @param setter function that updates the source of the value
          * @return this builder
@@ -207,9 +222,12 @@ public class GenericSyncValue<T> extends AbstractGenericSyncValue<T, GenericSync
         }
 
         /**
-         * Sets a function which writes the value to a {@link FriendlyByteBuf}. The function is called every time the value is synced to the
+         * Sets a function which writes the value to a {@link FriendlyByteBuf}. The function is called every time the
+         * value is synced to the
          * other side.
-         * <p><b>This setter is required!</b></p>
+         * <p>
+         * <b>This setter is required!</b>
+         * </p>
          *
          * @param deserializer function that writes the value to a packet buffer
          * @return this builder
@@ -220,9 +238,12 @@ public class GenericSyncValue<T> extends AbstractGenericSyncValue<T, GenericSync
         }
 
         /**
-         * Sets a function which reads the value from a {@link FriendlyByteBuf}. The function is called every time the value is synced to the
+         * Sets a function which reads the value from a {@link FriendlyByteBuf}. The function is called every time the
+         * value is synced to the
          * other side.
-         * <p><b>This setter is required!</b></p>
+         * <p>
+         * <b>This setter is required!</b>
+         * </p>
          *
          * @param serializer function that reads the value from a packet buffer
          * @return this builder
@@ -233,12 +254,18 @@ public class GenericSyncValue<T> extends AbstractGenericSyncValue<T, GenericSync
         }
 
         /**
-         * Sets a function which tests two instances of the value for differences. This function is called every tick on server to determine
-         * if the value from {@link #getter(Supplier)} needs to be synced. By default, this uses {@link Objects#equals(Object, Object)}.
-         * If your value does not implement {@link Object#equals(Object)}, then this setter must be called in order for it to function
-         * properly. Otherwise {@link Objects#equals(Object, Object)} always returns false since the instances will always be different,
+         * Sets a function which tests two instances of the value for differences. This function is called every tick on
+         * server to determine
+         * if the value from {@link #getter(Supplier)} needs to be synced. By default, this uses
+         * {@link Objects#equals(Object, Object)}.
+         * If your value does not implement {@link Object#equals(Object)}, then this setter must be called in order for
+         * it to function
+         * properly. Otherwise {@link Objects#equals(Object, Object)} always returns false since the instances will
+         * always be different,
          * which causes the value to be synced every tick.
-         * <p><b>This setter is optional!</b></p>
+         * <p>
+         * <b>This setter is optional!</b>
+         * </p>
          *
          * @param equals function that determines if two instances of the value are equal
          * @return this builder
@@ -259,20 +286,30 @@ public class GenericSyncValue<T> extends AbstractGenericSyncValue<T, GenericSync
         }
 
         /**
-         * Sets a function which creates a copy of the value. This is called every time the value cache is updated. This is to prevent
-         * accidental mutations of the cache value. For example if you called {@link #setValue(Object)}, but keep a reference to the new
-         * value and then modify your reference, then the cached value is also updated since it's the same object. If now the
-         * {@link #getter(Supplier)} function happens to return exactly that reference, then the {@link #equals(EqualityTest)} function always
-         * compares its cache to itself (since it compare the cache to the getter value, which are the same in this case). This causes
+         * Sets a function which creates a copy of the value. This is called every time the value cache is updated. This
+         * is to prevent
+         * accidental mutations of the cache value. For example if you called {@link #setValue(Object)}, but keep a
+         * reference to the new
+         * value and then modify your reference, then the cached value is also updated since it's the same object. If
+         * now the
+         * {@link #getter(Supplier)} function happens to return exactly that reference, then the
+         * {@link #equals(EqualityTest)} function always
+         * compares its cache to itself (since it compare the cache to the getter value, which are the same in this
+         * case). This causes
          * the value to be never synced from server to client.
          * <p>
-         * By default, the {@link #serializer(IByteBufSerializer)} and {@link #deserializer(IByteBufDeserializer)} function are called to
-         * create a new instance. If these functions are implemented properly, it is always guaranteed to create a new instance of the
+         * By default, the {@link #serializer(IByteBufSerializer)} and {@link #deserializer(IByteBufDeserializer)}
+         * function are called to
+         * create a new instance. If these functions are implemented properly, it is always guaranteed to create a new
+         * instance of the
          * value. However, it is still recommended to provide your own proper copy method.
          * <p>
-         * If you know, that your values is immutable (can't be modified once created), then you can use {@link #copyImmutable()}.
+         * If you know, that your values is immutable (can't be modified once created), then you can use
+         * {@link #copyImmutable()}.
          * That function won't copy the value, but just return the value.
-         * <p><b>This setter is optional!</b></p>
+         * <p>
+         * <b>This setter is optional!</b>
+         * </p>
          *
          * @param copy function that creates a new exact copy of the value
          * @return this builder
@@ -283,7 +320,8 @@ public class GenericSyncValue<T> extends AbstractGenericSyncValue<T, GenericSync
         }
 
         /**
-         * Sets a {@link #copy(ICopy)} function which assumes the values are always immutable. This should only be used if the value is
+         * Sets a {@link #copy(ICopy)} function which assumes the values are always immutable. This should only be used
+         * if the value is
          * always immutable (can't be modified once created). See {@link #copy(ICopy)} for more info.
          *
          * @return this builder
@@ -294,7 +332,8 @@ public class GenericSyncValue<T> extends AbstractGenericSyncValue<T, GenericSync
         }
 
         /**
-         * Sets an adapter. This combines {@link #deserializer(IByteBufDeserializer)}, {@link #serializer(IByteBufSerializer)} and
+         * Sets an adapter. This combines {@link #deserializer(IByteBufDeserializer)},
+         * {@link #serializer(IByteBufSerializer)} and
          * {@link #equals(EqualityTest)} into one method.
          *
          * @param adapter byte buf adapter
@@ -310,10 +349,13 @@ public class GenericSyncValue<T> extends AbstractGenericSyncValue<T, GenericSync
         }
 
         /**
-         * Sets the value to be nullable. This wraps all the used functions into null safe variants. This only for convenience.
+         * Sets the value to be nullable. This wraps all the used functions into null safe variants. This only for
+         * convenience.
          * Manually having to consider nullability inside all the functions is cumbersome. This setter is a shortcut.
          * It is opt-in since, it creates a very minor overhead in the serializer and deserializer.
-         * <p><b>This setter is optional!</b></p>
+         * <p>
+         * <b>This setter is optional!</b>
+         * </p>
          *
          * @return this builder
          */
@@ -335,7 +377,8 @@ public class GenericSyncValue<T> extends AbstractGenericSyncValue<T, GenericSync
          * @throws IllegalArgumentException if the value type is null and the getter returns null
          */
         public GenericSyncValue<T> build() {
-            return new GenericSyncValue<>(type, getter, setter, deserializer, serializer, equals, copy, nullable).allowC2S(this.allowC2S);
+            return new GenericSyncValue<>(type, getter, setter, deserializer, serializer, equals, copy, nullable)
+                    .allowC2S(this.allowC2S);
         }
     }
 }

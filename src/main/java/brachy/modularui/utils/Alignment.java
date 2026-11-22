@@ -4,10 +4,10 @@ import brachy.modularui.utils.serialization.codec.CodecUtil;
 
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.StringRepresentable;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import com.google.common.base.CaseFormat;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -23,14 +23,16 @@ public class Alignment {
 
     private static final Codec<Alignment> CODEC_OF_INSTANCE = RecordCodecBuilder.create(instance -> instance.group(
             Codec.FLOAT.fieldOf("x").forGetter(Alignment::getX),
-            Codec.FLOAT.fieldOf("y").forGetter(Alignment::getY)
-    ).apply(instance, Alignment::new));
-    private static final Codec<Alignment> CODEC_OF_NAME = ExtraCodecs.stringResolverCodec(Alignment::getName, ALIGNMENT_MAP::get);
+            Codec.FLOAT.fieldOf("y").forGetter(Alignment::getY)).apply(instance, Alignment::new));
+    private static final Codec<Alignment> CODEC_OF_NAME = ExtraCodecs.stringResolverCodec(Alignment::getName,
+            ALIGNMENT_MAP::get);
 
     public static final Codec<Alignment> CODEC = CodecUtil.chainedCodec(CODEC_OF_NAME, CODEC_OF_INSTANCE);
 
-    @Getter public final float x, y;
-    @Getter(AccessLevel.PRIVATE) private final String name;
+    @Getter
+    public final float x, y;
+    @Getter(AccessLevel.PRIVATE)
+    private final String name;
 
     public static final Alignment TopLeft = new Alignment(0, 0, "TopLeft");
     public static final Alignment TopCenter = new Alignment(0.5f, 0, "TopCenter");

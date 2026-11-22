@@ -1,7 +1,7 @@
 package brachy.modularui.widgets.slot;
 
-import brachy.modularui.core.mixins.common.SlotAccessor;
 import brachy.modularui.core.mixins.common.CombinedInvWrapperAccessor;
+import brachy.modularui.core.mixins.common.SlotAccessor;
 import brachy.modularui.value.sync.ItemSlotSyncHandler;
 
 import net.minecraft.resources.ResourceLocation;
@@ -9,7 +9,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import com.mojang.datafixers.util.Pair;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.SlotItemHandler;
@@ -18,6 +17,7 @@ import net.minecraftforge.items.wrapper.PlayerInvWrapper;
 import net.minecraftforge.items.wrapper.PlayerMainInvWrapper;
 import net.minecraftforge.items.wrapper.PlayerOffhandInvWrapper;
 
+import com.mojang.datafixers.util.Pair;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.ApiStatus;
@@ -39,10 +39,12 @@ public class ModularSlot extends SlotItemHandler {
             slot -> Objects.requireNonNull(slot.getSlotGroup()).getShiftClickPriority());
 
     @Getter
-    @Setter(onMethod_ = {@ApiStatus.Internal})
+    @Setter(onMethod_ = { @ApiStatus.Internal })
     private boolean enabled = true;
-    @Getter private boolean canTake = true, canPut = true, canDragInto = true;
-    @Getter private Predicate<ItemStack> filter = stack -> true;
+    @Getter
+    private boolean canTake = true, canPut = true, canDragInto = true;
+    @Getter
+    private Predicate<ItemStack> filter = stack -> true;
     private IOnSlotChanged changeListener = IOnSlotChanged.DEFAULT;
     @Getter
     private boolean ignoreMaxStackSize = false;
@@ -176,7 +178,8 @@ public class ModularSlot extends SlotItemHandler {
 
     @Override
     public boolean isSameInventory(@NotNull Slot other) {
-        return other instanceof SlotItemHandler slotItemHandler && slotItemHandler.getItemHandler() == this.getItemHandler();
+        return other instanceof SlotItemHandler slotItemHandler &&
+                slotItemHandler.getItemHandler() == this.getItemHandler();
     }
 
     /**

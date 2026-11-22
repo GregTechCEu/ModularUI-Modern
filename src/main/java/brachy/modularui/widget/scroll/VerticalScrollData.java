@@ -107,13 +107,15 @@ public class VerticalScrollData extends ScrollData {
             float prog = MathUtils.clamp(s / maxOpacityScroll, 0, 1);
             int startColor = Color.withAlpha(startColorFull, prog * 0.8f);
             int size = Math.min((int) (prog * maxShadowSize), maxShadowSizeLimit);
-            GuiDraw.drawVerticalGradientRect(context.getGraphics(), x, sp.getScrollPaddingTop(), w, size, startColor, endColor);
+            GuiDraw.drawVerticalGradientRect(context.getGraphics(), x, sp.getScrollPaddingTop(), w, size, startColor,
+                    endColor);
         }
         if (s < max) {
             float prog = MathUtils.clamp((max - s) / maxOpacityScroll, 0, 1);
             int startColor = Color.withAlpha(startColorFull, prog * 0.8f);
             int size = Math.min((int) (prog * maxShadowSize), maxShadowSizeLimit);
-            GuiDraw.drawVerticalGradientRect(context.getGraphics(), x, area.h() - size - sp.getScrollPaddingBottom(), w, size, endColor, startColor);
+            GuiDraw.drawVerticalGradientRect(context.getGraphics(), x, area.h() - size - sp.getScrollPaddingBottom(), w,
+                    size, endColor, startColor);
         }
     }
 }

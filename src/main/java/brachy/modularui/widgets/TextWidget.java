@@ -23,12 +23,18 @@ import java.util.function.Supplier;
 
 public class TextWidget<W extends TextWidget<W>> extends Widget<W> {
 
-    @Getter private Component key;
-    @Getter private Alignment alignment = Alignment.CenterLeft;
-    @Getter private IntSupplier color = null;
-    @Getter private Boolean textShadow = null;
-    @Getter private float scale = 1f;
-    @Getter private int maxWidth = -1;
+    @Getter
+    private Component key;
+    @Getter
+    private Alignment alignment = Alignment.CenterLeft;
+    @Getter
+    private IntSupplier color = null;
+    @Getter
+    private Boolean textShadow = null;
+    @Getter
+    private float scale = 1f;
+    @Getter
+    private int maxWidth = -1;
 
     private String lastText;
     private @Nullable Supplier<Component> keySupplier;
@@ -102,7 +108,8 @@ public class TextWidget<W extends TextWidget<W>> extends Widget<W> {
         renderer.setPos(padding.left(), padding.top());
         renderer.setScale(this.scale);
         renderer.setSimulate(true);
-        // Don't update the key here, otherwise an infinite loop of checkComponentUpdated -> simulate -> checkComponentUpdated occurs
+        // Don't update the key here, otherwise an infinite loop of checkComponentUpdated -> simulate ->
+        // checkComponentUpdated occurs
         renderer.draw(null, this.key);
         renderer.setSimulate(false);
         return renderer;
@@ -184,7 +191,7 @@ public class TextWidget<W extends TextWidget<W>> extends Widget<W> {
 
     public W style(ChatFormatting formatting) {
         // TODO
-        //this.key.style(formatting);
+        // this.key.style(formatting);
         return getThis();
     }
 

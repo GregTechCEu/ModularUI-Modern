@@ -22,6 +22,7 @@ import java.math.MathContext;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @MethodsReturnNonnullByDefault
@@ -174,7 +175,7 @@ public class MathUtils {
         return count <= 0 ? 1 : (int) Math.ceil(x);
     }
 
-    public static int min(int @Nullable ... values) {
+    public static int min(int @Nullable... values) {
         if (values == null || values.length == 0) throw new IllegalArgumentException();
         if (values.length == 1) return values[0];
         if (values.length == 2) return Math.min(values[0], values[1]);
@@ -187,7 +188,7 @@ public class MathUtils {
         return min;
     }
 
-    public static int max(int @Nullable ... values) {
+    public static int max(int @Nullable... values) {
         if (values == null || values.length == 0) throw new IllegalArgumentException();
         if (values.length == 1) return values[0];
         if (values.length == 2) return Math.max(values[0], values[1]);

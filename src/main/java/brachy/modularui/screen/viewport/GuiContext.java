@@ -12,10 +12,10 @@ import brachy.modularui.widget.sizer.Area;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.ApiStatus;
@@ -49,21 +49,32 @@ public class GuiContext extends GuiViewportStack {
     /* Mouse states */
     private int mouseX;
     private int mouseY;
-    @Getter private int lastMouseButton;
-    @Getter private boolean lastButtonPress; // button pressed = true, button released = false
-    @Getter private double lastMouseScrollDelta;
+    @Getter
+    private int lastMouseButton;
+    @Getter
+    private boolean lastButtonPress; // button pressed = true, button released = false
+    @Getter
+    private double lastMouseScrollDelta;
 
     /* Keyboard states */
-    @Getter private int lastKeyCode;
-    @Getter private int lastScanCode;
-    @Getter private int lastKeyModifiers;
-    @Getter private char lastCodePoint;
-    @Getter private boolean lastKeyPress; // key pressed = true, key released = false
+    @Getter
+    private int lastKeyCode;
+    @Getter
+    private int lastScanCode;
+    @Getter
+    private int lastKeyModifiers;
+    @Getter
+    private char lastCodePoint;
+    @Getter
+    private boolean lastKeyPress; // key pressed = true, key released = false
 
     /* Render states */
-    @Getter private float renderPartialTicks;
-    @Getter private long tick = 0;
-    @Getter private int currentDrawingZ = 0;
+    @Getter
+    private float renderPartialTicks;
+    @Getter
+    private long tick = 0;
+    @Getter
+    private int currentDrawingZ = 0;
 
     public GuiContext(UIType uiType) {
         this.uiType = uiType;

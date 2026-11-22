@@ -5,7 +5,6 @@ import com.mojang.serialization.DynamicOps;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.MapLike;
 import com.mojang.serialization.RecordBuilder;
-
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -43,12 +42,12 @@ public class WidgetThemeCodec<T extends WidgetTheme> extends MapCodec<T> {
         List<Object> args = new ArrayList<>();
         this.fields.forEach(f -> args.add(f.decode(ops, map, errors)));
         if (!errors.isEmpty()) {
-            return DataResult.error(() ->
-                    String.format("Errors while decoding widget theme: %s", errors));
+            return DataResult.error(() -> String.format("Errors while decoding widget theme: %s", errors));
         }
         try {
             return DataResult.success(this.ctor.newInstance(args.toArray(Object[]::new)));
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | IllegalArgumentException e) {
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                 IllegalArgumentException e) {
             return DataResult.error(e::getMessage);
         }
     }

@@ -16,9 +16,12 @@ import java.util.function.DoubleSupplier;
 
 public abstract class BaseProgressDrawable<D extends BaseProgressDrawable<D>> implements IDrawable {
 
-    @Getter private IDrawable emptyBackground;
-    @Getter private DoubleSupplier progress;
-    @Getter protected float progressStepSize = 0;
+    @Getter
+    private IDrawable emptyBackground;
+    @Getter
+    private DoubleSupplier progress;
+    @Getter
+    protected float progressStepSize = 0;
 
     @Override
     public void draw(GuiContext context, int x, int y, int width, int height, WidgetTheme widgetTheme) {
@@ -84,7 +87,8 @@ public abstract class BaseProgressDrawable<D extends BaseProgressDrawable<D>> im
 
     /**
      * Sets a progress step size. The displayed progress will be clamped to the closest multiple of this value.
-     * Small values are smooth and high values are choppy. Values higher than 1 means the displayed progress is always 0.
+     * Small values are smooth and high values are choppy. Values higher than 1 means the displayed progress is always
+     * 0.
      *
      * @param progressStepSize progress step size
      * @return this.
@@ -108,7 +112,6 @@ public abstract class BaseProgressDrawable<D extends BaseProgressDrawable<D>> im
         this.emptyBackground = drawable;
         return self();
     }
-
 
     @SuppressWarnings("unchecked")
     protected D self() {

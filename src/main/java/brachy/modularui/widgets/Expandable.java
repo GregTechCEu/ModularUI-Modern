@@ -23,16 +23,23 @@ import java.util.function.BiConsumer;
 
 public class Expandable extends Widget<Expandable> implements Interactable, IViewport {
 
-    @Getter private IWidget normalView = new EmptyWidget();
-    @Getter private IWidget expandedView = new EmptyWidget();
+    @Getter
+    private IWidget normalView = new EmptyWidget();
+    @Getter
+    private IWidget expandedView = new EmptyWidget();
     private final List<IWidget> children = Arrays.asList(normalView, expandedView);
     private List<IWidget> currentChildren = children;
-    @Getter private boolean expanded = false;
+    @Getter
+    private boolean expanded = false;
     private Area areaSnapshot;
-    @Getter private Animator animator;
-    @Getter private BiConsumer<Rectangle, Boolean> stencilTransform;
-    @Getter private int animationDuration = 300;
-    @Getter private IInterpolation interpolation = Interpolation.SINE_OUT;
+    @Getter
+    private Animator animator;
+    @Getter
+    private BiConsumer<Rectangle, Boolean> stencilTransform;
+    @Getter
+    private int animationDuration = 300;
+    @Getter
+    private IInterpolation interpolation = Interpolation.SINE_OUT;
 
     public Expandable() {
         coverChildren();

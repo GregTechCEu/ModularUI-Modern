@@ -26,12 +26,13 @@ import org.jetbrains.annotations.Nullable;
  * @param <W> type of this widget
  */
 public abstract class AbstractScrollWidget<I extends IWidget, W extends AbstractScrollWidget<I, W>>
-        extends AbstractParentWidget<I, W> implements IViewport, Interactable {
+                                          extends AbstractParentWidget<I, W> implements IViewport, Interactable {
 
     private final ScrollArea scroll = new ScrollArea();
     private boolean scrollXActive, scrollYActive;
 
-    @Getter private boolean showScrollShadows = true;
+    @Getter
+    private boolean showScrollShadows = true;
 
     public AbstractScrollWidget(@Nullable HorizontalScrollData x, @Nullable VerticalScrollData y) {
         super();
@@ -76,8 +77,10 @@ public abstract class AbstractScrollWidget<I extends IWidget, W extends Abstract
     }
 
     protected void checkScrollbarActive(boolean resizeOnChange) {
-        boolean scrollYActive = this.scroll.getScrollY() != null && this.scroll.getScrollY().isScrollBarActive(getScrollArea());
-        boolean scrollXActive = this.scroll.getScrollX() != null && this.scroll.getScrollX().isScrollBarActive(getScrollArea(), scrollYActive);
+        boolean scrollYActive = this.scroll.getScrollY() != null &&
+                this.scroll.getScrollY().isScrollBarActive(getScrollArea());
+        boolean scrollXActive = this.scroll.getScrollX() != null &&
+                this.scroll.getScrollX().isScrollBarActive(getScrollArea(), scrollYActive);
         if (resizeOnChange && (scrollYActive != this.scrollYActive || scrollXActive != this.scrollXActive)) {
             scheduleResize();
         }
@@ -142,7 +145,8 @@ public abstract class AbstractScrollWidget<I extends IWidget, W extends Abstract
         if (!transformed) {
             context.getStencil().pop();
             WidgetThemeEntry<WidgetTheme> scrollbarTheme = getTheme().getScrollbarThemeEntry();
-            this.scroll.drawScrollbar(context, scrollbarTheme.getTheme(isHovering()), scrollbarTheme.theme().getBackground());
+            this.scroll.drawScrollbar(context, scrollbarTheme.getTheme(isHovering()),
+                    scrollbarTheme.theme().getBackground());
             if (this.showScrollShadows) this.scroll.drawScrollShadow(context);
         }
     }

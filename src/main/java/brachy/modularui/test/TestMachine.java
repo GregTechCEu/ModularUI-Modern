@@ -78,13 +78,16 @@ public class TestMachine {
         private final ItemStackHandler outputItems = new ItemStackHandler(4);
         private final MultiTankFluidHandler inputFluids = new MultiTankFluidHandler(2, FLUID_SLOT_CAPACITY);
         private final MultiTankFluidHandler outputFluids = new MultiTankFluidHandler(2, FLUID_SLOT_CAPACITY);
-        private final LazyOptional<IItemHandlerModifiable> items = LazyOptional.of(() -> new CombinedInvWrapper(inputItems, outputItems));
-        private final LazyOptional<IFluidHandler> fluids = LazyOptional.of(() -> new CombinedFluidHandlerWrapper(inputFluids, outputFluids));
+        private final LazyOptional<IItemHandlerModifiable> items = LazyOptional
+                .of(() -> new CombinedInvWrapper(inputItems, outputItems));
+        private final LazyOptional<IFluidHandler> fluids = LazyOptional
+                .of(() -> new CombinedFluidHandlerWrapper(inputFluids, outputFluids));
 
         private int ticks = 0;
         private boolean running = false, paused = false;
         private int recipeProgress = 0;
-        @Nullable private Recipe lastRecipe = null;
+        @Nullable
+        private Recipe lastRecipe = null;
 
         public BE(BlockPos pos, BlockState blockState) {
             super(TestRegistration.MACHINE_BE_TYPE.get(), pos, blockState);
@@ -118,7 +121,9 @@ public class TestMachine {
                                     .coverChildren(176, 30)
                                     .padding(7)
                                     .widgetThemeKey(IThemeApi.PANEL)
-                                    .child(Recipes.buildMachineUI(panel, this.inputItems, this.outputItems, this.inputFluids, this.outputFluids, new DoubleSyncValue(this::getProgress), false))
+                                    .child(Recipes.buildMachineUI(panel, this.inputItems, this.outputItems,
+                                            this.inputFluids, this.outputFluids, new DoubleSyncValue(this::getProgress),
+                                            false))
                                     .child(new ParentWidget<>()
                                             .coverChildren()
                                             .decoration()
@@ -137,11 +142,11 @@ public class TestMachine {
                                             .bottom(7)
                                             .rightRelAnchor(0, 1f)
                                             .child(new ToggleButton()
-                                                    .value(new BooleanSyncValue(() -> this.paused, v -> this.paused = v).allowC2S())
+                                                    .value(new BooleanSyncValue(() -> this.paused, v -> this.paused = v)
+                                                            .allowC2S())
                                                     .overlay(true, GuiTextures.PLAY)
                                                     .overlay(false, GuiTextures.PAUSE))
-                                            .name("side_options"))
-                            )
+                                            .name("side_options")))
                             .child(new SingleChildWidget<>()
                                     .coverChildren()
                                     .padding(7)
@@ -282,7 +287,8 @@ public class TestMachine {
                     .itemIn(Items.GOLD_INGOT, 4)
                     .itemOut(Items.NETHER_STAR));
 
-            // add (many) more recipes with (consistent) random inputs and outputs to try to overflow the cache for testing
+            // add (many) more recipes with (consistent) random inputs and outputs to try to overflow the cache for
+            // testing
             final int VERY_MANY_RECIPES = 256;
             RandomSource rng = RandomSource.create("""
                       // chosen by fair dice roll.
@@ -299,20 +305,23 @@ public class TestMachine {
                 while (recipe.inItems.size() < inItems) {
                     BuiltInRegistries.ITEM.getRandom(rng).ifPresent(item -> {
                         ItemStack stack = item.value().getDefaultInstance();
-                        stack.setCount(Mth.clamp((int) (rng.nextGaussian() * stack.getMaxStackSize()), 0, stack.getMaxStackSize()));
+                        stack.setCount(Mth.clamp((int) (rng.nextGaussian() * stack.getMaxStackSize()), 0,
+                                stack.getMaxStackSize()));
                         recipe.itemIn(stack);
                     });
                 }
                 while (recipe.outItems.size() < outItems) {
                     BuiltInRegistries.ITEM.getRandom(rng).ifPresent(item -> {
                         ItemStack stack = item.value().getDefaultInstance();
-                        stack.setCount(Mth.clamp((int) (rng.nextGaussian() * stack.getMaxStackSize()), 0, stack.getMaxStackSize()));
+                        stack.setCount(Mth.clamp((int) (rng.nextGaussian() * stack.getMaxStackSize()), 0,
+                                stack.getMaxStackSize()));
                         recipe.itemOut(stack);
                     });
                 }
                 while (recipe.inFluids.size() < inFluids) {
                     BuiltInRegistries.FLUID.getRandom(rng).ifPresent(fluid -> {
-                        int amount = Mth.clamp((int) (rng.nextGaussian() * FLUID_SLOT_CAPACITY), 0, FLUID_SLOT_CAPACITY);
+                        int amount = Mth.clamp((int) (rng.nextGaussian() * FLUID_SLOT_CAPACITY), 0,
+                                FLUID_SLOT_CAPACITY);
                         if (amount == 0) return;
 
                         recipe.fluidIn(fluid.value(), amount);
@@ -320,7 +329,8 @@ public class TestMachine {
                 }
                 while (recipe.outFluids.size() < outFluids) {
                     BuiltInRegistries.FLUID.getRandom(rng).ifPresent(fluid -> {
-                        int amount = Mth.clamp((int) (rng.nextGaussian() * FLUID_SLOT_CAPACITY), 0, FLUID_SLOT_CAPACITY);
+                        int amount = Mth.clamp((int) (rng.nextGaussian() * FLUID_SLOT_CAPACITY), 0,
+                                FLUID_SLOT_CAPACITY);
                         if (amount == 0) return;
 
                         recipe.fluidOut(fluid.value(), amount);
@@ -331,7 +341,8 @@ public class TestMachine {
             }
         });
 
-        public static Recipe findRecipe(IItemHandler inputItems, IFluidHandler inputFluids, @Nullable Recipe lastRecipe) {
+        public static Recipe findRecipe(IItemHandler inputItems, IFluidHandler inputFluids,
+                                        @Nullable Recipe lastRecipe) {
             if (lastRecipe != null && lastRecipe.startRecipe(inputItems, inputFluids, true)) return lastRecipe;
             for (Recipe recipe : list) {
                 if (recipe.startRecipe(inputItems, inputFluids, true)) {
@@ -372,8 +383,10 @@ public class TestMachine {
             return false;
         }
 
-        public static IWidget buildMachineUI(ModularPanel<?> panel, IItemHandlerModifiable inItems, IItemHandlerModifiable outItems,
-                                             IMultiTankFluidHandler inFluids, IMultiTankFluidHandler outFluids, IDoubleValue<?> progress,
+        public static IWidget buildMachineUI(ModularPanel<?> panel, IItemHandlerModifiable inItems,
+                                             IItemHandlerModifiable outItems,
+                                             IMultiTankFluidHandler inFluids, IMultiTankFluidHandler outFluids,
+                                             IDoubleValue<?> progress,
                                              final boolean isRecipeViewerUI) {
             var val = new StringValue("Option 1");
             IPanelHandler panelHandler = IPanelHandler.simple(panel, (parent, player) -> {
@@ -389,7 +402,8 @@ public class TestMachine {
                             .option("Option 1")
                             .option("Option 2")
                             .option("Option 3")
-                            .optionToWidget((s, b) -> Text.str(s).asWidget().center().color(Color.WHITE.main).shadow(true).padding(2)))
+                            .optionToWidget((s, b) -> Text.str(s).asWidget().center().color(Color.WHITE.main)
+                                    .shadow(true).padding(2)))
                     .child(new ButtonWidget<>()
                             .size(70, 14)
                             .overlay(Text.str("Sub panel"))

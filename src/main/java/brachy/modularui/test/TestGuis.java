@@ -1,6 +1,5 @@
 package brachy.modularui.test;
 
-import brachy.modularui.utils.MUIRenderTypes;
 import brachy.modularui.ModularUI;
 import brachy.modularui.animation.Animator;
 import brachy.modularui.animation.IAnimator;
@@ -11,7 +10,6 @@ import brachy.modularui.api.drawable.IDrawable;
 import brachy.modularui.api.drawable.Text;
 import brachy.modularui.api.layout.IViewportStack;
 import brachy.modularui.api.widget.IWidget;
-import brachy.modularui.drawable.schema.BlockHighlight;
 import brachy.modularui.drawable.FluidDrawable;
 import brachy.modularui.drawable.GuiDraw;
 import brachy.modularui.drawable.GuiTextures;
@@ -21,9 +19,10 @@ import brachy.modularui.drawable.UITexture;
 import brachy.modularui.drawable.graph.GraphDrawable;
 import brachy.modularui.drawable.progress.CircularProgressDrawable;
 import brachy.modularui.drawable.progress.ProgressDrawable;
-import brachy.modularui.factory.ClientGUI;
 import brachy.modularui.drawable.schema.ArraySchema;
+import brachy.modularui.drawable.schema.BlockHighlight;
 import brachy.modularui.drawable.schema.ISchema;
+import brachy.modularui.factory.ClientGUI;
 import brachy.modularui.screen.CustomModularScreen;
 import brachy.modularui.screen.ModularPanel;
 import brachy.modularui.screen.ModularScreen;
@@ -33,6 +32,7 @@ import brachy.modularui.utils.Color;
 import brachy.modularui.utils.ColorShade;
 import brachy.modularui.utils.Interpolation;
 import brachy.modularui.utils.Interpolations;
+import brachy.modularui.utils.MUIRenderTypes;
 import brachy.modularui.utils.math.DAM;
 import brachy.modularui.value.BoolValue;
 import brachy.modularui.value.DoubleValue;
@@ -64,11 +64,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluids;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import com.google.common.base.CaseFormat;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
 import org.apache.commons.lang3.tuple.Pair;
@@ -109,8 +109,10 @@ public class TestGuis extends CustomModularScreen {
     }
 
     /**
-     * This method finds all 'build___UI' methods in this class via reflection and adds a button that opens that UI to a list widget.
-     * This makes it very convenient to add and test test-screens without having to swap out the screen that the diamond item opens.
+     * This method finds all 'build___UI' methods in this class via reflection and adds a button that opens that UI to a
+     * list widget.
+     * This makes it very convenient to add and test test-screens without having to swap out the screen that the diamond
+     * item opens.
      */
     @Override
     public @NotNull ModularPanel<?> buildUI(ModularGuiContext context) {
@@ -136,14 +138,16 @@ public class TestGuis extends CustomModularScreen {
                                     String name = m.getName();
                                     if (name.startsWith("build")) name = name.substring(5);
                                     if (name.endsWith("UI")) name = name.substring(0, name.length() - 2);
-                                    String codeTextureName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, name);
+                                    String codeTextureName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE,
+                                            name);
                                     name = name.replaceAll("([a-z])([A-Z])", "$1 $2");
                                     return button(name)
                                             .onMousePressed((context1, button) -> {
                                                 try {
                                                     ModularPanel<?> panel = (ModularPanel) m.invoke(null);
                                                     if (TestGuis.withCode) {
-                                                        // WIP: this is meant to put an image of the code next to ui for showcase purpose
+                                                        // WIP: this is meant to put an image of the code next to ui for
+                                                        // showcase purpose
                                                         panel.child(UITexture.builder()
                                                                 .location(ModularUI.id("gui/code/" + codeTextureName))
                                                                 .build()
@@ -151,23 +155,26 @@ public class TestGuis extends CustomModularScreen {
                                                                 .leftRel(1f)
                                                                 .heightRel(1f));
                                                     }
-                                                    ClientGUI.open(new ModularScreen(ModularUI.MOD_ID, panel).openParentOnClose(true));
+                                                    ClientGUI.open(new ModularScreen(ModularUI.MOD_ID, panel)
+                                                            .openParentOnClose(true));
                                                 } catch (IllegalAccessException | InvocationTargetException e) {
                                                     ModularUI.LOGGER.throwing(e);
                                                 }
                                                 return true;
                                             });
                                 })
-                                /*.child(button("OpenGL test")
-                                        .onMousePressed(button -> {
-                                            ClientGUI.open(new GLTestGui().openParentOnClose(true));
-                                            return true;
-                                        }))
-                                .child(button("Sortable List")
-                                        .onMousePressed(button -> {
-                                            ClientGUI.open(new TestGui().openParentOnClose(true));
-                                            return true;
-                                        }))*/
+                                /*
+                                 * .child(button("OpenGL test")
+                                 * .onMousePressed(button -> {
+                                 * ClientGUI.open(new GLTestGui().openParentOnClose(true));
+                                 * return true;
+                                 * }))
+                                 * .child(button("Sortable List")
+                                 * .onMousePressed(button -> {
+                                 * ClientGUI.open(new TestGui().openParentOnClose(true));
+                                 * return true;
+                                 * }))
+                                 */
                                 .child(button("Test self")
                                         .onMousePressed((context1, button) -> {
                                             ClientGUI.open(this);
@@ -204,7 +211,6 @@ public class TestGuis extends CustomModularScreen {
                                             .margin(1)
                                             .name("G:" + i + ",W:" + j);
                                 })));
-
     }
 
     public static @NotNull ModularPanel<?> buildPendulumAnimationUI() {
@@ -266,53 +272,63 @@ public class TestGuis extends CustomModularScreen {
                                     stack.translate(x0, y0);
                                     stack.scale(scale, scale);
                                     stack.translate(-x0, -y0);
-                                    widget.color(Color.lerp(0xFF040404, Color.RED.main, Math.min(1f, 1.2f * logGrowVal)));
+                                    widget.color(
+                                            Color.lerp(0xFF040404, Color.RED.main, Math.min(1f, 1.2f * logGrowVal)));
                                 })));
     }
 
-    /*public static @NotNull ModularPanel<?> buildSpriteAndEntityUI() {
-        TextureAtlasSprite sprite = SpriteHelper.getSpriteOfBlockState(GameObjectHelper.getBlockState("minecraft", "command_block"), EnumFacing.UP);
-        // SpriteHelper.getSpriteOfItem(new ItemStack(Items.DIAMOND));
-        Entity entity = FakeEntity.create(EntityDragon.class);
-        float period = 3000f;
-        return ModularPanel.defaultPanel("main")
-                .size(150)
-                .overlay(new Rectangle()
-                        .color(Color.GREEN.main)
-                        .hollow(2)
-                        .asIcon().margin(5))
-                .child(new TextWidget<>(IKey.str("Test String")).scale(0.6f).horizontalCenter().top(7))
-                .child(new DraggableWidget<>()
-                        .background(new SpriteDrawable(sprite))
-                        .size(20)
-                        .alignX(0.5f)
-                        .top(20)
-                        .tooltipBuilder(tooltip -> {
-                            tooltip.addLine(
-                                    "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.  "
-                                            + "Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.  "
-                                            + "Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.  "
-                                            + "Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem");
-                            tooltip.addLine("Longer Line 2");
-                            tooltip.addLine("Line 3");
-                            tooltip.alignment(Alignment.Center);
-                            tooltip.scale(0.5f);
-                            tooltip.pos(RichTooltip.Pos.NEXT_TO_MOUSE);
-                        }))
-                .child(new IDrawable() {
-                    @Override
-                    public void draw(GuiContext context, int x, int y, int width, int height, WidgetTheme widgetTheme) {
-                        GuiDraw.drawEntity(context.getGraphics(), entity, 0, 0, width, height, context.getCurrentDrawingZ(), (graphics, e) -> {
-                            // TODO the drawable doesnt seem to update the rotation
-                            float scale = 0.9f;
-                            graphics.pose().scale(scale, scale, scale);
-                            graphics.pose().translate(0, 7, 0);
-                            //graphics.pose().rotate(35, 1, 0, 0);
-                            //graphics.pose().rotate(360 * (Util.getMillis() % period) / period, 0, 1, 0);
-                        }, null);
-                    }
-                }.asWidget().alignX(0.5f).bottom(10).size(100, 75));
-    }*/
+    /*
+     * public static @NotNull ModularPanel<?> buildSpriteAndEntityUI() {
+     * TextureAtlasSprite sprite = SpriteHelper.getSpriteOfBlockState(GameObjectHelper.getBlockState("minecraft",
+     * "command_block"), EnumFacing.UP);
+     * // SpriteHelper.getSpriteOfItem(new ItemStack(Items.DIAMOND));
+     * Entity entity = FakeEntity.create(EntityDragon.class);
+     * float period = 3000f;
+     * return ModularPanel.defaultPanel("main")
+     * .size(150)
+     * .overlay(new Rectangle()
+     * .color(Color.GREEN.main)
+     * .hollow(2)
+     * .asIcon().margin(5))
+     * .child(new TextWidget<>(IKey.str("Test String")).scale(0.6f).horizontalCenter().top(7))
+     * .child(new DraggableWidget<>()
+     * .background(new SpriteDrawable(sprite))
+     * .size(20)
+     * .alignX(0.5f)
+     * .top(20)
+     * .tooltipBuilder(tooltip -> {
+     * tooltip.addLine(
+     * "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.  "
+     * +
+     * "Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.  "
+     * +
+     * "Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.  "
+     * +
+     * "Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem"
+     * );
+     * tooltip.addLine("Longer Line 2");
+     * tooltip.addLine("Line 3");
+     * tooltip.alignment(Alignment.Center);
+     * tooltip.scale(0.5f);
+     * tooltip.pos(RichTooltip.Pos.NEXT_TO_MOUSE);
+     * }))
+     * .child(new IDrawable() {
+     * 
+     * @Override
+     * public void draw(GuiContext context, int x, int y, int width, int height, WidgetTheme widgetTheme) {
+     * GuiDraw.drawEntity(context.getGraphics(), entity, 0, 0, width, height, context.getCurrentDrawingZ(), (graphics,
+     * e) -> {
+     * // TODO the drawable doesnt seem to update the rotation
+     * float scale = 0.9f;
+     * graphics.pose().scale(scale, scale, scale);
+     * graphics.pose().translate(0, 7, 0);
+     * //graphics.pose().rotate(35, 1, 0, 0);
+     * //graphics.pose().rotate(360 * (Util.getMillis() % period) / period, 0, 1, 0);
+     * }, null);
+     * }
+     * }.asWidget().alignX(0.5f).bottom(10).size(100, 75));
+     * }
+     */
 
     public static @NotNull ModularPanel<?> buildRichTextUI() {
         IntValue integer = new IntValue(0);
@@ -326,7 +342,8 @@ public class TestGuis extends CustomModularScreen {
                                         .asIcon()
                                         .asHoverable()
                                         .tooltip(richTooltip -> richTooltip.addFromItem(new ItemStack(Blocks.GRASS))
-                                                .add(Text.GRAY + "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.")))
+                                                .add(Text.GRAY +
+                                                        "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.")))
                                 .add(", nice to ")
                                 .addDrawable(new ItemDrawable(new ItemStack(Items.PORKCHOP))
                                         .asIcon()
@@ -346,19 +363,18 @@ public class TestGuis extends CustomModularScreen {
                                 .newLine()
                                 .newLine()
                                 .add(Text.comp(Text.comp(
-                                                Text.str("Underline all: "),
-                                                Text.comp(
-                                                                Text.str("Green Text, "),
-                                                                Text.str("this is red").style(Text.RED),
-                                                                Text.str(" and this should be green again"))
-                                                        .style(Text.GREEN),
-                                                Text.str(". Still underlined, "))
+                                        Text.str("Underline all: "),
+                                        Text.comp(
+                                                Text.str("Green Text, "),
+                                                Text.str("this is red").style(Text.RED),
+                                                Text.str(" and this should be green again"))
+                                                .style(Text.GREEN),
+                                        Text.str(". Still underlined, "))
                                         .style(Text.UNDERLINE), Text.str("but not anymore.")))
                                 .newLine()
                                 .addDrawable(Text.str("Green, %s, %s and green again",
                                         Text.str("red").style(Text.RED),
-                                        Text.str("underline").style(null, Text.UNDERLINE)
-                                ).style(Text.GREEN))
+                                        Text.str("underline").style(null, Text.UNDERLINE)).style(Text.GREEN))
                                 .newLine()
                                 .add(Text.RESET + "" + Text.UNDERLINE + "Underlined" + Text.RESET)
                                 .newLine()
@@ -368,37 +384,43 @@ public class TestGuis extends CustomModularScreen {
                                     int i = integer.getIntValue() + 1;
                                     integer.setIntValue(i);
                                     return Text.str("key [%s]", Text.str("arg")
-                                                    .style(Text.UNDERLINE, Text.BLACK))
+                                            .style(Text.UNDERLINE, Text.BLACK))
                                             .style(i % 30 > 5 ? Text.RED : Text.DARK_BLUE);
                                 }).fallbackStyle(Text.BOLD), Text.str(" Test")))
-                                .textShadow(false)
-                        ));
+                                .textShadow(false)));
     }
 
     public static @NotNull ModularPanel<?> buildWorldSchemaUI() {
-        /*TrackedDummyWorld world = new TrackedDummyWorld();
-        world.addBlock(new BlockPos(0, 0, 0), new BlockInfo(Blocks.DIAMOND_BLOCK.getDefaultState()));
-        world.addBlock(new BlockPos(0, 1, 0), new BlockInfo(Blocks.BEDROCK.getDefaultState()));
-        world.addBlock(new BlockPos(1, 0, 1), new BlockInfo(Blocks.GOLD_BLOCK.getDefaultState()));*/
-/*        return ModularPanel.defaultPanel("main")
-                .size(150)
-                .overlay(new SchemaRenderer(BoxSchema.of(Minecraft.getMinecraft().world, new BlockPos(Platform.getClientPlayer()), 5))
-                        .cameraFunc((camera, schema) -> {
-                            double pitch = Math.PI / 4;
-                            double T = 4000D;
-                            double yaw = Minecraft.getSystemTime() % T / T * Math.PI * 2;
-                            camera.setLookAt(new BlockPos(Platform.getClientPlayer()), 20, yaw, pitch);
-                        })
-                        .isometric(true)
-                        .asIcon().size(140));*/
+        /*
+         * TrackedDummyWorld world = new TrackedDummyWorld();
+         * world.addBlock(new BlockPos(0, 0, 0), new BlockInfo(Blocks.DIAMOND_BLOCK.getDefaultState()));
+         * world.addBlock(new BlockPos(0, 1, 0), new BlockInfo(Blocks.BEDROCK.getDefaultState()));
+         * world.addBlock(new BlockPos(1, 0, 1), new BlockInfo(Blocks.GOLD_BLOCK.getDefaultState()));
+         */
+        /*
+         * return ModularPanel.defaultPanel("main")
+         * .size(150)
+         * .overlay(new SchemaRenderer(BoxSchema.of(Minecraft.getMinecraft().world, new
+         * BlockPos(Platform.getClientPlayer()), 5))
+         * .cameraFunc((camera, schema) -> {
+         * double pitch = Math.PI / 4;
+         * double T = 4000D;
+         * double yaw = Minecraft.getSystemTime() % T / T * Math.PI * 2;
+         * camera.setLookAt(new BlockPos(Platform.getClientPlayer()), 20, yaw, pitch);
+         * })
+         * .isometric(true)
+         * .asIcon().size(140));
+         */
 
-        /*MapSchema world = new MapSchema.Builder()
-                .add(new BlockPos(0, 0, 0), Blocks.DIAMOND_BLOCK.getDefaultState())
-                .add(new BlockPos(0, 1, 0), Blocks.BEDROCK.getDefaultState())
-                .add(new BlockPos(0, 2, 0), Blocks.WOOL.getDefaultState())
-                .add(new BlockPos(1, 0, 1), Blocks.GOLD_BLOCK.getDefaultState())
-                .add(new BlockPos(0, 3, 0), Blocks.BEACON.getDefaultState())
-                .build();*/
+        /*
+         * MapSchema world = new MapSchema.Builder()
+         * .add(new BlockPos(0, 0, 0), Blocks.DIAMOND_BLOCK.getDefaultState())
+         * .add(new BlockPos(0, 1, 0), Blocks.BEDROCK.getDefaultState())
+         * .add(new BlockPos(0, 2, 0), Blocks.WOOL.getDefaultState())
+         * .add(new BlockPos(1, 0, 1), Blocks.GOLD_BLOCK.getDefaultState())
+         * .add(new BlockPos(0, 3, 0), Blocks.BEACON.getDefaultState())
+         * .build();
+         */
 
         ISchema schema = ArraySchema.builder()
                 .layer("D   D", "     ", "     ", "     ")
@@ -419,7 +441,7 @@ public class TestGuis extends CustomModularScreen {
 
         var panel = ModularPanel.defaultPanel("main").size(170);
         panel.child(new SchemaWidget(renderer)
-                        .full())
+                .full())
                 .child(new SchemaWidget.LayerButton(renderer, 0, 3)
                         .bottom(1)
                         .left(1)
@@ -469,7 +491,8 @@ public class TestGuis extends CustomModularScreen {
                                             .marginBottom(-1)
                                             .widgetThemeKey(IThemeApi.BUTTON)
                                             .mainAxisAlignment(Alignment.MainAxis.SPACE_BETWEEN)
-                                            .setEnabledIf(w -> text.toLowerCase().contains(searchValue.getStringValue()))
+                                            .setEnabledIf(
+                                                    w -> text.toLowerCase().contains(searchValue.getStringValue()))
                                             .child(new ItemDrawable(stack).asWidget())
                                             .child(new ScrollingTextWidget(Text.str(text))
                                                     .widgetThemeKey(IThemeApi.BUTTON)
@@ -501,7 +524,8 @@ public class TestGuis extends CustomModularScreen {
         Rectangle color1 = new Rectangle().color(Color.BLACK.main);
         Rectangle color2 = new Rectangle().color(Color.WHITE.main);
 
-        IDrawable gradient = (context1, x, y, width, height, widgetTheme) -> GuiDraw.drawHorizontalGradientRect(context1.getGraphics(), x, y, width, height, color1.getColor(), color2.getColor());
+        IDrawable gradient = (context1, x, y, width, height, widgetTheme) -> GuiDraw.drawHorizontalGradientRect(
+                context1.getGraphics(), x, y, width, height, color1.getColor(), color2.getColor());
         IDrawable correctedGradient = (context1, x, y, width, height, widgetTheme) -> {
             int points = 500;
             Matrix4f pose = context1.graphicsPose().last().pose();
@@ -520,18 +544,22 @@ public class TestGuis extends CustomModularScreen {
 
         ModularPanel<?> panel = new ModularPanel<>("colors").width(300).coverChildrenHeight().padding(7);
 
-        IPanelHandler colorPicker1 = IPanelHandler.simple(panel, (mainPanel, player) -> new ColorPickerDialog("color_picker1", color1.getColor(), true)
-                .resultConsumer(color1::color)
-                .draggable(true)
-                .relative(panel)
-                .top(0)
-                .rightRel(1f), true);
-        IPanelHandler colorPicker2 = IPanelHandler.simple(panel, (mainPanel, player) -> new ColorPickerDialog("color_picker2", color2.getColor(), true)
-                .resultConsumer(color2::color)
-                .draggable(true)
-                .relative(panel)
-                .top(0)
-                .leftRel(1f), true);
+        IPanelHandler colorPicker1 = IPanelHandler.simple(panel,
+                (mainPanel, player) -> new ColorPickerDialog("color_picker1", color1.getColor(), true)
+                        .resultConsumer(color1::color)
+                        .draggable(true)
+                        .relative(panel)
+                        .top(0)
+                        .rightRel(1f),
+                true);
+        IPanelHandler colorPicker2 = IPanelHandler.simple(panel,
+                (mainPanel, player) -> new ColorPickerDialog("color_picker2", color2.getColor(), true)
+                        .resultConsumer(color2::color)
+                        .draggable(true)
+                        .relative(panel)
+                        .top(0)
+                        .leftRel(1f),
+                true);
 
         return panel
                 .child(Flow.column()
@@ -576,7 +604,8 @@ public class TestGuis extends CustomModularScreen {
 
     public static ModularPanel<?> buildContextMenu() {
         List<String> options1 = IntStream.range(0, 5).mapToObj(i -> "Option " + (i + 1)).collect(Collectors.toList());
-        List<String> options2 = IntStream.range(0, 5).mapToObj(i -> "Sub Option " + (i + 1)).collect(Collectors.toList());
+        List<String> options2 = IntStream.range(0, 5).mapToObj(i -> "Sub Option " + (i + 1))
+                .collect(Collectors.toList());
         ObjectValue<ItemStack> itemValue = new ObjectValue<>(ItemStack.class, new ItemStack(Items.ACACIA_DOOR));
         return new ModularPanel<>("context_menu_test")
                 .size(150)
@@ -595,7 +624,7 @@ public class TestGuis extends CustomModularScreen {
                                         .overlay(Text.str("Sub Menu"))
                                         .openRightDown()
                                         .menuList(l1 -> l1
-                                                //.width(90)
+                                                // .width(90)
                                                 .maxSize(80)
                                                 .children(options2, s -> Text.str(s).asWidget())))))
                 .child(new DropdownWidget<>("test_dropdown", ItemStack.class)
@@ -617,8 +646,7 @@ public class TestGuis extends CustomModularScreen {
                                 .child(new ItemDrawable(item).asWidget())
                                 .child(Text.str(item.getDisplayName().getString()).asWidget()
                                         .widgetThemeKey(IThemeApi.BUTTON)
-                                        .invisible()))
-                );
+                                        .invisible())));
     }
 
     public static @NotNull ModularPanel<?> buildGraphUI() {
@@ -806,15 +834,14 @@ public class TestGuis extends CustomModularScreen {
                                         .filledTexture(new FluidDrawable(new FluidStack(Fluids.WATER, 1)))
                                         .counterClockwise()
                                         .asWidget()))
-                        .coverChildren()
-                );
+                        .coverChildren());
     }
 
     private static class TestPanel extends ModularPanel<TestPanel> {
 
         public TestPanel(String name) {
             super(name);
-            //background(GuiTextures.BACKGROUND);
+            // background(GuiTextures.BACKGROUND);
             size(100, 100);
         }
 

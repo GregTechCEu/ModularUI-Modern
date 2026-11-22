@@ -12,10 +12,10 @@ import com.mojang.serialization.RecordBuilder;
  * @see WidgetThemeKey
  * @see ITheme
  *
- * @param key The {@link WidgetThemeKey} which this theme data is for.
- * @param theme The theme data.
+ * @param key        The {@link WidgetThemeKey} which this theme data is for.
+ * @param theme      The theme data.
  * @param hoverTheme Theme data to be used when this widget is being hovered over.
- * @param <T> The class of the theme data.
+ * @param <T>        The class of the theme data.
  */
 public record WidgetThemeEntry<T extends WidgetTheme>(WidgetThemeKey<T> key, T theme, T hoverTheme) {
 
@@ -44,6 +44,7 @@ public record WidgetThemeEntry<T extends WidgetTheme>(WidgetThemeKey<T> key, T t
             mapBuilder.add(this.key.getFullName(), this.key.getCodec().codec().encodeStart(ops, this.theme));
         }
         if (this.theme == this.hoverTheme) return;
-        mapBuilder.add(this.key.getFullName() + IThemeApi.HOVER_SUFFIX, this.key.getCodec().codec().encodeStart(ops, this.hoverTheme));
+        mapBuilder.add(this.key.getFullName() + IThemeApi.HOVER_SUFFIX,
+                this.key.getCodec().codec().encodeStart(ops, this.hoverTheme));
     }
 }

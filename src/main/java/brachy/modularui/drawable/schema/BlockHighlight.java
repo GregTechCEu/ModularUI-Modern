@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.BufferUploader;
@@ -14,7 +15,6 @@ import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -32,12 +32,12 @@ public class BlockHighlight {
 
     static {
         int[][] intVertices = {
-                {1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0},
-                {0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0},
-                {0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0},
-                {0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1},
-                {0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0},
-                {1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0}
+                { 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0 },
+                { 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0 },
+                { 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0 },
+                { 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1 },
+                { 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0 },
+                { 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0 }
         };
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 12; j++) {

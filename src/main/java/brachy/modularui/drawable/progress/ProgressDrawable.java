@@ -8,16 +8,20 @@ import brachy.modularui.theme.WidgetTheme;
 import lombok.Getter;
 
 /**
- * A standard progress drawable which can display a progress bar with any {@link brachy.modularui.api.drawable.IDrawable}
+ * A standard progress drawable which can display a progress bar with any
+ * {@link brachy.modularui.api.drawable.IDrawable}
  * in the directions left, right, up and down.
  */
 public class ProgressDrawable extends AbstractProgressDrawable<ProgressDrawable> {
 
-    @Getter private Direction direction = Direction.RIGHT;
-    @Getter private float progressPixelStepSize = 0;
+    @Getter
+    private Direction direction = Direction.RIGHT;
+    @Getter
+    private float progressPixelStepSize = 0;
 
     @Override
-    public void pushProgressStencil(float progress, GuiContext context, int x, int y, int width, int height, WidgetTheme widgetTheme) {
+    public void pushProgressStencil(float progress, GuiContext context, int x, int y, int width, int height,
+                                    WidgetTheme widgetTheme) {
         float u0 = 0, u1 = 1, v0 = 0, v1 = 1;
         switch (this.direction) {
             case LEFT -> u0 = 1 - progress;
@@ -32,7 +36,8 @@ public class ProgressDrawable extends AbstractProgressDrawable<ProgressDrawable>
     protected float getCurrentProgressStepSize(int width, int height) {
         float stepSize = this.progressStepSize;
         float pixelStepSize = this.progressPixelStepSize;
-        if (stepSize == 0 && pixelStepSize == 0 && !ModularUIConfig.smoothProgressBars() && getFilledTexture() instanceof UITexture) {
+        if (stepSize == 0 && pixelStepSize == 0 && !ModularUIConfig.smoothProgressBars() &&
+                getFilledTexture() instanceof UITexture) {
             pixelStepSize = 1;
         }
         if (pixelStepSize > 0) {
@@ -94,7 +99,8 @@ public class ProgressDrawable extends AbstractProgressDrawable<ProgressDrawable>
 
     /**
      * Sets a progress step size. The displayed progress will be clamped to the closest multiple of this value.
-     * Small values are smooth and high values are choppy. Values higher than 1 means the displayed progress is always 0.
+     * Small values are smooth and high values are choppy. Values higher than 1 means the displayed progress is always
+     * 0.
      *
      * @param progressStepSize progress step size
      * @return this.

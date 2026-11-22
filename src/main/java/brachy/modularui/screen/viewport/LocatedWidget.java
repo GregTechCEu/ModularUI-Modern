@@ -73,6 +73,5 @@ public class LocatedWidget extends LocatedElement<IWidget> {
             if (a == null || b == null) return false;
             return Objects.equals(a.getElement(), b.getElement());
         }
-
     }
 }

@@ -10,7 +10,8 @@ import java.util.Objects;
 
 public abstract class AbstractProgressDrawable<D extends AbstractProgressDrawable<D>> extends BaseProgressDrawable<D> {
 
-    @Getter private IDrawable filledTexture;
+    @Getter
+    private IDrawable filledTexture;
 
     @Override
     public void draw(GuiContext context, int x, int y, int width, int height, WidgetTheme widgetTheme) {
@@ -23,7 +24,8 @@ public abstract class AbstractProgressDrawable<D extends AbstractProgressDrawabl
         if (p < 1f) context.getStencil().pop();
     }
 
-    protected abstract void pushProgressStencil(float progress, GuiContext context, int x, int y, int width, int height, WidgetTheme widgetTheme);
+    protected abstract void pushProgressStencil(float progress, GuiContext context, int x, int y, int width, int height,
+                                                WidgetTheme widgetTheme);
 
     /**
      * Sets the filled texture which is partially drawn based on the current progress.

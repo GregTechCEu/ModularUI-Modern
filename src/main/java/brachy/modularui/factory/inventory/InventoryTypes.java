@@ -6,11 +6,11 @@ import brachy.modularui.test.TestItem;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
@@ -73,7 +73,7 @@ public final class InventoryTypes {
      * @param stack   item stack to check stackability for
      * @param visitor visitor function
      */
-    @SuppressWarnings({"unchecked", "rawtypes"})
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void visitAllStackable(Player player, ItemStack stack, InventoryVisitor<?> visitor) {
         for (InventoryType type : getAll()) {
             if (type.visitAllStackable(player, stack, visitor)) {
@@ -90,7 +90,7 @@ public final class InventoryTypes {
      * @param player  the player to visit inventory in
      * @param visitor visitor function
      */
-    @SuppressWarnings({"unchecked", "rawtypes"})
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void visitAll(Player player, InventoryVisitor<?> visitor) {
         for (InventoryType type : getAll()) {
             if (type.visitAll(player, visitor)) {

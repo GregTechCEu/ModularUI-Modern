@@ -112,7 +112,7 @@ public class ModularUI {
     /**
      * @return if the game is the <strong>PHYSICAL</strong> client, e.g. not a dedicated server.
      * @apiNote Do not use this to check if you're currently on the server thread for side-specific actions!
-     * It does <strong>NOT</strong> work for that. Use {@link #isClientThread()} instead.
+     *          It does <strong>NOT</strong> work for that. Use {@link #isClientThread()} instead.
      * @see #isClientThread()
      */
     public static boolean isClientSide() {
@@ -123,7 +123,7 @@ public class ModularUI {
      * This check isn't the same for client and server!
      *
      * @return if it's safe to access the current instance {@link net.minecraft.world.level.Level Level} on client or if
-     * it's safe to access any level on server.
+     *         it's safe to access any level on server.
      */
     public static boolean canGetServerLevel() {
         if (isClientSide()) {
@@ -174,15 +174,15 @@ public class ModularUI {
 
     public enum Mods {
 
-        //BLUR(ModIds.BLUR),
-        //BOGOSORTER(ModIds.BOGOSORTER),
+        // BLUR(ModIds.BLUR),
+        // BOGOSORTER(ModIds.BOGOSORTER),
         CURIOS(ModIds.CURIOS),
         EMI(ModIds.EMI),
         JEI(ModIds.JEI),
         REI(ModIds.REI),
         KUBEJS(ModIds.KUBEJS),
-        //MODNAMETOOLTIP(ModIds.MODNAMETOOLTIP)
-        //NEA(ModIds.NEA),
+        // MODNAMETOOLTIP(ModIds.MODNAMETOOLTIP)
+        // NEA(ModIds.NEA),
         EMBEDDIUM(ModIds.EMBEDDIUM),
         SODIUM(ModIds.SODIUM),
         IRIS(ModIds.IRIS),

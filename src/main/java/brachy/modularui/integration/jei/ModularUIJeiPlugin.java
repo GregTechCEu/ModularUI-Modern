@@ -5,11 +5,10 @@ import brachy.modularui.integration.jei.handler.JeiScreenHandler;
 import brachy.modularui.integration.recipeviewer.RecipeSlotRole;
 import brachy.modularui.screen.ContainerScreenWrapper;
 import brachy.modularui.screen.ScreenWrapper;
+import brachy.modularui.test.TestRecipeViewerGuis;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.resources.ResourceLocation;
-
-import brachy.modularui.test.TestRecipeViewerGuis;
 
 import lombok.Getter;
 import mezz.jei.api.IModPlugin;
@@ -30,8 +29,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @JeiPlugin
 public class ModularUIJeiPlugin implements IModPlugin {
 
-    @Getter private static IJeiRuntime runtime = null;
-    @Getter private static IJeiHelpers jeiHelpers;
+    @Getter
+    private static IJeiRuntime runtime = null;
+    @Getter
+    private static IJeiHelpers jeiHelpers;
 
     public static boolean hasRuntime() {
         return runtime != null;
@@ -87,7 +88,7 @@ public class ModularUIJeiPlugin implements IModPlugin {
     public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
         if (ModularUI.Mods.REI.isLoaded() || ModularUI.Mods.EMI.isLoaded()) return;
 
-        //JeiContainerHandler.register(ModularContainerMenu.class, registration);
+        // JeiContainerHandler.register(ModularContainerMenu.class, registration);
     }
 
     @Override

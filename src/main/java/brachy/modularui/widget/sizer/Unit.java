@@ -4,8 +4,8 @@ import brachy.modularui.api.GuiAxis;
 import brachy.modularui.utils.serialization.codec.MutableObjectCodec;
 
 import net.minecraft.util.StringRepresentable;
-import com.mojang.serialization.Codec;
 
+import com.mojang.serialization.Codec;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -178,7 +178,6 @@ public class Unit {
         public String getText(GuiAxis axis) {
             return axis.isHorizontal() ? this.xText : this.yText;
         }
-
 
         @Override
         public @NotNull String getSerializedName() {

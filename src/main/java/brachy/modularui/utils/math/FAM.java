@@ -213,7 +213,7 @@ public class FAM {
 
     public static float[] diff(float[] src) {
         if (src.length < 2) return EMPTY;
-        if (src.length == 2) return new float[]{src[1] - src[0]};
+        if (src.length == 2) return new float[] { src[1] - src[0] };
         float[] res = new float[src.length - 1];
         for (int i = 0; i < res.length; i++) {
             res[i] = src[i + 1] - src[i];

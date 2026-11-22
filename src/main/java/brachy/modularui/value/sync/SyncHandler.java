@@ -32,8 +32,10 @@ public abstract class SyncHandler<S extends SyncHandler<S>> implements ISyncOrVa
     /**
      * the key that belongs to this sync handler
      */
-    @Getter private String key;
-    @Getter private boolean allowC2S;
+    @Getter
+    private String key;
+    @Getter
+    private boolean allowC2S;
 
     @ApiStatus.OverrideOnly
     @MustBeInvokedByOverriders
@@ -71,7 +73,8 @@ public abstract class SyncHandler<S extends SyncHandler<S>> implements ISyncOrVa
     @OnlyIn(Dist.CLIENT)
     public final void syncToServer(int id, @NotNull IPacketWriter bufferConsumer) {
         if (!isAllowC2S()) {
-            ModularUI.LOGGER.throwing(Level.WARN, new SecurityException("Sync handler is unable to send packets to server!"));
+            ModularUI.LOGGER.throwing(Level.WARN,
+                    new SecurityException("Sync handler is unable to send packets to server!"));
             return;
         }
         FriendlyByteBuf buffer = new FriendlyByteBuf(Unpooled.buffer());
@@ -88,7 +91,8 @@ public abstract class SyncHandler<S extends SyncHandler<S>> implements ISyncOrVa
      */
     public final void sync(int id, @NotNull IPacketWriter bufferConsumer) {
         if (getSyncManager().isClient() && !isAllowC2S()) {
-            ModularUI.LOGGER.throwing(Level.WARN, new SecurityException("Sync handler is unable to send packets to server!"));
+            ModularUI.LOGGER.throwing(Level.WARN,
+                    new SecurityException("Sync handler is unable to send packets to server!"));
             return;
         }
         FriendlyByteBuf buffer = new FriendlyByteBuf(Unpooled.buffer());
@@ -181,8 +185,10 @@ public abstract class SyncHandler<S extends SyncHandler<S>> implements ISyncOrVa
     }
 
     /**
-     * Sets this sync handler to accept C2S (client to server) packets. This value MUST be the same on client and server.
-     * By default, this is false to prevent clients from force updating values. Values which the player can control through a button for
+     * Sets this sync handler to accept C2S (client to server) packets. This value MUST be the same on client and
+     * server.
+     * By default, this is false to prevent clients from force updating values. Values which the player can control
+     * through a button for
      * example are completely fine to allow C2S updates.
      *
      * @param allowC2S whether this sync handler should allow client to server updates
@@ -194,8 +200,10 @@ public abstract class SyncHandler<S extends SyncHandler<S>> implements ISyncOrVa
     }
 
     /**
-     * Sets this sync handler whether to accept C2S (client to server) packets or not. This value MUST be the same on client and server.
-     * By default, this is false to prevent clients from force updating values. Values which the player can control through a button for
+     * Sets this sync handler whether to accept C2S (client to server) packets or not. This value MUST be the same on
+     * client and server.
+     * By default, this is false to prevent clients from force updating values. Values which the player can control
+     * through a button for
      * example are completely fine to allow C2S updates.
      *
      * @return this
@@ -209,7 +217,8 @@ public abstract class SyncHandler<S extends SyncHandler<S>> implements ISyncOrVa
         return (S) this;
     }
 
-    private static void send(ModularNetworkSide network, String panel, FriendlyByteBuf buffer, SyncHandler<?> syncHandler) {
+    private static void send(ModularNetworkSide network, String panel, FriendlyByteBuf buffer,
+                             SyncHandler<?> syncHandler) {
         Objects.requireNonNull(buffer);
         Objects.requireNonNull(syncHandler);
         if (!syncHandler.isValid()) {

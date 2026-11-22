@@ -61,6 +61,7 @@ public abstract class ModularUIJeiCategory<T> implements IRecipeCategory<T> {
         this.displaySizeCache = CacheBuilder.newBuilder()
                 .initialCapacity(64)
                 .build(new CacheLoader<>() {
+
                     @Override
                     public Dimensions load(T recipe) {
                         return ModularUIJeiCategory.this.calculateSize(recipe);
@@ -86,8 +87,10 @@ public abstract class ModularUIJeiCategory<T> implements IRecipeCategory<T> {
 
     /**
      * Calculates and caches the size of the recipe if not already done.<br>
-     * This should be called in subclasses' {@link #setupRecipeIngredients(IRecipeLayoutBuilder, Object, IFocusGroup) setupRecipeIngredients} methods.
-     * Otherwise, the size of ALL the recipes in the same category are calculated at once, which can make the game lag for a few seconds.
+     * This should be called in subclasses' {@link #setupRecipeIngredients(IRecipeLayoutBuilder, Object, IFocusGroup)
+     * setupRecipeIngredients} methods.
+     * Otherwise, the size of ALL the recipes in the same category are calculated at once, which can make the game lag
+     * for a few seconds.
      */
     protected final void calculateAndCacheSize(T recipe) {
         this.displaySizeCache.getUnchecked(recipe);
@@ -95,7 +98,8 @@ public abstract class ModularUIJeiCategory<T> implements IRecipeCategory<T> {
 
     /**
      * Return the maximum expected display width here.<br>
-     * You should also return a per-category display width that's at most this value in {@link #getWidth(Object)} if the default value
+     * You should also return a per-category display width that's at most this value in {@link #getWidth(Object)} if the
+     * default value
      * doesn't suit your needs.
      *
      * @return The maximum expected display width
@@ -104,7 +108,8 @@ public abstract class ModularUIJeiCategory<T> implements IRecipeCategory<T> {
 
     /**
      * Return the maximum expected display height here.<br>
-     * You should also return a per-category display height that's at most this value in {@link #getHeight(Object)} if the default value
+     * You should also return a per-category display height that's at most this value in {@link #getHeight(Object)} if
+     * the default value
      * doesn't suit your needs.
      *
      * @return The maximum expected display height
@@ -116,7 +121,8 @@ public abstract class ModularUIJeiCategory<T> implements IRecipeCategory<T> {
      * This is used by JEI for lookups, to figure out what ingredients are inputs and outputs for a recipe.
      *
      * <p>
-     * Note that you can <b>only</b> add inputs and outputs for JEI's recipe lookup/search here, as the layout builder that's
+     * Note that you can <b>only</b> add inputs and outputs for JEI's recipe lookup/search here, as the layout builder
+     * that's
      * passed into this method only handles those and not the displayed recipe previews.
      */
     @ApiStatus.OverrideOnly
@@ -161,14 +167,16 @@ public abstract class ModularUIJeiCategory<T> implements IRecipeCategory<T> {
 
     @ApiStatus.OverrideOnly
     @MustBeInvokedByOverriders
-    public IWidget createRecipeSlotForWidget(IRecipeLayoutBuilder builder, IWidget widget, T recipe, IFocusGroup focuses, MutableInt index) {
+    public IWidget createRecipeSlotForWidget(IRecipeLayoutBuilder builder, IWidget widget, T recipe,
+                                             IFocusGroup focuses, MutableInt index) {
         if (!(widget instanceof JeiRecipeViewerSlot<?, ?> recipeViewerSlot)) return widget;
 
         if (recipeViewerSlot.getName() == null) {
             recipeViewerSlot.name("jei_slot_" + index.getAndIncrement());
         }
 
-        IRecipeSlotBuilder slotBuilder = builder.addSlot(ModularUIJeiPlugin.mapToJeiRole(recipeViewerSlot.recipeSlotRole()))
+        IRecipeSlotBuilder slotBuilder = builder
+                .addSlot(ModularUIJeiPlugin.mapToJeiRole(recipeViewerSlot.recipeSlotRole()))
                 .setSlotName(recipeViewerSlot.getName());
         recipeViewerSlot.configureJeiSlotBuilder(slotBuilder);
 
@@ -190,12 +198,14 @@ public abstract class ModularUIJeiCategory<T> implements IRecipeCategory<T> {
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, T recipe, IFocusGroup focuses) {
         // guard against JEMI issues by explicitly checking for JEI's implementation
-        // this is also done to skip having to create the whole widget tree when JEI is only looking up the recipe's ingredients
+        // this is also done to skip having to create the whole widget tree when JEI is only looking up the recipe's
+        // ingredients
         // Check the mod first so compatibility runtimes without JEI do not load its builder class.
         if (ModularUI.Mods.JEI.isLoaded() && builder instanceof RecipeLayoutBuilder<?>) {
             ModularScreen screen = createScreen(recipe);
             MutableInt index = new MutableInt(0);
-            screen.getMainPanel().visitTransformAllChildren(widget -> createRecipeSlotForWidget(builder, widget, recipe, focuses, index));
+            screen.getMainPanel().visitTransformAllChildren(
+                    widget -> createRecipeSlotForWidget(builder, widget, recipe, focuses, index));
             veryTemporaryScreenCache.put(recipe, screen);
         } else {
             // don't bother with creating the full widget tree if setRecipe was called to get the recipe's ingredients
@@ -220,7 +230,8 @@ public abstract class ModularUIJeiCategory<T> implements IRecipeCategory<T> {
     }
 
     @Override
-    public void getTooltip(ITooltipBuilder tooltipBuilder, T recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {}
+    public void getTooltip(ITooltipBuilder tooltipBuilder, T recipe, IRecipeSlotsView recipeSlotsView, double mouseX,
+                           double mouseY) {}
 
     @Override
     public @Nullable IDrawable getIcon() {
@@ -247,7 +258,7 @@ public abstract class ModularUIJeiCategory<T> implements IRecipeCategory<T> {
         return display.width;
     }
 
-    protected record Dimensions(int width, int height) { }
+    protected record Dimensions(int width, int height) {}
 
     public static class UIWrapperWidget implements IJeiGuiEventListener, IRecipeWidget {
 
@@ -268,7 +279,8 @@ public abstract class ModularUIJeiCategory<T> implements IRecipeCategory<T> {
 
         @Override
         public void drawWidget(GuiGraphics graphics, double mouseX, double mouseY) {
-            EmbedHandler.drawEmbed(this.screen, graphics, (int) mouseX, (int) mouseY, Minecraft.getInstance().getPartialTick());
+            EmbedHandler.drawEmbed(this.screen, graphics, (int) mouseX, (int) mouseY,
+                    Minecraft.getInstance().getPartialTick());
         }
 
         @Override
@@ -296,7 +308,7 @@ public abstract class ModularUIJeiCategory<T> implements IRecipeCategory<T> {
 
         @Override
         public void mouseMoved(double mouseX, double mouseY) {
-            //this.screen.mouseMoved(mouseX, mouseY);
+            // this.screen.mouseMoved(mouseX, mouseY);
         }
 
         @Override
@@ -324,5 +336,4 @@ public abstract class ModularUIJeiCategory<T> implements IRecipeCategory<T> {
             return this.screen.keyPressed(keyCode, scanCode, modifiers);
         }
     }
-
 }

@@ -25,7 +25,6 @@ public class MUIDraggableStackVisitor<T extends Screen & IMuiScreen> implements 
         this.clazz = clazz;
     }
 
-
     @Override
     public <R extends Screen> boolean isHandingScreen(R screen) {
         return clazz.isAssignableFrom(screen.getClass());

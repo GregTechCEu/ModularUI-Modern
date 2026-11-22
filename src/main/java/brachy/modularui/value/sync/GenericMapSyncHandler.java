@@ -127,7 +127,8 @@ public class GenericMapSyncHandler<K, V> extends ValueSyncHandler<Map<K, V>, Gen
     }
 
     /**
-     * Allows safe modification of the cached value. Normally modifying the cached value can cause the value to never be synced.
+     * Allows safe modification of the cached value. Normally modifying the cached value can cause the value to never be
+     * synced.
      * This method forces a sync after the modification.
      *
      * @param consumer function that operates on the current cached value
@@ -137,8 +138,10 @@ public class GenericMapSyncHandler<K, V> extends ValueSyncHandler<Map<K, V>, Gen
     }
 
     /**
-     * Allows safe modification of the cached value. Normally modifying the cached value can cause the value to never be synced.
-     * This method can automatically sync the cache after the modification. Be careful with potential issues when the sync arg is false.
+     * Allows safe modification of the cached value. Normally modifying the cached value can cause the value to never be
+     * synced.
+     * This method can automatically sync the cache after the modification. Be careful with potential issues when the
+     * sync arg is false.
      *
      * @param consumer function that operates on the current cached value
      */

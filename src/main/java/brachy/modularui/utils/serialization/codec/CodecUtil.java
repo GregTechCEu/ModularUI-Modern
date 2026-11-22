@@ -10,7 +10,6 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.MapLike;
 import com.mojang.serialization.RecordBuilder;
 import com.mojang.serialization.codecs.KeyDispatchCodec;
-
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 
 import java.util.ArrayList;
@@ -51,6 +50,7 @@ public class CodecUtil {
 
     public static <A> Codec<A> nullCodec(Supplier<A> decoder, Predicate<A> nullTester) {
         return new Codec<>() {
+
             @Override
             public <T> DataResult<Pair<A, T>> decode(DynamicOps<T> ops, T input) {
                 if (input == null || Objects.equals(ops.empty(), input)) {
@@ -87,6 +87,7 @@ public class CodecUtil {
         if (decoder == null || decoder.length == 0) throw new NullPointerException();
         if (decoder.length == 1) return decoder[0];
         return new Decoder<>() {
+
             @Override
             public <T> DataResult<Pair<A, T>> decode(DynamicOps<T> ops, T input) {
                 StringBuilder message = new StringBuilder();
@@ -106,6 +107,7 @@ public class CodecUtil {
         if (encoder == null || encoder.length == 0) throw new NullPointerException();
         if (encoder.length == 1) return encoder[0];
         return new Encoder<>() {
+
             @Override
             public <T> DataResult<T> encode(A input, DynamicOps<T> ops, T prefix) {
                 StringBuilder message = new StringBuilder();
@@ -126,6 +128,7 @@ public class CodecUtil {
         if (codecs.length == 1) return codecs[0];
         // I hate this
         return new MapCodec<>() {
+
             @Override
             public <T> Stream<T> keys(DynamicOps<T> ops) {
                 Stream<T> s = Stream.empty();
@@ -169,13 +172,15 @@ public class CodecUtil {
         if (codecs == null || codecs.length == 0) throw new NullPointerException();
         if (codecs.length == 1) return (Codec<Object>) codecs[0];
         return new Decoder<>() {
+
             @Override
             public <T> DataResult<Pair<Object, T>> decode(DynamicOps<T> ops, T input) {
                 StringBuilder message = new StringBuilder();
                 for (var codec : codecs) {
                     var d = codec.decode(ops, input);
                     var res = d.result();
-                    if (res.isPresent()) return DataResult.success(new Pair<>(res.get().getFirst(), res.get().getSecond()));
+                    if (res.isPresent())
+                        return DataResult.success(new Pair<>(res.get().getFirst(), res.get().getSecond()));
                     message.append(d.error().orElseThrow().message()).append("; ");
                 }
                 return DataResult.error(() -> message.substring(0, message.length() - 2));
@@ -195,8 +200,8 @@ public class CodecUtil {
         return Codec.of(encoder, chainedDecoder(decoder));
     }
 
-    public static <E, A> MapCodec<E> dispatchNullable(Codec<A> keyCodec, Function<? super E, ? extends
-            A> type, Function<? super A, ? extends Codec<? extends E>> codec) {
+    public static <E, A> MapCodec<E> dispatchNullable(Codec<A> keyCodec, Function<? super E, ? extends A> type,
+                                                      Function<? super A, ? extends Codec<? extends E>> codec) {
         return dispatchNullable("type", keyCodec, type, codec);
     }
 
@@ -220,20 +225,22 @@ public class CodecUtil {
                                                         Function<? super V, ? extends DataResult<? extends K>> type,
                                                         Function<? super K, ? extends DataResult<? extends Codec<? extends V>>> codec) {
         return new KeyDispatchCodec<>(key, keyCodec, type, codec);
-
     }
 
     public static <A> Encoder<A> checked(Encoder<A> codec, Predicate<A> test) {
         return new Encoder<>() {
+
             @Override
             public <T> DataResult<T> encode(A input, DynamicOps<T> ops, T prefix) {
-                return test.test(input) ? codec.encode(input, ops, prefix) : DataResult.error(() -> "Codec " + codec + " can't handle value " + input);
+                return test.test(input) ? codec.encode(input, ops, prefix) :
+                        DataResult.error(() -> "Codec " + codec + " can't handle value " + input);
             }
         };
     }
 
     public static <A> Codec<A> checkedEncoder(Codec<A> codec, Predicate<A> test) {
         return new Codec<>() {
+
             @Override
             public <T> DataResult<Pair<A, T>> decode(DynamicOps<T> ops, T input) {
                 return codec.decode(ops, input);
@@ -241,7 +248,8 @@ public class CodecUtil {
 
             @Override
             public <T> DataResult<T> encode(A input, DynamicOps<T> ops, T prefix) {
-                return test.test(input) ? codec.encode(input, ops, prefix) : DataResult.error(() -> "Codec " + codec + " can't handle value " + input);
+                return test.test(input) ? codec.encode(input, ops, prefix) :
+                        DataResult.error(() -> "Codec " + codec + " can't handle value " + input);
             }
 
             @Override

@@ -14,7 +14,6 @@ import brachy.modularui.utils.serialization.codec.MutableObjectCodec;
 import brachy.modularui.widgets.layout.IExpander;
 
 import com.mojang.serialization.Codec;
-
 import lombok.AccessLevel;
 import lombok.Getter;
 import org.jetbrains.annotations.ApiStatus;
@@ -36,7 +35,8 @@ public class StandardResizer extends WidgetResizeNode implements IPositioned<Sta
             .add("y", StandardResizer::setY, StandardResizer::getY, DimensionSizer.CODEC)
             .build();
 
-    public static final MutableObjectCodec<StandardResizer> COMPACT_CODEC = MutableObjectCodec.builder(StandardResizer.class)
+    public static final MutableObjectCodec<StandardResizer> COMPACT_CODEC = MutableObjectCodec
+            .builder(StandardResizer.class)
             .baseCopy(resizer -> new StandardResizer(resizer.getWidget()))
             .addOpt("expanded", StandardResizer::expanded, StandardResizer::isExpanded, Codec.BOOL, false)
             .addOpt("decoration", StandardResizer::decoration, StandardResizer::isDecoration, Codec.BOOL, false)
@@ -50,10 +50,14 @@ public class StandardResizer extends WidgetResizeNode implements IPositioned<Sta
             .addFieldOf(DimensionSizer.CODEC, StandardResizer::getY, "size", "height")
             .build();
 
-    @Getter(AccessLevel.PRIVATE) private final DimensionSizer x;
-    @Getter(AccessLevel.PRIVATE) private final DimensionSizer y;
-    @Getter private boolean expanded = false;
-    @Getter private boolean decoration = false;
+    @Getter(AccessLevel.PRIVATE)
+    private final DimensionSizer x;
+    @Getter(AccessLevel.PRIVATE)
+    private final DimensionSizer y;
+    @Getter
+    private boolean expanded = false;
+    @Getter
+    private boolean decoration = false;
 
     private boolean childrenResized = false;
     private boolean layoutResized = false;
@@ -284,7 +288,8 @@ public class StandardResizer extends WidgetResizeNode implements IPositioned<Sta
                 // if all children sizes depend on their parent, just use the min size as default
                 w = this.x.getCoverChildrenMinSize();
             } else {
-                GuiError.throwNew(getWidget(), GuiError.Type.SIZING, "Can't cover children width when all children depend on their parent and min size is 0!");
+                GuiError.throwNew(getWidget(), GuiError.Type.SIZING,
+                        "Can't cover children width when all children depend on their parent and min size is 0!");
                 return false;
             }
         }
@@ -293,7 +298,8 @@ public class StandardResizer extends WidgetResizeNode implements IPositioned<Sta
                 // if all children sizes depend on their parent, just use the min size as default
                 h = this.y.getCoverChildrenMinSize();
             } else {
-                GuiError.throwNew(getWidget(), GuiError.Type.SIZING, "Can't cover children height when all children depend on their parent and min size is 0!");
+                GuiError.throwNew(getWidget(), GuiError.Type.SIZING,
+                        "Can't cover children height when all children depend on their parent and min size is 0!");
                 return false;
             }
         }
@@ -372,7 +378,8 @@ public class StandardResizer extends WidgetResizeNode implements IPositioned<Sta
                         x1 = Math.max(x1, area.rx + area.width + padding.right() + margin.right());
                     }
                 } else if (coverByDefaultSizeX) {
-                    withDefaultW = Math.max(withDefaultW, child.getDefaultWidth() + margin.horizontal() + padding.horizontal());
+                    withDefaultW = Math.max(withDefaultW,
+                            child.getDefaultWidth() + margin.horizontal() + padding.horizontal());
                 }
             }
 
@@ -388,7 +395,8 @@ public class StandardResizer extends WidgetResizeNode implements IPositioned<Sta
                         y1 = Math.max(y1, area.ry + area.height + padding.bottom() + margin.bottom());
                     }
                 } else if (coverByDefaultSizeY) {
-                    withDefaultH = Math.max(withDefaultH, child.getDefaultHeight() + margin.vertical() + padding.vertical());
+                    withDefaultH = Math.max(withDefaultH,
+                            child.getDefaultHeight() + margin.vertical() + padding.vertical());
                 }
             }
         }
@@ -398,7 +406,8 @@ public class StandardResizer extends WidgetResizeNode implements IPositioned<Sta
                 // if all children sizes depend on their parent, just use the min size as default
                 w = this.x.getCoverChildrenMinSize();
             } else {
-                GuiError.throwNew(getWidget(), GuiError.Type.SIZING, "Can't cover children width when all children depend on their parent and min size is 0!");
+                GuiError.throwNew(getWidget(), GuiError.Type.SIZING,
+                        "Can't cover children width when all children depend on their parent and min size is 0!");
                 return;
             }
         }
@@ -407,7 +416,8 @@ public class StandardResizer extends WidgetResizeNode implements IPositioned<Sta
                 // if all children sizes depend on their parent, just use the min size as default
                 h = this.y.getCoverChildrenMinSize();
             } else {
-                GuiError.throwNew(getWidget(), GuiError.Type.SIZING, "Can't cover children height when all children depend on their parent and min size is 0!");
+                GuiError.throwNew(getWidget(), GuiError.Type.SIZING,
+                        "Can't cover children height when all children depend on their parent and min size is 0!");
                 return;
             }
         }

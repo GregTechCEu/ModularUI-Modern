@@ -123,12 +123,12 @@ public class REIStackConverter {
         return (Converter<T>) CONVERTERS.get(clazz);
     }
 
-
     public static <T> Optional<Converter<T>> getFor(Class<T> clazz) {
         return Optional.ofNullable(getForNullable(clazz));
     }
 
-    public static <T> EntryIngredient convertToReiEntry(EntryList<T> entries, float chance, UnaryOperator<T> renderMappingFunction) {
+    public static <T> EntryIngredient convertToReiEntry(EntryList<T> entries, float chance,
+                                                        UnaryOperator<T> renderMappingFunction) {
         REIStackConverter.Converter<T> converter = REIStackConverter.getForNullable(entries.getType());
         if (converter != null) {
             return converter.convertTo(entries, chance, renderMappingFunction);

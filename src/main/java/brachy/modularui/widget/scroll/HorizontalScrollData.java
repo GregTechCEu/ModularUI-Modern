@@ -108,13 +108,15 @@ public class HorizontalScrollData extends ScrollData {
             float prog = MathUtils.clamp(s / maxOpacityScroll, 0, 1);
             int startColor = Color.withAlpha(startColorFull, prog * 0.8f);
             int size = Math.min((int) (prog * maxShadowSize), maxShadowSizeLimit);
-            GuiDraw.drawHorizontalGradientRect(context.getGraphics(), sp.getScrollPaddingLeft(), y, size, h, startColor, endColor);
+            GuiDraw.drawHorizontalGradientRect(context.getGraphics(), sp.getScrollPaddingLeft(), y, size, h, startColor,
+                    endColor);
         }
         if (s < max) {
             float prog = MathUtils.clamp((max - s) / maxOpacityScroll, 0, 1);
             int startColor = Color.withAlpha(startColorFull, prog * 0.8f);
             int size = Math.min((int) (prog * maxShadowSize), maxShadowSizeLimit);
-            GuiDraw.drawHorizontalGradientRect(context.getGraphics(), area.w() - size - sp.getScrollPaddingRight(), y, size, h, endColor, startColor);
+            GuiDraw.drawHorizontalGradientRect(context.getGraphics(), area.w() - size - sp.getScrollPaddingRight(), y,
+                    size, h, endColor, startColor);
         }
     }
 }

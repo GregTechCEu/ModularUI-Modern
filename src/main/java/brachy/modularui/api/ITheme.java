@@ -11,12 +11,8 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.DynamicOps;
 import com.mojang.serialization.Encoder;
-
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
-
-import net.minecraft.util.ExtraCodecs;
-
 import org.jetbrains.annotations.UnmodifiableView;
 
 import java.util.Collection;
@@ -39,6 +35,7 @@ public interface ITheme {
             ITheme::getId);
 
     Encoder<ITheme> ENCODER = new Encoder<>() {
+
         @Override
         public <T> DataResult<T> encode(ITheme input, DynamicOps<T> ops, T prefix) {
             var mapBuilder = ops.mapBuilder();
@@ -49,7 +46,8 @@ public interface ITheme {
             for (WidgetThemeEntry<?> entry : input.getWidgetThemeEntries()) {
                 if (entry.key() == IThemeApi.FALLBACK) continue;
                 var set = encodedThemes.computeIfAbsent(entry.key().getName(), k -> new ObjectOpenHashSet<>());
-                if (entry.key().isSubWidgetTheme() && set.contains(entry.theme()) && set.contains(entry.hoverTheme())) continue;
+                if (entry.key().isSubWidgetTheme() && set.contains(entry.theme()) && set.contains(entry.hoverTheme()))
+                    continue;
                 entry.encode(ops, mapBuilder, false);
                 set.add(entry.theme());
                 set.add(entry.hoverTheme());

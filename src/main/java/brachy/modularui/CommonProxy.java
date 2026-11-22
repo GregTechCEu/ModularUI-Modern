@@ -11,7 +11,6 @@ import brachy.modularui.theme.ThemeManager;
 
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
-import com.mojang.brigadier.Command;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
@@ -22,6 +21,8 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+
+import com.mojang.brigadier.Command;
 
 public class CommonProxy {
 
@@ -74,7 +75,8 @@ public class CommonProxy {
                         .executes(ctx -> {
                             ThemeManager.reload();
                             // TODO translations for this
-                            ctx.getSource().sendSuccess(() -> Component.literal("ModularUI Themes reloaded").withStyle(Text.GREEN), true);
+                            ctx.getSource().sendSuccess(
+                                    () -> Component.literal("ModularUI Themes reloaded").withStyle(Text.GREEN), true);
                             return Command.SINGLE_SUCCESS;
                         }));
         event.getDispatcher().register(command);

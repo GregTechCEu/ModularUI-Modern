@@ -19,12 +19,12 @@ import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.util.ExtraCodecs;
+
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.Decoder;
 import com.mojang.serialization.DynamicOps;
 import com.mojang.serialization.Encoder;
-
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import lombok.Getter;
 
@@ -44,6 +44,7 @@ public class RichText implements IDrawable, IRichTextBuilder<RichText> {
             ModularComponent.CODEC.codec(), ExtraCodecs.COMPONENT,
             Spacer.CODEC_MAP.codec(), Codec.STRING, IDrawable.CODEC);
     private static final Encoder<Object> RICH_ELEMENT_ENCODER = new Encoder<>() {
+
         @Override
         public <T> DataResult<T> encode(Object input, DynamicOps<T> ops, T prefix) {
             if (input == null) return DataResult.success(ops.empty());
@@ -56,7 +57,8 @@ public class RichText implements IDrawable, IRichTextBuilder<RichText> {
             if (input instanceof Component v) return ExtraCodecs.COMPONENT.encode(v, ops, prefix);
             if (input instanceof IDrawable v) return IDrawable.CODEC.encode(v, ops, prefix);
             if (input instanceof Spacer v) return Spacer.CODEC_MAP.codec().encode(v, ops, prefix);
-            return DataResult.error(() -> "RichText is currently unable to encode objects of type " + input.getClass().getSimpleName());
+            return DataResult.error(
+                    () -> "RichText is currently unable to encode objects of type " + input.getClass().getSimpleName());
         }
     };
     public static final Codec<Object> RICH_ELEMENT_CODEC = Codec.of(RICH_ELEMENT_ENCODER, RICH_ELEMENT_DECODER);
@@ -71,10 +73,14 @@ public class RichText implements IDrawable, IRichTextBuilder<RichText> {
 
     private final List<Object> elements = new ArrayList<>();
     private TooltipLines componentList;
-    @Getter private Alignment alignment = Alignment.CenterLeft;
-    @Getter private float scale = 1f;
-    @Getter private Integer color = null;
-    @Getter private Boolean shadow = null;
+    @Getter
+    private Alignment alignment = Alignment.CenterLeft;
+    @Getter
+    private float scale = 1f;
+    @Getter
+    private Integer color = null;
+    @Getter
+    private Boolean shadow = null;
 
     private int cursor = 0;
     private boolean cursorLocked = false;
@@ -370,7 +376,8 @@ public class RichText implements IDrawable, IRichTextBuilder<RichText> {
         draw(renderer, context, x, y, width, height, color, shadow);
     }
 
-    public void draw(TextRenderer renderer, GuiContext context, int x, int y, int width, int height, int color, boolean shadow) {
+    public void draw(TextRenderer renderer, GuiContext context, int x, int y, int width, int height, int color,
+                     boolean shadow) {
         if (ModularUI.isDev() && !this.verified) {
             verifyListElements(this.elements);
             this.verified = true;
@@ -388,7 +395,8 @@ public class RichText implements IDrawable, IRichTextBuilder<RichText> {
         return (int) renderer.getLastHeight();
     }
 
-    public void setupRenderer(TextRenderer renderer, int x, int y, float width, float height, int color, boolean shadow) {
+    public void setupRenderer(TextRenderer renderer, int x, int y, float width, float height, int color,
+                              boolean shadow) {
         renderer.setPos(x, y);
         renderer.setScale(this.scale);
         renderer.setColor(this.color != null ? this.color : color);
@@ -479,7 +487,8 @@ public class RichText implements IDrawable, IRichTextBuilder<RichText> {
                 continue;
             }
             if (!errored.contains(o.getClass())) {
-                errors.add("Element of type '" + o.getClass() + "' is not valid for RichText. Elements must implement one of these interfaces: [FormattedText, IIcon, ITextLine]");
+                errors.add("Element of type '" + o.getClass() +
+                        "' is not valid for RichText. Elements must implement one of these interfaces: [FormattedText, IIcon, ITextLine]");
                 errored.add(o.getClass());
             }
         }

@@ -29,7 +29,7 @@ import java.util.Collection;
 import java.util.Map;
 
 public class REIScreenHandler<T extends Screen & IMuiScreen> extends RecipeViewerHandler
-        implements DraggableStackProvider<T>, ExclusionZonesProvider<T> {
+                             implements DraggableStackProvider<T>, ExclusionZonesProvider<T> {
 
     private static final Map<Class<?>, REIScreenHandler<?>> CACHE = new Reference2ReferenceOpenHashMap<>();
 
@@ -76,7 +76,7 @@ public class REIScreenHandler<T extends Screen & IMuiScreen> extends RecipeViewe
             if (converter == null) {
                 return null;
             }
-            @SuppressWarnings({"rawtypes", "unchecked"})
+            @SuppressWarnings({ "rawtypes", "unchecked" })
             var converted = ((REIStackConverter.Converter) converter).convertTo(provider);
             return new DraggableStack() {
 

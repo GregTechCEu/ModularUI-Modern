@@ -5,9 +5,8 @@ import brachy.modularui.screen.viewport.GuiContext;
 import brachy.modularui.theme.WidgetTheme;
 import brachy.modularui.utils.serialization.codec.MutableObjectCodec;
 
-import com.mojang.serialization.Codec;
-
 import com.google.common.collect.Iterables;
+import com.mojang.serialization.Codec;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -22,7 +21,8 @@ import java.util.Objects;
 public class CycleDrawable implements IDrawable {
 
     public static final MutableObjectCodec<CycleDrawable> CODEC = MutableObjectCodec.drawableBuilder(CycleDrawable::new)
-            .addOpt("drawables", CycleDrawable::drawables, CycleDrawable::getListDrawables, IDrawable.CODEC.listOf(), Collections.emptyList())
+            .addOpt("drawables", CycleDrawable::drawables, CycleDrawable::getListDrawables, IDrawable.CODEC.listOf(),
+                    Collections.emptyList())
             .addOpt("cycleTime", CycleDrawable::cycleTime, CycleDrawable::cycleTime, Codec.INT, 1000)
             .build();
 

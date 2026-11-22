@@ -13,7 +13,6 @@ import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
-import com.mojang.serialization.JsonOps;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
@@ -21,6 +20,7 @@ import net.minecraftforge.common.MinecraftForge;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.mojang.serialization.JsonOps;
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
@@ -75,7 +75,8 @@ public class ThemeManager extends SimplePreparableReloadListener<Map<String, Lis
         for (String namespace : resourceManager.getNamespaces()) {
             profiler.push(namespace);
 
-            for (Resource resource : resourceManager.getResourceStack(ResourceLocation.fromNamespaceAndPath(namespace, THEMES_PATH))) {
+            for (Resource resource : resourceManager
+                    .getResourceStack(ResourceLocation.fromNamespaceAndPath(namespace, THEMES_PATH))) {
                 profiler.push(resource.sourcePackId());
                 themeJsonSources.add(resource.sourcePackId());
 
@@ -266,7 +267,7 @@ public class ThemeManager extends SimplePreparableReloadListener<Map<String, Lis
 
     private static void validateJsonScreenThemes() {
         for (ObjectIterator<Object2ObjectMap.Entry<String, String>> iterator = ThemeAPI.INSTANCE.jsonScreenThemes
-                .object2ObjectEntrySet().fastIterator(); iterator.hasNext(); ) {
+                .object2ObjectEntrySet().fastIterator(); iterator.hasNext();) {
             Map.Entry<String, String> entry = iterator.next();
             if (!ThemeAPI.INSTANCE.hasTheme(entry.getValue())) {
                 ModularUI.LOGGER.error("Tried to register theme '{}' for screen '{}', but theme does not exist",
@@ -287,7 +288,7 @@ public class ThemeManager extends SimplePreparableReloadListener<Map<String, Lis
             this.id = id;
             this.override = override;
             String p = null;
-            for (ListIterator<JsonObject> iterator = jsons.listIterator(jsons.size()); iterator.hasPrevious(); ) {
+            for (ListIterator<JsonObject> iterator = jsons.listIterator(jsons.size()); iterator.hasPrevious();) {
                 JsonObject json = iterator.previous();
                 if (json.has(IThemeApi.PARENT)) {
                     p = json.get(IThemeApi.PARENT).getAsString();
@@ -319,7 +320,8 @@ public class ThemeManager extends SimplePreparableReloadListener<Map<String, Lis
             WidgetThemeMap widgetThemes = new WidgetThemeMap();
             WidgetThemeEntry<?> parentWidgetTheme = parent.getFallbackEntry(); // fallback theme of parent
             // fallback theme of new theme
-            var incompleteFallbackJson = ImmutableJson.of(jsonBuilder.getJson()); // themes should only inherit values which are declared here
+            var incompleteFallbackJson = ImmutableJson.of(jsonBuilder.getJson()); // themes should only inherit values
+                                                                                  // which are declared here
             var fallbackJson = IThemeApi.FALLBACK.getMerger().merge(
                     jsonBuilder.getJson(),
                     ThemeManager.jsons.get(IThemeApi.FALLBACK, parentWidgetTheme.theme()),
@@ -373,9 +375,11 @@ public class ThemeManager extends SimplePreparableReloadListener<Map<String, Lis
             if (key.isSubWidgetTheme()) fallback = ImmutableJson.EMPTY;
             ImmutableJson widgetThemeJson;
             if (rawWidgetThemeJson != null) {
-                T parentWidgetTheme = key.isSubWidgetTheme() ? map.getTheme(key.getParent()).theme() : parent.getWidgetThemeEntry(key).theme();
+                T parentWidgetTheme = key.isSubWidgetTheme() ? map.getTheme(key.getParent()).theme() :
+                        parent.getWidgetThemeEntry(key).theme();
                 // sub widget themes strictly only inherit from their parent widget theme and not the parent theme
-                widgetThemeJson = ImmutableJson.of(merger.merge(rawWidgetThemeJson, ThemeManager.jsons.get(key, parentWidgetTheme), fallback));
+                widgetThemeJson = ImmutableJson
+                        .of(merger.merge(rawWidgetThemeJson, ThemeManager.jsons.get(key, parentWidgetTheme), fallback));
             } else {
                 widgetThemeJson = ThemeManager.jsons.get(key, parent.getWidgetThemeEntry(key).theme());
             }
@@ -387,12 +391,15 @@ public class ThemeManager extends SimplePreparableReloadListener<Map<String, Lis
             }
 
             // only inherit from the widget theme if it was actually defined, otherwise use parent
-            ImmutableJson parentWidgetHoverTheme = definedStandard ? widgetThemeJson : ThemeManager.jsons.get(key, parent.getWidgetThemeEntry(key).hoverTheme());
+            ImmutableJson parentWidgetHoverTheme = definedStandard ? widgetThemeJson :
+                    ThemeManager.jsons.get(key, parent.getWidgetThemeEntry(key).hoverTheme());
             JsonObject widgetThemeHover = merger.merge(widgetThemeHoverJson, parentWidgetHoverTheme, fallback);
             var immutableHoverWidgetTheme = ImmutableJson.of(widgetThemeHover);
 
-            T widgetThemeInstance = key.getCodec().codec().parse(JsonOps.INSTANCE, widgetThemeJson.toJson()).getOrThrow(false, s -> {});
-            T widgetThemeHoverInstance = key.getCodec().codec().parse(JsonOps.INSTANCE, immutableHoverWidgetTheme.toJson()).getOrThrow(false, s -> {});
+            T widgetThemeInstance = key.getCodec().codec().parse(JsonOps.INSTANCE, widgetThemeJson.toJson())
+                    .getOrThrow(false, s -> {});
+            T widgetThemeHoverInstance = key.getCodec().codec()
+                    .parse(JsonOps.INSTANCE, immutableHoverWidgetTheme.toJson()).getOrThrow(false, s -> {});
 
             map.register(key, widgetThemeInstance, widgetThemeHoverInstance);
         }

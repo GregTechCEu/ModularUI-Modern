@@ -9,11 +9,11 @@ import brachy.modularui.api.widget.IFocusedWidget;
 import brachy.modularui.api.widget.IVanillaSlot;
 import brachy.modularui.api.widget.IWidget;
 import brachy.modularui.api.widget.ResizeDragArea;
-import brachy.modularui.utils.CursorHandler;
 import brachy.modularui.screen.DraggablePanelWrapper;
 import brachy.modularui.screen.ModularPanel;
 import brachy.modularui.screen.ModularScreen;
 import brachy.modularui.screen.UISettings;
+import brachy.modularui.utils.CursorHandler;
 
 import net.minecraft.Util;
 import net.minecraft.client.gui.GuiGraphics;

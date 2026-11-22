@@ -67,7 +67,8 @@ public class PanelSyncManager implements ISyncRegistrar<PanelSyncManager> {
         this.locked = true;
         this.syncHandlers.forEach((mapKey, syncHandler) -> syncHandler.init(mapKey, this));
         this.init = true;
-        this.subPanels.forEach((s, syncHandler) -> this.modularSyncManager.getMainPSM().registerPanelSyncHandler(s, syncHandler));
+        this.subPanels.forEach(
+                (s, syncHandler) -> this.modularSyncManager.getMainPSM().registerPanelSyncHandler(s, syncHandler));
     }
 
     private void registerPanelSyncHandler(String name, SyncHandler<?> syncHandler) {
@@ -79,8 +80,9 @@ public class PanelSyncManager implements ISyncRegistrar<PanelSyncManager> {
         }
         String currentName = this.reverseSyncHandlers.get(syncHandler);
         if (currentName != null && !name.equals(currentName)) {
-            throw new IllegalStateException("Failed to register panel sync handler for name '" + name + "' during initialization. " +
-                    "The panel sync handler is already registered under the name '" + currentName + "'.");
+            throw new IllegalStateException(
+                    "Failed to register panel sync handler for name '" + name + "' during initialization. " +
+                            "The panel sync handler is already registered under the name '" + currentName + "'.");
         }
         this.syncHandlers.put(name, syncHandler);
         this.reverseSyncHandlers.put(syncHandler, name);
@@ -104,7 +106,8 @@ public class PanelSyncManager implements ISyncRegistrar<PanelSyncManager> {
     public void onClose() {
         this.closeListener.forEach(listener -> listener.accept(getPlayer()));
         this.syncHandlers.values().forEach(SyncHandler::dispose);
-        // Previously panel sync handlers were removed from the main psm, however this problematic if the screen will be reopened at some
+        // Previously panel sync handlers were removed from the main psm, however this problematic if the screen will be
+        // reopened at some
         // point. We can just not remove the sync handlers since mui has proper checks for re-registering panels.
     }
 
@@ -141,7 +144,8 @@ public class PanelSyncManager implements ISyncRegistrar<PanelSyncManager> {
         } else if (syncHandler.isAllowC2S()) {
             syncHandler.readOnServer(id, buf);
         } else {
-            ModularUI.LOGGER.throwing(Level.WARN, new SecurityException("Tried to send a packet to server, but the sync handler does not accept client packets."));
+            ModularUI.LOGGER.throwing(Level.WARN, new SecurityException(
+                    "Tried to send a packet to server, but the sync handler does not accept client packets."));
         }
     }
 
@@ -151,7 +155,8 @@ public class PanelSyncManager implements ISyncRegistrar<PanelSyncManager> {
             ModularUI.LOGGER.warn("SyncAction '{}' does not exist for panel '{}'!.", mapKey, panelName);
             return false;
         }
-        if (!isLocked() || this.allowSyncHandlerRegistration || !syncedAction.isExecuteClient() || !syncedAction.isExecuteServer()) {
+        if (!isLocked() || this.allowSyncHandlerRegistration || !syncedAction.isExecuteClient() ||
+                !syncedAction.isExecuteServer()) {
             syncedAction.invoke(this.client, buf);
         } else {
             // only allow sync handler registration if it is executed on client and server
@@ -182,9 +187,11 @@ public class PanelSyncManager implements ISyncRegistrar<PanelSyncManager> {
             // registration of sync handlers forbidden
             if (this.allowSyncHandlerRegistration) {
                 // lock can be bypassed currently, but it wasn't used
-                throw new IllegalStateException("SyncHandlers must be registered during panel building. Please use getOrCreateSyncHandler() inside DynamicSyncHandler!");
+                throw new IllegalStateException(
+                        "SyncHandlers must be registered during panel building. Please use getOrCreateSyncHandler() inside DynamicSyncHandler!");
             } else {
-                throw new IllegalStateException("SyncHandlers must be registered during panel building. The only exceptions is via a DynamicSyncHandler and sync functions!");
+                throw new IllegalStateException(
+                        "SyncHandlers must be registered during panel building. The only exceptions is via a DynamicSyncHandler and sync functions!");
             }
         }
         String key = makeSyncKey(name, id);
@@ -223,13 +230,17 @@ public class PanelSyncManager implements ISyncRegistrar<PanelSyncManager> {
      * <b>NOTE</b>
      * </p>
      * A panel sync handler is only created once. If one was already registered, that one will be returned.
-     * (This is only relevant for nested sub panels.) Furthermore, the panel handler has to be created on client and server with the same
-     * key. Like any other sync handler, the panel sync handler has to be created before the panel opened. The only exception is inside
+     * (This is only relevant for nested sub panels.) Furthermore, the panel handler has to be created on client and
+     * server with the same
+     * key. Like any other sync handler, the panel sync handler has to be created before the panel opened. The only
+     * exception is inside
      * dynamic sync handlers.
      *
      * @param key          the key used for syncing
-     * @param subPanel     true if this panel should close when its parent closes (the parent is defined by <i>this</i> {@link PanelSyncManager})
-     * @param panelBuilder the panel builder, that will create the new panel. It must not return null or any existing panels.
+     * @param subPanel     true if this panel should close when its parent closes (the parent is defined by <i>this</i>
+     *                     {@link PanelSyncManager})
+     * @param panelBuilder the panel builder, that will create the new panel. It must not return null or any existing
+     *                     panels.
      * @return a synced panel handler.
      * @throws NullPointerException     if the build panel of the builder is null
      * @throws IllegalArgumentException if the build panel of the builder is the main panel
@@ -241,12 +252,14 @@ public class PanelSyncManager implements ISyncRegistrar<PanelSyncManager> {
         if (ph != null) return ph;
         if (isLocked() && !this.allowSyncHandlerRegistration) {
             // registration of sync handlers forbidden
-            throw new IllegalStateException("Synced panels must be registered during panel building. The only exceptions is via a DynamicSyncHandler and sync functions!");
+            throw new IllegalStateException(
+                    "Synced panels must be registered during panel building. The only exceptions is via a DynamicSyncHandler and sync functions!");
         }
         PanelSyncHandler syncHandler = new PanelSyncHandler(panelBuilder, subPanel);
         this.subPanels.put(key, syncHandler);
         if (isInitialised() && (this == this.modularSyncManager.getMainPSM() ||
-                this.modularSyncManager.getMainPSM().findSyncHandlerNullable(this.panelName, PanelSyncHandler.class) == null)) {
+                this.modularSyncManager.getMainPSM().findSyncHandlerNullable(this.panelName, PanelSyncHandler.class) ==
+                        null)) {
             // current panel is open
             this.modularSyncManager.getMainPSM().registerPanelSyncHandler(key, syncHandler);
         }
@@ -302,7 +315,8 @@ public class PanelSyncManager implements ISyncRegistrar<PanelSyncManager> {
     }
 
     @Override
-    public PanelSyncManager registerSyncedAction(String mapKey, boolean executeClient, boolean executeServer, ISyncedAction action) {
+    public PanelSyncManager registerSyncedAction(String mapKey, boolean executeClient, boolean executeServer,
+                                                 ISyncedAction action) {
         if (executeClient || executeServer) {
             this.syncedActions.put(mapKey, new SyncedAction(action, executeClient, executeServer));
         }
@@ -311,7 +325,8 @@ public class PanelSyncManager implements ISyncRegistrar<PanelSyncManager> {
 
     public void callSyncedAction(String mapKey, FriendlyByteBuf packet) {
         if (invokeSyncedAction(mapKey, packet)) {
-            ModularNetwork.get(isClient()).sendActionPacket(getModularSyncManager(), this.panelName, mapKey, packet, getPlayer());
+            ModularNetwork.get(isClient()).sendActionPacket(getModularSyncManager(), this.panelName, mapKey, packet,
+                    getPlayer());
         }
     }
 
@@ -326,12 +341,14 @@ public class PanelSyncManager implements ISyncRegistrar<PanelSyncManager> {
     }
 
     @Override
-    public <T extends SyncHandler<?>> T getOrCreateSyncHandler(String name, int id, Class<T> clazz, Supplier<T> supplier) {
+    public <T extends SyncHandler<?>> T getOrCreateSyncHandler(String name, int id, Class<T> clazz,
+                                                               Supplier<T> supplier) {
         SyncHandler<?> syncHandler = findSyncHandlerNullable(name, id);
         if (syncHandler == null) {
             if (isLocked() && !this.allowSyncHandlerRegistration) {
                 // registration is locked, and we don't have permission to temporarily bypass lock
-                throw new IllegalStateException("SyncHandlers must be registered during panel building. The only exceptions is via a DynamicSyncHandler and sync functions!");
+                throw new IllegalStateException(
+                        "SyncHandlers must be registered during panel building. The only exceptions is via a DynamicSyncHandler and sync functions!");
             }
             T t = supplier.get();
             boolean l = this.locked;
@@ -343,7 +360,8 @@ public class PanelSyncManager implements ISyncRegistrar<PanelSyncManager> {
         if (clazz.isAssignableFrom(syncHandler.getClass())) {
             return clazz.cast(syncHandler);
         }
-        throw new IllegalStateException("SyncHandler for key " + makeSyncKey(name, id) + " is of type " + syncHandler.getClass() + ", but type " + clazz + " was expected!");
+        throw new IllegalStateException("SyncHandler for key " + makeSyncKey(name, id) + " is of type " +
+                syncHandler.getClass() + ", but type " + clazz + " was expected!");
     }
 
     @Override
@@ -352,7 +370,8 @@ public class PanelSyncManager implements ISyncRegistrar<PanelSyncManager> {
         if (syncHandler == null) {
             if (isLocked() && !this.allowSyncHandlerRegistration) {
                 // registration is locked, and we don't have permission to temporarily bypass lock
-                throw new IllegalStateException("SyncHandlers must be registered during panel building. The only exceptions is via a DynamicSyncHandler and sync functions!");
+                throw new IllegalStateException(
+                        "SyncHandlers must be registered during panel building. The only exceptions is via a DynamicSyncHandler and sync functions!");
             }
             T t = supplier.get();
             boolean l = this.locked;
@@ -362,7 +381,7 @@ public class PanelSyncManager implements ISyncRegistrar<PanelSyncManager> {
             return t;
         }
         try {
-            //noinspection unchecked
+            // noinspection unchecked
             return (T) syncHandler;
         } catch (ClassCastException e) {
             throw new IllegalStateException("SyncHandler for key " + makeSyncKey(name, id) +

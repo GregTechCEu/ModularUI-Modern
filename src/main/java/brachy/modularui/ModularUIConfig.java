@@ -26,7 +26,8 @@ public class ModularUIConfig {
             .translation("config.modularui.defaultScrollSpeed")
             .defineInRange("defaultScrollSpeed", 30, 1, 100);
     public static final BooleanValue SMOOTH_PROGRESS_BARS = BUILDER
-            .comment("If progress bars should step in texture pixels or screen pixels. (Screen pixels are way smaller and therefore smoother)")
+            .comment(
+                    "If progress bars should step in texture pixels or screen pixels. (Screen pixels are way smaller and therefore smoother)")
             .translation("config.modularui.smoothProgressBars")
             .define("smoothProgressBars", false);
     public static final IntValue ANIMATION_TIME = BUILDER
@@ -39,7 +40,8 @@ public class ModularUIConfig {
             .translation("config.modularui.tooltipPos")
             .defineEnum("tooltipPos", RichTooltip.Pos.NEXT_TO_MOUSE);
     public static final BooleanValue ESC_RESTORES_LAST_TEXT = BUILDER
-            .comment("If true, pressing ESC key in the text field will restore the last text instead of confirming current one.")
+            .comment(
+                    "If true, pressing ESC key in the text field will restore the last text instead of confirming current one.")
             .translation("config.modularui.escRestoresLastText")
             .define("escRestoresLastText", false);
     public static final BooleanValue USE_DARK_THEME_BY_DEFAULT = BUILDER
@@ -49,12 +51,12 @@ public class ModularUIConfig {
     public static final BooleanValue ENABLE_TEST_GUIS = BUILDER
             .comment("Enables a test block, test item with a test gui and opening a gui by right clicking a diamond.")
             .translation("config.modularui.enableTestGuis")
-            .worldRestart() //.gameRestart()
+            .worldRestart() // .gameRestart()
             .define("enableTestGuis", ModularUI.isDev());
     public static final BooleanValue ENABLE_TEST_OVERLAYS = BUILDER
             .comment("Enables a test overlay shown on title screen and watermark shown on every GuiContainer.")
             .translation("config.modularui.enableTestOverlays")
-            .worldRestart() //.gameRestart()
+            .worldRestart() // .gameRestart()
             .define("enableTestOverlays", false);
     public static final BooleanValue REPLACE_VANILLA_TOOLTIPS = BUILDER
             .comment("If true, vanilla tooltip will be replaced with MUI's RichTooltip")

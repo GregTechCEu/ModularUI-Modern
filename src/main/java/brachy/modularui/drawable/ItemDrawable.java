@@ -11,10 +11,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
-import com.mojang.serialization.Codec;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import com.mojang.serialization.Codec;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -31,7 +31,8 @@ import java.util.List;
 public class ItemDrawable implements IDrawable {
 
     public static final MutableObjectCodec<ItemDrawable> CODEC = MutableObjectCodec.drawableBuilder(ItemDrawable::new)
-            .add("items", ItemDrawable::items, ItemDrawable::getItemList, CodecUtil.listLike(ItemStack.CODEC)).alias("item")
+            .add("items", ItemDrawable::items, ItemDrawable::getItemList, CodecUtil.listLike(ItemStack.CODEC))
+            .alias("item")
             .addOpt("cycleTime", ItemDrawable::cycleTime, ItemDrawable::cycleTime, Codec.INT, 1000)
             .build();
 

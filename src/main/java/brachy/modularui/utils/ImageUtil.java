@@ -114,7 +114,8 @@ public class ImageUtil {
         int w = ImageUtil.getWidth(size);
         int h = ImageUtil.getHeight(size);
         if (w != width || h != height) {
-            ModularUI.LOGGER.error("Image size is incorrect of image '{}'. Expected {}|{}, but actually is {}|{}", resLoc,
+            ModularUI.LOGGER.error("Image size is incorrect of image '{}'. Expected {}|{}, but actually is {}|{}",
+                    resLoc,
                     width, height, w, h);
         } else {
             ModularUI.LOGGER.info("Image '{}' has correct size", resLoc);
@@ -200,6 +201,7 @@ public class ImageUtil {
     private enum ImageType implements SizeParser {
 
         PNG(8, 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A) {
+
             @Override
             public long parse(InputStream inputStream) throws IOException {
                 DataInput dataInput = getDataInput(inputStream);
@@ -209,6 +211,7 @@ public class ImageUtil {
             }
         },
         JPEG(2, 0xFF, 0xD8) {
+
             @Override
             public long parse(InputStream inputStream) throws IOException {
                 DataInput dis = getDataInput(inputStream);
@@ -247,6 +250,7 @@ public class ImageUtil {
         },
         // 5th byte is variable -> only use the first 4
         GIF(6, 0x47, 0x49, 0x46, 0x38) {
+
             @Override
             public long parse(InputStream inputStream) throws IOException {
                 return packSize(readLittleEndianShort(inputStream), readLittleEndianShort(inputStream));

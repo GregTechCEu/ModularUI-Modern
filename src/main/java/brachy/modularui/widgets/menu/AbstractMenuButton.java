@@ -29,7 +29,8 @@ import java.util.function.Predicate;
  *
  * @param <W> type of this widget
  */
-public abstract class AbstractMenuButton<W extends AbstractMenuButton<W>> extends Widget<W> implements IMenuPart, Interactable {
+public abstract class AbstractMenuButton<W extends AbstractMenuButton<W>> extends Widget<W>
+                                        implements IMenuPart, Interactable {
 
     /**
      * The general direction where the menu will be opened. This is just a shortcut to standard resizer calls.
@@ -53,11 +54,13 @@ public abstract class AbstractMenuButton<W extends AbstractMenuButton<W>> extend
     /**
      * true if the menu is currently open (soft or hard)
      */
-    @Getter private boolean open;
+    @Getter
+    private boolean open;
     /**
      * true if the menu is currently soft open (opened by hovering)
      */
-    @Getter private boolean softOpen; // state, soft means opened by hovering
+    @Getter
+    private boolean softOpen; // state, soft means opened by hovering
     private IPanelHandler panelHandler;
     private final String panelName;
 

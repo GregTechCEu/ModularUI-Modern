@@ -14,7 +14,8 @@ import java.util.List;
 /**
  * A crafting inventory that wraps a {@link IItemHandlerModifiable}.
  * This inventory creates a content list which is used here to detect changes from the item handler.
- * This is required as interacting with a slot will update the content, but will not notify the container to check for new recipes.
+ * This is required as interacting with a slot will update the content, but will not notify the container to check for
+ * new recipes.
  */
 public class CraftingContainerWrapper extends TransientCraftingContainer {
 

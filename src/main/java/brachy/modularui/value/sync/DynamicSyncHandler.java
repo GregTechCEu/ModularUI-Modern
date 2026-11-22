@@ -128,7 +128,8 @@ public class DynamicSyncHandler extends SyncHandler<DynamicSyncHandler> implemen
     }
 
     /**
-     * An internal function which is used to link the {@link brachy.modularui.widgets.dynamic.DynamicWidget DynamicWidget}.
+     * An internal function which is used to link the {@link brachy.modularui.widgets.dynamic.DynamicWidget
+     * DynamicWidget}.
      */
     @ApiStatus.Internal
     @Override

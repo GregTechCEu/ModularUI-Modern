@@ -67,7 +67,7 @@ public abstract class InventoryType<T> {
      * @return index of slot with stackable item or -1 if none found
      */
     public int findFirstStackable(Player player, ItemStack stack, boolean ignoreEmpty) {
-        int[] holder = {-1};
+        int[] holder = { -1 };
         visitAllStackable(player, stack, (type, context, index, stackInSlot) -> {
             if (stackInSlot.isEmpty() && ignoreEmpty) return false;
             holder[0] = index;

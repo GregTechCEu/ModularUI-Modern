@@ -43,7 +43,8 @@ public class BoxSchema extends PosListSchema {
     public boolean equals(Object o) {
         if (!(o instanceof BoxSchema entries)) return false;
 
-        return level.equals(entries.level) && min.equals(entries.min) && max.equals(entries.max) && center.equals(entries.center);
+        return level.equals(entries.level) && min.equals(entries.min) && max.equals(entries.max) &&
+                center.equals(entries.center);
     }
 
     @Override

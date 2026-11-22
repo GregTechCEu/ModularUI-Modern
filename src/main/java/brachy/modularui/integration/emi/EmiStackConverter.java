@@ -60,17 +60,17 @@ public class EmiStackConverter {
                 return toEMIIngredient(stackList.stream().map(mapper)).setChance(chance);
             } else if (stack instanceof ItemTagList tagList) {
                 return EmiIngredient.of(tagList.getEntries().stream()
-                                        .map(ItemTagList.ItemTagEntry::stacks)
-                                        .map(stream -> toEMIIngredient(stream.map(mapper)))
-                                        .collect(Collectors.toList()),
-                                tagList.getEntries().get(0).amount())
+                        .map(ItemTagList.ItemTagEntry::stacks)
+                        .map(stream -> toEMIIngredient(stream.map(mapper)))
+                        .collect(Collectors.toList()),
+                        tagList.getEntries().get(0).amount())
                         .setChance(chance);
             } else if (stack instanceof ItemHolderSetList holderSetList) {
                 return EmiIngredient.of(holderSetList.getEntries().stream()
-                                        .map(ItemHolderSetList.ItemHolderSetEntry::stacks)
-                                        .map(stream -> toEMIIngredient(stream.map(mapper)))
-                                        .collect(Collectors.toList()),
-                                holderSetList.getEntries().get(0).amount())
+                        .map(ItemHolderSetList.ItemHolderSetEntry::stacks)
+                        .map(stream -> toEMIIngredient(stream.map(mapper)))
+                        .collect(Collectors.toList()),
+                        holderSetList.getEntries().get(0).amount())
                         .setChance(chance);
             }
             return EmiStack.EMPTY;
@@ -106,17 +106,17 @@ public class EmiStackConverter {
                 return toEMIIngredient(stackList.stream().map(mapper)).setChance(chance);
             } else if (stack instanceof FluidTagList tagList) {
                 return EmiIngredient.of(tagList.getEntries().stream()
-                                        .map(FluidTagList.FluidTagEntry::stacks)
-                                        .map(stream -> toEMIIngredient(stream.map(mapper)))
-                                        .collect(Collectors.toList()),
-                                tagList.getEntries().get(0).amount())
+                        .map(FluidTagList.FluidTagEntry::stacks)
+                        .map(stream -> toEMIIngredient(stream.map(mapper)))
+                        .collect(Collectors.toList()),
+                        tagList.getEntries().get(0).amount())
                         .setChance(chance);
             } else if (stack instanceof FluidHolderSetList holderSetList) {
                 return EmiIngredient.of(holderSetList.getEntries().stream()
-                                        .map(FluidHolderSetList.FluidHolderSetEntry::stacks)
-                                        .map(stream -> toEMIIngredient(stream.map(mapper)))
-                                        .collect(Collectors.toList()),
-                                holderSetList.getEntries().get(0).amount())
+                        .map(FluidHolderSetList.FluidHolderSetEntry::stacks)
+                        .map(stream -> toEMIIngredient(stream.map(mapper)))
+                        .collect(Collectors.toList()),
+                        holderSetList.getEntries().get(0).amount())
                         .setChance(chance);
             }
             return EmiStack.EMPTY;
@@ -138,7 +138,8 @@ public class EmiStackConverter {
         return Optional.ofNullable(getForNullable(clazz));
     }
 
-    public static <T> EmiIngredient convertToEmiEntry(EntryList<T> entries, float chance, UnaryOperator<T> renderMappingFunction) {
+    public static <T> EmiIngredient convertToEmiEntry(EntryList<T> entries, float chance,
+                                                      UnaryOperator<T> renderMappingFunction) {
         Converter<T> converter = getForNullable(entries.getType());
         if (converter != null) {
             return converter.convertTo(entries, chance, renderMappingFunction);

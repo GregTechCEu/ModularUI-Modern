@@ -11,9 +11,11 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class ModularUIMenuTypes {
 
-    private static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(Registries.MENU, ModularUI.MOD_ID);
+    private static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(Registries.MENU,
+            ModularUI.MOD_ID);
 
-    public static final RegistryObject<MenuType<ModularContainerMenu>> MODULAR_CONTAINER = MENU_TYPES.register("modular",
+    public static final RegistryObject<MenuType<ModularContainerMenu>> MODULAR_CONTAINER = MENU_TYPES.register(
+            "modular",
             () -> IForgeMenuType.create(ModularContainerMenu::new));
 
     public static void register(IEventBus modBus) {

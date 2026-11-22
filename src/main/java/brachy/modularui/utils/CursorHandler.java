@@ -65,7 +65,8 @@ public class CursorHandler {
         try (GLFWErrorCallback ignored = org.lwjgl.glfw.GLFW.glfwSetErrorCallback(null)) {
             long cursor = GLFW.glfwCreateStandardCursor(shape);
             if (cursor == 0L) { // If can't load platform-specific default cursors
-                ModularUI.LOGGER.warn("GLFW: Failed to create standard cursor shape {}. Falling back to default pointer.",
+                ModularUI.LOGGER.warn(
+                        "GLFW: Failed to create standard cursor shape {}. Falling back to default pointer.",
                         shape);
                 // TODO: Load custom textures
                 return 0L;

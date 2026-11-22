@@ -14,15 +14,21 @@ public class WidgetTheme {
         return ThemeAPI.DEFAULT_THEME.getFallbackEntry();
     }
 
-    @Getter private final int defaultWidth;
-    @Getter private final int defaultHeight;
+    @Getter
+    private final int defaultWidth;
+    @Getter
+    private final int defaultHeight;
     @Getter
     @Nullable
     private final IDrawable background;
-    @Getter private final int color;
-    @Getter private final int textColor;
-    @Getter private final boolean textShadow;
-    @Getter private final int iconColor;
+    @Getter
+    private final int color;
+    @Getter
+    private final int textColor;
+    @Getter
+    private final boolean textShadow;
+    @Getter
+    private final int iconColor;
 
     public static WidgetTheme whiteTextShadow(int defaultWidth, int defaultHeight, @Nullable IDrawable background) {
         return new WidgetTheme(defaultWidth, defaultHeight, background, Color.WHITE.main,

@@ -7,15 +7,15 @@ import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
-import com.mojang.blaze3d.platform.GlUtil;
-import com.mojang.blaze3d.platform.Window;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Table;
 import com.google.common.collect.Tables;
+import com.mojang.blaze3d.platform.GlUtil;
+import com.mojang.blaze3d.platform.Window;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import org.jetbrains.annotations.Contract;
 import org.joml.Matrix4f;
 import org.joml.Matrix4fc;
@@ -27,6 +27,7 @@ import org.lwjgl.opengl.GL11;
 import java.nio.ByteBuffer;
 import java.security.InvalidParameterException;
 import java.util.Objects;
+
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
@@ -45,7 +46,7 @@ public class MatrixUtils {
             .synchronizedTable(HashBasedTable.create());
 
     private static final ByteBuffer PIXEL_DEPTH_BUFFER = GlUtil.allocateMemory(4);
-    private static final int[] VIEWPORT_COORDS = {0, 0, 0, 0};
+    private static final int[] VIEWPORT_COORDS = { 0, 0, 0, 0 };
 
     /**
      * @param from the original vector
@@ -275,13 +276,13 @@ public class MatrixUtils {
      * This is in essence the same code as in gluProject, but it returns the resulting transformation matrixinstead of
      * applying it to the deprecated OpenGL transformation stack.
      *
-     * @param x          X-coordinate in pixels
-     * @param y          Y-coordinate in pixels
-     * @param viewport   the viewport described by {@code [x, y, width, height]}
+     * @param x        X-coordinate in pixels
+     * @param y        Y-coordinate in pixels
+     * @param viewport the viewport described by {@code [x, y, width, height]}
      * @return world pos
      */
     public static Vector3f projectScreenToWorld(int x, int y, int[] viewport) {
-       return projectScreenToWorld(x, y, viewport, 0, true);
+        return projectScreenToWorld(x, y, viewport, 0, true);
     }
 
     public static Vector3f projectScreenToWorld(int x, int y, int[] viewport, float depth) {

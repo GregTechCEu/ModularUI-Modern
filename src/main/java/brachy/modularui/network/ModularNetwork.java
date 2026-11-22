@@ -24,7 +24,8 @@ import java.util.UUID;
 @ApiStatus.Internal
 public abstract class ModularNetwork {
 
-    // You have to make sure you are choosing the logical side you are currently on otherwise you can mess things up badly,
+    // You have to make sure you are choosing the logical side you are currently on otherwise you can mess things up
+    // badly,
     // since there is no validation.
     public static final Client CLIENT = new Client();
     public static final ServerManager SERVER = new ServerManager();
@@ -118,12 +119,14 @@ public abstract class ModularNetwork {
         }
 
         @Override
-        public void sendSyncHandlerPacket(String panel, SyncHandler<?> syncHandler, FriendlyByteBuf buffer, Player player) {
+        public void sendSyncHandlerPacket(String panel, SyncHandler<?> syncHandler, FriendlyByteBuf buffer,
+                                          Player player) {
             get(player).sendSyncHandlerPacket(panel, syncHandler, buffer, player);
         }
 
         @Override
-        public void sendActionPacket(ModularSyncManager msm, String panel, String key, FriendlyByteBuf buffer, Player player) {
+        public void sendActionPacket(ModularSyncManager msm, String panel, String key, FriendlyByteBuf buffer,
+                                     Player player) {
             get(player).sendActionPacket(msm, panel, key, buffer, player);
         }
 

@@ -15,7 +15,8 @@ import java.util.Objects;
 import java.util.function.LongConsumer;
 import java.util.function.LongSupplier;
 
-public class LongSyncValue extends ValueSyncHandler<Long, LongSyncValue> implements ILongSyncValue<Long>, IIntSyncValue<Long>, IStringSyncValue<Long> {
+public class LongSyncValue extends ValueSyncHandler<Long, LongSyncValue>
+                           implements ILongSyncValue<Long>, IIntSyncValue<Long>, IStringSyncValue<Long> {
 
     private final LongSupplier getter;
     private final LongConsumer setter;

@@ -19,7 +19,6 @@ import brachy.modularui.utils.Color;
 import brachy.modularui.utils.serialization.json.JsonBuilder;
 
 import com.mojang.serialization.Codec;
-
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -105,7 +104,8 @@ public interface IThemeApi {
             .register();
 
     WidgetThemeKey<SelectableTheme> TOGGLE_BUTTON = get().widgetThemeKeyBuilder("toggleButton", SelectableTheme.class)
-            .defaultTheme(SelectableTheme.whiteTextShadow(18, 18, GuiTextures.MC_BUTTON, GuiTextures.MC_BUTTON_DISABLED))
+            .defaultTheme(
+                    SelectableTheme.whiteTextShadow(18, 18, GuiTextures.MC_BUTTON, GuiTextures.MC_BUTTON_DISABLED))
             .defaultHoverTheme(SelectableTheme.whiteTextShadow(18, 18, GuiTextures.MC_BUTTON_HOVERED, IDrawable.NONE))
             .fieldsOf(FALLBACK)
             .field(SELECTED_BACKGROUND, IDrawable.class, IDrawable.CODEC, SelectableTheme::getSelectedBackground)
@@ -123,7 +123,6 @@ public interface IThemeApi {
     WidgetThemeKey<SlotTheme> ITEM_SLOT_PLAYER_ARMOR = ITEM_SLOT_PLAYER.createSubKey("playerArmor");
 
     String HOVER_SUFFIX = ":hover";
-
 
     /**
      * @return the default api implementation
@@ -188,7 +187,8 @@ public interface IThemeApi {
      * @param defaultTheme default theme if no theme was found
      * @return the registered theme for the given screen or the given default theme or {@link #getDefaultTheme()}
      */
-    default ITheme getThemeForScreen(String owner, String name, @Nullable String defaultTheme, @Nullable String fallbackTheme) {
+    default ITheme getThemeForScreen(String owner, String name, @Nullable String defaultTheme,
+                                     @Nullable String fallbackTheme) {
         return getThemeForScreen(owner, name, null, defaultTheme, fallbackTheme);
     }
 
@@ -201,7 +201,8 @@ public interface IThemeApi {
      * @param defaultTheme default theme if no theme was found
      * @return the registered theme for the given screen or the given default theme or {@link #getDefaultTheme()}
      */
-    ITheme getThemeForScreen(String owner, String name, @Nullable String panel, @Nullable String defaultTheme, @Nullable String fallbackTheme);
+    ITheme getThemeForScreen(String owner, String name, @Nullable String panel, @Nullable String defaultTheme,
+                             @Nullable String fallbackTheme);
 
     /**
      * Gets the appropriate theme for a specific panel.
@@ -212,7 +213,8 @@ public interface IThemeApi {
      */
     default ITheme getThemeForScreen(ModularPanel<?> panel, @Nullable String defaultTheme) {
         ModularScreen screen = panel.getScreen();
-        return getThemeForScreen(screen.getOwner(), screen.getName(), panel.getName(), defaultTheme, screen.getThemeOverride());
+        return getThemeForScreen(screen.getOwner(), screen.getName(), panel.getName(), defaultTheme,
+                screen.getThemeOverride());
     }
 
     /**
@@ -247,7 +249,8 @@ public interface IThemeApi {
 
     @Deprecated
     <T extends WidgetTheme> WidgetThemeKey<T> registerWidgetTheme(String id, T defaultTheme, T defaultHoverTheme,
-                                                                  WidgetThemeMerger<T> merger, WidgetThemeCodec<T> codec);
+                                                                  WidgetThemeMerger<T> merger,
+                                                                  WidgetThemeCodec<T> codec);
 
     default <T extends WidgetTheme> WidgetThemeKeyBuilder<T> widgetThemeKeyBuilder(String id, Class<T> type) {
         return new WidgetThemeKeyBuilder<>(id, type);

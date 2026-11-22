@@ -11,7 +11,8 @@ import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public abstract class AbstractGenericSyncValue<T, S extends AbstractGenericSyncValue<T, S>> extends ValueSyncHandler<T, S> {
+public abstract class AbstractGenericSyncValue<T, S extends AbstractGenericSyncValue<T, S>>
+                                              extends ValueSyncHandler<T, S> {
 
     private final Class<T> type;
     private final Supplier<T> getter;
@@ -24,7 +25,8 @@ public abstract class AbstractGenericSyncValue<T, S extends AbstractGenericSyncV
         this.cache = getter.get();
         if (type == null) {
             if (this.cache == null) {
-                throw new IllegalArgumentException("If the value class is not give, then the getter must return a non null value!");
+                throw new IllegalArgumentException(
+                        "If the value class is not give, then the getter must return a non null value!");
             }
             type = (Class<T>) this.cache.getClass();
         }
@@ -48,7 +50,8 @@ public abstract class AbstractGenericSyncValue<T, S extends AbstractGenericSyncV
         this.cache = this.getter.get();
         if (type == null) {
             if (this.cache == null) {
-                throw new IllegalArgumentException("If the value class is not give, then the getter must return a non null value!");
+                throw new IllegalArgumentException(
+                        "If the value class is not give, then the getter must return a non null value!");
             }
             type = (Class<T>) this.cache.getClass();
         }
@@ -129,7 +132,8 @@ public abstract class AbstractGenericSyncValue<T, S extends AbstractGenericSyncV
     }
 
     /**
-     * Allows safe modification of the cached value. Normally modifying the cached value can cause the value to never be synced.
+     * Allows safe modification of the cached value. Normally modifying the cached value can cause the value to never be
+     * synced.
      * This method forces a sync after the modification.
      *
      * @param consumer function that operates on the current cached value
@@ -139,8 +143,10 @@ public abstract class AbstractGenericSyncValue<T, S extends AbstractGenericSyncV
     }
 
     /**
-     * Allows safe modification of the cached value. Normally modifying the cached value can cause the value to never be synced.
-     * This method can automatically sync the cache after the modification. Be careful with potential issues when the sync arg is false.
+     * Allows safe modification of the cached value. Normally modifying the cached value can cause the value to never be
+     * synced.
+     * This method can automatically sync the cache after the modification. Be careful with potential issues when the
+     * sync arg is false.
      *
      * @param consumer function that operates on the current cached value
      */

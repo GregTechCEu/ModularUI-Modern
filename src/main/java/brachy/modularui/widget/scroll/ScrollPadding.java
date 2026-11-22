@@ -13,10 +13,14 @@ public class ScrollPadding extends Box {
     public static final ScrollPadding SHARED = new ScrollPadding();
     public static final ScrollPadding ZERO = new ScrollPadding();
 
-    @Getter protected int scrollPaddingLeft;
-    @Getter protected int scrollPaddingTop;
-    @Getter protected int scrollPaddingRight;
-    @Getter protected int scrollPaddingBottom;
+    @Getter
+    protected int scrollPaddingLeft;
+    @Getter
+    protected int scrollPaddingTop;
+    @Getter
+    protected int scrollPaddingRight;
+    @Getter
+    protected int scrollPaddingBottom;
 
     public ScrollPadding scrollPaddingAll(int all) {
         return this.scrollPaddingAll(all, all);

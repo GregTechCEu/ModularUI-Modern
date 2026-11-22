@@ -8,10 +8,10 @@ import brachy.modularui.utils.Color;
 import brachy.modularui.utils.Interpolations;
 import brachy.modularui.utils.serialization.codec.MutableObjectCodec;
 
-import com.mojang.serialization.Codec;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import com.mojang.serialization.Codec;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

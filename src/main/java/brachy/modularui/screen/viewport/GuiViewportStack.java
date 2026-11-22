@@ -5,7 +5,6 @@ import brachy.modularui.api.layout.IViewportStack;
 import brachy.modularui.widget.sizer.Area;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
@@ -92,7 +91,9 @@ public class GuiViewportStack implements IViewportStack {
             } else {
                 name = this.top.isViewportMatrix() ? asString(this.top.getViewport()) : "not a viewport";
             }
-            throw new IllegalStateException("Viewports must be popped in reverse order they were pushed. Tried to pop '" + asString(viewport) + "', but last pushed is '" + name + "'.");
+            throw new IllegalStateException(
+                    "Viewports must be popped in reverse order they were pushed. Tried to pop '" + asString(viewport) +
+                            "', but last pushed is '" + name + "'.");
         }
         pop();
         updateViewport(true);
@@ -112,7 +113,8 @@ public class GuiViewportStack implements IViewportStack {
     }
 
     public void push(TransformationMatrix transformationMatrix) {
-        this.viewportStack.push(newMatrix().construct(transformationMatrix, this.top == null ? null : this.top.getMatrix()));
+        this.viewportStack
+                .push(newMatrix().construct(transformationMatrix, this.top == null ? null : this.top.getMatrix()));
         updateViewport(false);
         if (this.top.isViewportMatrix()) {
             this.topViewport = this.top;

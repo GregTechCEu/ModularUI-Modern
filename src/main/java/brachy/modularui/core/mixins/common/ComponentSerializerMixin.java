@@ -25,10 +25,11 @@ import java.lang.reflect.Type;
 public class ComponentSerializerMixin {
 
     @WrapOperation(
-            method = "serialize(Lnet/minecraft/network/chat/Component;Ljava/lang/reflect/Type;Lcom/google/gson/JsonSerializationContext;)Lcom/google/gson/JsonElement;",
-            at = @At(value = "INVOKE",
-                    target = "Lnet/minecraft/network/chat/Component$Serializer;serialize(Lnet/minecraft/network/chat/Component;Ljava/lang/reflect/Type;Lcom/google/gson/JsonSerializationContext;)Lcom/google/gson/JsonElement;"))
-    public JsonElement serialize(Component.Serializer instance, Component src, Type typeOfSrc, JsonSerializationContext context, Operation<JsonElement> original) {
+                   method = "serialize(Lnet/minecraft/network/chat/Component;Ljava/lang/reflect/Type;Lcom/google/gson/JsonSerializationContext;)Lcom/google/gson/JsonElement;",
+                   at = @At(value = "INVOKE",
+                            target = "Lnet/minecraft/network/chat/Component$Serializer;serialize(Lnet/minecraft/network/chat/Component;Ljava/lang/reflect/Type;Lcom/google/gson/JsonSerializationContext;)Lcom/google/gson/JsonElement;"))
+    public JsonElement serialize(Component.Serializer instance, Component src, Type typeOfSrc,
+                                 JsonSerializationContext context, Operation<JsonElement> original) {
         if (src instanceof ModularComponent mc) {
             var d = ModularComponent.CODEC.mutableCodec().encodeJson(mc);
             var res = d.result();
@@ -38,10 +39,14 @@ public class ComponentSerializerMixin {
         return original.call(instance, src, typeOfSrc, context);
     }
 
-    @WrapOperation(method = "deserialize(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/network/chat/MutableComponent;", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/chat/Component$Serializer;deserialize(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/network/chat/MutableComponent;"))
-    public MutableComponent deserialize(Component.Serializer instance, JsonElement json, Type typeOfT, JsonDeserializationContext context, Operation<MutableComponent> original) {
+    @WrapOperation(method = "deserialize(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/network/chat/MutableComponent;",
+                   at = @At(value = "INVOKE",
+                            target = "Lnet/minecraft/network/chat/Component$Serializer;deserialize(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/network/chat/MutableComponent;"))
+    public MutableComponent deserialize(Component.Serializer instance, JsonElement json, Type typeOfT,
+                                        JsonDeserializationContext context, Operation<MutableComponent> original) {
         MutableComponent comp = original.call(instance, json, typeOfT, context);
-        if (comp.getClass() == MutableComponent.class && json instanceof JsonObject jsonObj && ModularComponent.CODEC.hasAnyField(jsonObj)) {
+        if (comp.getClass() == MutableComponent.class && json instanceof JsonObject jsonObj &&
+                ModularComponent.CODEC.hasAnyField(jsonObj)) {
             ModularComponent mc = comp.asModular();
             var d = ModularComponent.CODEC.mutableCodec().parseJson(jsonObj, mc);
             var res = d.result();

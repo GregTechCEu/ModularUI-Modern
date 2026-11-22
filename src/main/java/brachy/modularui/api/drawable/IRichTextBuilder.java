@@ -94,12 +94,14 @@ public interface IRichTextBuilder<T extends IRichTextBuilder<T>> {
      * @param lang lang key of the multilang to add.
      * @return this
      */
-    /*TODO default T addMultiLine(String lang) {
-        for (MutableComponent text : LangHandler.getMultiLang(lang)) {
-            getRichText().addLine(text);
-        }
-        return getThis();
-    }*/
+    /*
+     * TODO default T addMultiLine(String lang) {
+     * for (MutableComponent text : LangHandler.getMultiLang(lang)) {
+     * getRichText().addLine(text);
+     * }
+     * return getThis();
+     * }
+     */
 
     /**
      * Starts a new line. This is always preferred over {@code "\n"} or {@code IKey.str("\n")}, it reduces computation a

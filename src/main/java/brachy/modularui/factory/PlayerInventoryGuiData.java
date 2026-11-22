@@ -21,7 +21,8 @@ import lombok.Getter;
 @Getter
 public class PlayerInventoryGuiData<T> extends GuiData {
 
-    public static <T> PlayerInventoryGuiData<T> of(Player player, InventoryType<T> inventoryType, T context, int slotIndex) {
+    public static <T> PlayerInventoryGuiData<T> of(Player player, InventoryType<T> inventoryType, T context,
+                                                   int slotIndex) {
         return new PlayerInventoryGuiData<>(player, inventoryType, context, slotIndex);
     }
 

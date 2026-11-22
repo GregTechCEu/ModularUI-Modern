@@ -23,7 +23,8 @@ import java.util.Optional;
 
 public class JeiContainerHandler<T extends ModularContainerMenu> implements IUniversalRecipeTransferHandler<T> {
 
-    public static <T extends ModularContainerMenu> void register(Class<T> clz, IRecipeTransferRegistration registration) {
+    public static <T extends ModularContainerMenu> void register(Class<T> clz,
+                                                                 IRecipeTransferRegistration registration) {
         new JeiContainerHandler<>(clz, registration.getTransferHelper()).register(registration);
     }
 
@@ -74,7 +75,9 @@ public class JeiContainerHandler<T extends ModularContainerMenu> implements IUni
             } else if (muiError instanceof RecipeTransferError.Cosmetic) {
                 return Type.COSMETIC;
             } else {
-                throw new IllegalStateException("Recipe transfer error %s is not an internal, user facing or cosmetic error".formatted(muiError));
+                throw new IllegalStateException(
+                        "Recipe transfer error %s is not an internal, user facing or cosmetic error"
+                                .formatted(muiError));
             }
         }
 

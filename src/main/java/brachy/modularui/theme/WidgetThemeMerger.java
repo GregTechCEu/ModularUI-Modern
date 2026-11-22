@@ -27,7 +27,8 @@ public class WidgetThemeMerger<T extends WidgetTheme> {
         return input;
     }
 
-    private <V> void mergeField(WidgetThemeField<T, V> field, JsonObject input, ImmutableJson parent, ImmutableJson fallback, JsonElement inheritsList) {
+    private <V> void mergeField(WidgetThemeField<T, V> field, JsonObject input, ImmutableJson parent,
+                                ImmutableJson fallback, JsonElement inheritsList) {
         var key = field.name();
         if (input.has(key)) return;
         if (field.canFallback() && !inherits(inheritsList, key) && fallback.has(key)) {

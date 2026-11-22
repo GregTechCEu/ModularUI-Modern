@@ -4,8 +4,8 @@ import brachy.modularui.screen.viewport.GuiContext;
 
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
-import com.mojang.blaze3d.systems.RenderSystem;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 
@@ -14,7 +14,8 @@ import java.util.Objects;
 @Accessors(fluent = true)
 public class TiledUITexture extends UITexture {
 
-    @Getter private final int imageWidth, imageHeight;
+    @Getter
+    private final int imageWidth, imageHeight;
 
     /**
      * Use {@link UITexture#builder()} with {@link Builder#tiled()}
@@ -45,7 +46,8 @@ public class TiledUITexture extends UITexture {
 
     @Override
     protected TiledUITexture copy() {
-        return new TiledUITexture(location, u0, v0, u1, v1, colorType, nonOpaque, colorOverride, imageWidth, imageHeight);
+        return new TiledUITexture(location, u0, v0, u1, v1, colorType, nonOpaque, colorOverride, imageWidth,
+                imageHeight);
     }
 
     @Override

@@ -30,7 +30,8 @@ public class MinecraftMixin {
         }
     }
 
-    @Inject(method = "setScreen", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/Screen;removed()V"))
+    @Inject(method = "setScreen",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/Screen;removed()V"))
     public void modularui$trackRealScreenClose(Screen guiScreen, CallbackInfo ci) {
         if (guiScreen == null) {
             // the ScreenEvent.Closing is also closed when the screen is transitioning to another screen,

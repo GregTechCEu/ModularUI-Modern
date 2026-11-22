@@ -30,6 +30,13 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.RenderTooltipEvent;
+import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fluids.FluidStack;
+
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -38,13 +45,6 @@ import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.VertexFormat;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.RenderTooltipEvent;
-import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fluids.FluidStack;
-
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4d;
 import org.joml.Matrix4f;
@@ -243,7 +243,8 @@ public class GuiDraw {
     /**
      * Set up the texture as a sampler differently depending on if it's part of the GUI atlas or not.
      * <p>
-     * If the texture is part of the GUI atlas, the atlas will be used for drawing and the UV coordinates will be scaled to the atlas texture.<br>
+     * If the texture is part of the GUI atlas, the atlas will be used for drawing and the UV coordinates will be scaled
+     * to the atlas texture.<br>
      * If it's not part of the GUI atlas, nothing special is done.
      *
      * @param location the texture <i>file's</i> location, e.g. {@code "modularui:textures/gui/slot/item.png"}
@@ -252,7 +253,7 @@ public class GuiDraw {
      * @param u1       u1 UV coordinate
      * @param v1       v1 UV coordinate
      * @return If texture is in the GUI atlas, rescaled UV coordinates {@code u0, v0, u1, v1}.<br>
-     * If not, the same coordinates that were passed in.
+     *         If not, the same coordinates that were passed in.
      */
     public static RectangleF setupTexture(ResourceLocation location, float u0, float v0, float u1, float v1) {
         TextureAtlasSprite sprite = GuiSpriteManager.getInstance()
@@ -264,7 +265,8 @@ public class GuiDraw {
 
             // have to multiply by 16 here because of MC weirdness
             // REMOVE THE MULTIPLICATION IN 1.21!!!
-            return new RectangleF(sprite.getU(u0 * 16), sprite.getV(v0 * 16), sprite.getU(u1 * 16), sprite.getV(v1 * 16));
+            return new RectangleF(sprite.getU(u0 * 16), sprite.getV(v0 * 16), sprite.getU(u1 * 16),
+                    sprite.getV(v1 * 16));
         } else {
             RenderSystem.setShaderTexture(0, location);
             return new RectangleF(u0, v0, u1, v1);
@@ -273,7 +275,8 @@ public class GuiDraw {
 
     public static boolean isGuiAtlasSprite(ResourceLocation location) {
         location = GUI_TEXTURE_ID_CONVERTER.fileToId(location);
-        return GuiSpriteManager.getInstance().getSprite(location).atlasLocation() != MissingTextureAtlasSprite.getLocation();
+        return GuiSpriteManager.getInstance().getSprite(location).atlasLocation() !=
+                MissingTextureAtlasSprite.getLocation();
     }
 
     public static void drawTexture(Matrix4f pose, ResourceLocation location, float x, float y, float w, float h,
@@ -391,7 +394,8 @@ public class GuiDraw {
     }
 
     public static void drawTiledTexture(Matrix4f pose, ResourceLocation location, float x, float y, float w, float h,
-                                        int u, int v, int tileWidth, int tileHeight, int textureWidth, int textureHeight, float z) {
+                                        int u, int v, int tileWidth, int tileHeight, int textureWidth,
+                                        int textureHeight, float z) {
         if (!isGuiAtlasSprite(location)) {
             RenderSystem.setShaderTexture(0, location);
             drawTiledTexture(pose, x, y, w, h, u, v, tileWidth, tileHeight, textureWidth, textureHeight, z);
@@ -438,7 +442,8 @@ public class GuiDraw {
 
         RectangleF newUvs = setupTexture(location, u0, v0, u1, v1);
 
-        drawTiledTexture(pose, x, y, w, h, newUvs.u0(), newUvs.v0(), newUvs.u1(), newUvs.v1(), textureWidth, textureHeight, z);
+        drawTiledTexture(pose, x, y, w, h, newUvs.u0(), newUvs.v0(), newUvs.u1(), newUvs.v1(), textureWidth,
+                textureHeight, z);
         RenderSystem.disableBlend();
     }
 
@@ -1043,7 +1048,8 @@ public class GuiDraw {
 
     @SuppressWarnings("UnstableApiUsage")
     public static void drawTooltipBackground(GuiContext context, ItemStack stack, List<ClientTooltipComponent> lines,
-                                             int x, int y, int textWidth, int height, @Nullable IRichTextBuilder<?> tooltip) {
+                                             int x, int y, int textWidth, int height,
+                                             @Nullable IRichTextBuilder<?> tooltip) {
         GuiGraphics graphics = context.getGraphics();
 
         // TODO theme color

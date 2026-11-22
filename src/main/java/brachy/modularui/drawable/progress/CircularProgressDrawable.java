@@ -2,29 +2,31 @@ package brachy.modularui.drawable.progress;
 
 import brachy.modularui.screen.viewport.GuiContext;
 import brachy.modularui.theme.WidgetTheme;
-
 import brachy.modularui.utils.math.MathUtils;
 
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.ShaderInstance;
+
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
-
 import lombok.Getter;
 import org.joml.Matrix4f;
 
 /**
- * A progress texture which translates the progress into a circular angle. This works with any {@link brachy.modularui.api.drawable.IDrawable}.
+ * A progress texture which translates the progress into a circular angle. This works with any
+ * {@link brachy.modularui.api.drawable.IDrawable}.
  */
 public class CircularProgressDrawable extends AbstractProgressDrawable<CircularProgressDrawable> {
 
-    @Getter private Direction direction = Direction.CW;
+    @Getter
+    private Direction direction = Direction.CW;
 
     @Override
-    protected void pushProgressStencil(float progress, GuiContext context, int x, int y, int width, int height, WidgetTheme widgetTheme) {
+    protected void pushProgressStencil(float progress, GuiContext context, int x, int y, int width, int height,
+                                       WidgetTheme widgetTheme) {
         float p = progress;
         float angle = p * MathUtils.PI2;
         context.getStencil().push(() -> {
@@ -139,6 +141,7 @@ public class CircularProgressDrawable extends AbstractProgressDrawable<CircularP
     }
 
     public enum Direction {
-        CW, CCW
+        CW,
+        CCW
     }
 }

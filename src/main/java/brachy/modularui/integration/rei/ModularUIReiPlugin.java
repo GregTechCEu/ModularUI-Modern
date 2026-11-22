@@ -4,7 +4,6 @@ import brachy.modularui.ModularUI;
 import brachy.modularui.integration.rei.handler.REIScreenHandler;
 import brachy.modularui.screen.ContainerScreenWrapper;
 import brachy.modularui.screen.ScreenWrapper;
-
 import brachy.modularui.test.TestRecipeViewerGuis;
 
 import me.shedaniel.rei.api.client.plugins.REIClientPlugin;

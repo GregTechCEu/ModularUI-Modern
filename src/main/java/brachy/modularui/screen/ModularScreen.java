@@ -29,14 +29,14 @@ import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.resources.ResourceLocation;
-import com.mojang.blaze3d.platform.InputConstants;
-import com.mojang.blaze3d.platform.Lighting;
-import com.mojang.blaze3d.platform.Window;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 
+import com.mojang.blaze3d.platform.InputConstants;
+import com.mojang.blaze3d.platform.Lighting;
+import com.mojang.blaze3d.platform.Window;
+import com.mojang.blaze3d.systems.RenderSystem;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
@@ -101,29 +101,38 @@ public class ModularScreen implements Renderable {
 
     /**
      * The full id of this screen as a {@link ResourceLocation}. Consists of the owner and name.
+     * 
      * @return The full id of this screen
      * @see #getOwner()
      * @see #getName()
      */
     @SuppressWarnings("JavadocDeclaration")
-    @Getter private final ResourceLocation id;
-    @Getter private final PanelManager panelManager;
-    @Getter private final ModularGuiContext context;
+    @Getter
+    private final ResourceLocation id;
+    @Getter
+    private final PanelManager panelManager;
+    @Getter
+    private final ModularGuiContext context;
     private final Map<Class<?>, List<IGuiAction>> guiActionListeners = new Object2ObjectOpenHashMap<>();
     private final Object2ObjectArrayMap<IWidget, Runnable> frameUpdates = new Object2ObjectArrayMap<>();
-    @Getter private final ScreenResizeNode resizeNode = new ScreenResizeNode(this);
-    @Getter private boolean pauseScreen = false;
-    @Getter private boolean openParentOnClose = false;
+    @Getter
+    private final ScreenResizeNode resizeNode = new ScreenResizeNode(this);
+    @Getter
+    private boolean pauseScreen = false;
+    @Getter
+    private boolean openParentOnClose = false;
 
     @Getter
     @Nullable
     private String themeOverride;
     private ITheme currentTheme;
-    @Getter private IMuiScreen screenWrapper;
+    @Getter
+    private IMuiScreen screenWrapper;
     /**
      * true if this is an overlay for another screen
      */
-    @Getter private boolean overlay = false;
+    @Getter
+    private boolean overlay = false;
 
     private double lastUpdate = -1, lastFrameUpdate = -1;
 
@@ -144,13 +153,16 @@ public class ModularScreen implements Renderable {
      * @param mainPanelCreator function which creates the main panel of this screen
      */
     public ModularScreen(String owner, @NotNull Function<ModularGuiContext, ModularPanel<?>> mainPanelCreator) {
-        this(UIType.MODULAR_SCREEN, owner, Objects.requireNonNull(mainPanelCreator, "The main panel function must not be null!"), false);
+        this(UIType.MODULAR_SCREEN, owner,
+                Objects.requireNonNull(mainPanelCreator, "The main panel function must not be null!"), false);
     }
 
-    private ModularScreen(UIType uiType, String owner, @Nullable Function<ModularGuiContext, ModularPanel<?>> mainPanelCreator, boolean __) {
+    private ModularScreen(UIType uiType, String owner,
+                          @Nullable Function<ModularGuiContext, ModularPanel<?>> mainPanelCreator, boolean __) {
         this.context = new ModularGuiContext(Objects.requireNonNull(uiType, "UIType must not be null"), this);
         Objects.requireNonNull(owner, "The owner must not be null!");
-        ModularPanel<?> mainPanel = mainPanelCreator != null ? mainPanelCreator.apply(this.context) : buildUI(this.context);
+        ModularPanel<?> mainPanel = mainPanelCreator != null ? mainPanelCreator.apply(this.context) :
+                buildUI(this.context);
         Objects.requireNonNull(mainPanel, "The main panel must not be null!");
         this.id = ResourceLocation.fromNamespaceAndPath(owner, mainPanel.getName());
         this.panelManager = new PanelManager(this, mainPanel);
@@ -309,7 +321,7 @@ public class ModularScreen implements Renderable {
     public void onFrameUpdate() {
         this.panelManager.checkDirty();
         for (ObjectIterator<Object2ObjectMap.Entry<IWidget, Runnable>> iterator = this.frameUpdates
-                .object2ObjectEntrySet().fastIterator(); iterator.hasNext(); ) {
+                .object2ObjectEntrySet().fastIterator(); iterator.hasNext();) {
             Object2ObjectMap.Entry<IWidget, Runnable> entry = iterator.next();
             if (!entry.getKey().isValid()) {
                 iterator.remove();
@@ -583,7 +595,8 @@ public class ModularScreen implements Renderable {
      * Interactable#onMouseDrag(double, double, int, double, double)} on every widget
      * under the mouse after gui action listeners have been called.
      *
-     * @param button mouse button that is held down (0 = left button, 1 = right button, 2 = scroll button, 4 and 5 = side buttons)
+     * @param button mouse button that is held down (0 = left button, 1 = right button, 2 = scroll button, 4 and 5 =
+     *               side buttons)
      * @param dragX  the X distance of the drag
      * @param dragY  the Y distance of the drag
      * @return true if the action was consumed and further processing should be canceled
@@ -677,8 +690,8 @@ public class ModularScreen implements Renderable {
     }
 
     public boolean isClientOnly() {
-        return isOverlay() || getContext().getUIType() != UIType.MODULAR_SCREEN
-                || !this.screenWrapper.isContainerScreen() || getContainer().isClientOnly();
+        return isOverlay() || getContext().getUIType() != UIType.MODULAR_SCREEN ||
+                !this.screenWrapper.isContainerScreen() || getContainer().isClientOnly();
     }
 
     public ModularContainerMenu getContainer() {

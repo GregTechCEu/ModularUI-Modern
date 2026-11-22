@@ -252,7 +252,7 @@ public class ArraySchema implements ISchema {
             validate();
             BlockState[][][] blocks = new BlockState[this.tensor
                     .size()][this.tensor.get(0).length][this.tensor.get(0)[0]
-                    .length()];
+                            .length()];
             for (int x = 0; x < this.tensor.size(); x++) {
                 String[] xLayer = this.tensor.get(x);
                 for (int y = 0; y < xLayer.length; y++) {

@@ -17,8 +17,8 @@ import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import com.mojang.blaze3d.platform.InputConstants;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
@@ -33,7 +33,7 @@ import java.util.regex.Pattern;
  * The base of a text input widget. Handles mouse/InputConstants input and rendering.
  */
 public class BaseTextFieldWidget<W extends BaseTextFieldWidget<W>> extends AbstractScrollWidget<VoidWidget, W>
-        implements IFocusedWidget {
+                                implements IFocusedWidget {
 
     public static final DecimalFormat format = new DecimalFormat("###.###");
 
@@ -57,15 +57,21 @@ public class BaseTextFieldWidget<W extends BaseTextFieldWidget<W>> extends Abstr
     @Getter
     protected List<String> lastText;
     protected int scrollOffset = 0;
-    @Getter protected float scale = 1f;
-    @Getter protected boolean focusOnGuiOpen;
+    @Getter
+    protected float scale = 1f;
+    @Getter
+    protected boolean focusOnGuiOpen;
     private int cursorTimer;
     protected long lastClickTime = 0;
 
-    @Getter protected Integer textColor;
-    @Getter protected Integer markedColor;
-    @Getter protected Component hintText = null;
-    @Getter protected Integer hintTextColor;
+    @Getter
+    protected Integer textColor;
+    @Getter
+    protected Integer markedColor;
+    @Getter
+    protected Component hintText = null;
+    @Getter
+    protected Integer hintTextColor;
 
     public BaseTextFieldWidget() {
         super(new HorizontalScrollData(false, 4), null);

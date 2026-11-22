@@ -1,9 +1,9 @@
 package brachy.modularui.integration.emi.recipe;
 
+import brachy.modularui.integration.recipeviewer.RecipeViewerUtils;
+
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-
-import brachy.modularui.integration.recipeviewer.RecipeViewerUtils;
 
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
@@ -21,7 +21,8 @@ public class ModularUIEmiCategory extends EmiRecipeCategory {
         super(id, icon, simplified);
     }
 
-    public ModularUIEmiCategory(ResourceLocation id, EmiRenderable icon, EmiRenderable simplified, Comparator<EmiRecipe> sorter) {
+    public ModularUIEmiCategory(ResourceLocation id, EmiRenderable icon, EmiRenderable simplified,
+                                Comparator<EmiRecipe> sorter) {
         super(id, icon, simplified, sorter);
     }
 
