@@ -5,16 +5,19 @@ import brachy.modularui.integration.jei.handler.JeiScreenHandler;
 import brachy.modularui.integration.recipeviewer.RecipeSlotRole;
 import brachy.modularui.screen.ContainerScreenWrapper;
 import brachy.modularui.screen.ScreenWrapper;
+import brachy.modularui.test.TestRecipeViewerGuis;
+import brachy.modularui.test.TestRegistration;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.resources.ResourceLocation;
-
-import brachy.modularui.test.TestRecipeViewerGuis;
+import net.minecraft.world.item.ItemStack;
 
 import lombok.Getter;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.helpers.IJeiHelpers;
+import mezz.jei.api.ingredients.subtypes.UidContext;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
@@ -24,6 +27,8 @@ import mezz.jei.api.registration.IRecipeTransferRegistration;
 import mezz.jei.api.runtime.IJeiRuntime;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.EnumSet;
+import java.util.List;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
@@ -72,6 +77,12 @@ public class ModularUIJeiPlugin implements IModPlugin {
 
         if (ModularUI.isDev()) {
             TestRecipeViewerGuis.JEI.registerCategory(registration);
+        } else {
+            jeiHelpers.getIngredientVisibility().hideIngredients(VanillaTypes.ITEM_STACK,
+                    List.of(new ItemStack(TestRegistration.TEST_ITEM.get()),
+                            new ItemStack(TestRegistration.TEST_BLOCK_ITEM.get()),
+                            new ItemStack(TestRegistration.TEST_MACHINE_BLOCK_ITEM.get())
+                    ), EnumSet.allOf(UidContext.class));
         }
     }
 
