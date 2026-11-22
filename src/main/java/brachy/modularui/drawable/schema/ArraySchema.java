@@ -186,7 +186,7 @@ public class ArraySchema implements ISchema {
         }
 
         public Builder where(char c, String registryName) {
-            return where(c, new ResourceLocation(registryName));
+            return where(c, ResourceLocation.parse(registryName));
         }
 
         public Builder where(char c, ResourceLocation registryName) {

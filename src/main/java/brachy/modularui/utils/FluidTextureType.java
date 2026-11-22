@@ -24,7 +24,7 @@ public enum FluidTextureType {
         else return fluidTypeExtensions.getOverlayTexture();
     });
 
-    private static final ResourceLocation WATER_STILL = new ResourceLocation("minecraft", "block/water_still");
+    private static final ResourceLocation WATER_STILL = ResourceLocation.withDefaultNamespace("block/water_still");
 
     private final BiFunction<IClientFluidTypeExtensions, FluidStack, ResourceLocation> mapper;
 
