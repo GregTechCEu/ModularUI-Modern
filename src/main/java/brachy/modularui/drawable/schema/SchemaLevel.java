@@ -2,10 +2,10 @@ package brachy.modularui.drawable.schema;
 
 import brachy.modularui.ModularUI;
 import brachy.modularui.utils.BlockPosUtil;
-import brachy.modularui.utils.RegistryAccessContainer;
 import brachy.modularui.utils.sides.SidedAccessHelper;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
+import net.minecraft.SharedConstants;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -31,9 +31,13 @@ import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.DataLayer;
 import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.minecraft.world.level.entity.LevelCallback;
 import net.minecraft.world.level.entity.LevelEntityGetter;
@@ -42,6 +46,8 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.lighting.LevelLightEngine;
 import net.minecraft.world.level.lighting.LightEngine;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.saveddata.maps.MapId;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import net.minecraft.world.phys.Vec3;
@@ -53,7 +59,6 @@ import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import it.unimi.dsi.fastutil.longs.LongSet;
 import lombok.Getter;
 import lombok.Setter;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3fc;
 
@@ -90,10 +95,8 @@ public class SchemaLevel extends Level implements ISchema {
     private final Holder<Biome> biome;
     private final DataLayer defaultDataLayer;
 
-    public static final SchemaLevel INSTANCE = new SchemaLevel();
-
     public SchemaLevel() {
-        this(RegistryAccessContainer.current());
+        this(SidedAccessHelper.getRegistries());
     }
 
     public SchemaLevel(RegistryAccess registryAccess) {
@@ -107,8 +110,8 @@ public class SchemaLevel extends Level implements ISchema {
                 true,
                 false,
                 0,
-                1000000);
-        this.biome = registryAccess.registryOrThrow(Registries.BIOME).getHolderOrThrow(Biomes.PLAINS);
+                SharedConstants.MAX_CHAINED_NEIGHBOR_UPDATES);
+        this.biome = registryAccess.registryOrThrow(Registries.BIOME).getHolderOrThrow(Biomes.THE_VOID);
 
         // the argument named "size" is actually the default value.
         // We want all blocks to have max light, so we create a pre-filled light data layer
@@ -218,14 +221,32 @@ public class SchemaLevel extends Level implements ISchema {
 
     @Override
     public BlockPos getOrigin() {
-        return min;
+        return this.min;
     }
 
     @Override
-    public boolean isLoaded(BlockPos pos) {
-        int chunkX = SectionPos.blockToSectionCoord(pos.getX());
-        int chunkZ = SectionPos.blockToSectionCoord(pos.getZ());
-        return chunkSource.hasChunk(chunkX, chunkZ);
+    public BlockState getBlockState(BlockPos pos) {
+        if (!isLoaded(pos)) {
+            // EmptyLevelChunk returns VOID_AIR so we do the same here
+            return Blocks.VOID_AIR.defaultBlockState();
+        }
+        return super.getBlockState(pos);
+    }
+
+    @Override
+    public FluidState getFluidState(BlockPos pos) {
+        if (!isLoaded(pos)) {
+            return Fluids.EMPTY.defaultFluidState();
+        }
+        return super.getFluidState(pos);
+    }
+
+    @Override
+    public @Nullable BlockEntity getBlockEntity(BlockPos pos) {
+        if (!isLoaded(pos)) {
+            return null;
+        }
+        return super.getBlockEntity(pos);
     }
 
     @Override
