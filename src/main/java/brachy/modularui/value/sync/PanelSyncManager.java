@@ -1,6 +1,7 @@
 package brachy.modularui.value.sync;
 
 import brachy.modularui.ModularUI;
+import brachy.modularui.api.IPacketWriter;
 import brachy.modularui.api.IPanelHandler;
 import brachy.modularui.api.ISyncedAction;
 import brachy.modularui.network.ModularNetwork;
@@ -314,6 +315,12 @@ public class PanelSyncManager implements ISyncRegistrar<PanelSyncManager> {
         if (invokeSyncedAction(mapKey, packet)) {
             ModularNetwork.get(isClient()).sendActionPacket(getModularSyncManager(), this.panelName, mapKey, packet, getPlayer());
         }
+    }
+
+    public void callSyncedAction(String mapKey, IPacketWriter<? super RegistryFriendlyByteBuf> writer) {
+        RegistryFriendlyByteBuf buf = SidedAccessHelper.makeRegistryByteBuf(Unpooled.buffer());
+        writer.write(buf);
+        callSyncedAction(mapKey, buf);
     }
 
     public void callSyncedAction(String mapKey) {
