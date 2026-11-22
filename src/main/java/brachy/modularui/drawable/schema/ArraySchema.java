@@ -185,10 +185,18 @@ public class ArraySchema implements ISchema {
             return where(c, block.defaultBlockState());
         }
 
+        /**
+         * @deprecated use {@link #where(char, Block)}
+         */
+        @Deprecated(forRemoval = true)
         public Builder where(char c, String registryName) {
             return where(c, ResourceLocation.parse(registryName));
         }
 
+        /**
+         * @deprecated use {@link #where(char, Block)}
+         */
+        @Deprecated(forRemoval = true)
         public Builder where(char c, ResourceLocation registryName) {
             return where(c, BuiltInRegistries.BLOCK.getOptional(registryName)
                     .orElseThrow(() -> new IllegalArgumentException(registryName + " isn't a valid block")));

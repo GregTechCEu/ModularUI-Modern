@@ -145,7 +145,7 @@ public class TestGuis extends CustomModularScreen {
                                                     if (TestGuis.withCode) {
                                                         // WIP: this is meant to put an image of the code next to ui for showcase purpose
                                                         panel.child(UITexture.builder()
-                                                                .location("gui/code/" + codeTextureName)
+                                                                .location(ModularUI.id("gui/code/" + codeTextureName))
                                                                 .build()
                                                                 .asWidget()
                                                                 .leftRel(1f)
@@ -406,10 +406,10 @@ public class TestGuis extends CustomModularScreen {
                 .layer(" DDD ", "  E  ", "  G  ", "  B  ")
                 .layer(" DDD ", " E E ", "     ", "     ")
                 .layer("D   D", "     ", "     ", "     ")
-                .where('D', "minecraft:gold_block")
-                .where('E', "minecraft:emerald_block")
-                .where('G', "minecraft:diamond_block")
-                .where('B', "minecraft:beacon")
+                .where('D', Blocks.GOLD_BLOCK)
+                .where('E', Blocks.EMERALD_BLOCK)
+                .where('G', Blocks.DIAMOND_BLOCK)
+                .where('B', Blocks.BEACON)
                 .build();
         var renderer = schema.createRenderer()
                 .rayTracing(true)

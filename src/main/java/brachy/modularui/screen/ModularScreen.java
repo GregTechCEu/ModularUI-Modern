@@ -100,17 +100,13 @@ public class ModularScreen implements Renderable {
     }
 
     /**
-     * The owner of this screen. Usually a modid. This is mainly used to find theme overrides.
+     * The full id of this screen as a {@link ResourceLocation}. Consists of the owner and name.
+     * @return The full id of this screen
+     * @see #getOwner()
+     * @see #getName()
      */
-    @Getter private final String owner;
-    /**
-     * The name of this screen, which is also the name of the panel. Every UI under one owner should have a different
-     * name.
-     * Unfortunately there is no good way to verify this, so it's the UI implementors responsibility to set a proper
-     * name for the main panel.
-     * This is mainly used to find theme overrides.
-     */
-    @Getter private final String name;
+    @SuppressWarnings("JavadocDeclaration")
+    @Getter private final ResourceLocation id;
     @Getter private final PanelManager panelManager;
     @Getter private final ModularGuiContext context;
     private final Map<Class<?>, List<IGuiAction>> guiActionListeners = new Object2ObjectOpenHashMap<>();
@@ -154,10 +150,9 @@ public class ModularScreen implements Renderable {
     private ModularScreen(UIType uiType, String owner, @Nullable Function<ModularGuiContext, ModularPanel<?>> mainPanelCreator, boolean __) {
         this.context = new ModularGuiContext(Objects.requireNonNull(uiType, "UIType must not be null"), this);
         Objects.requireNonNull(owner, "The owner must not be null!");
-        this.owner = owner;
         ModularPanel<?> mainPanel = mainPanelCreator != null ? mainPanelCreator.apply(this.context) : buildUI(this.context);
         Objects.requireNonNull(mainPanel, "The main panel must not be null!");
-        this.name = mainPanel.getName();
+        this.id = ResourceLocation.fromNamespaceAndPath(owner, mainPanel.getName());
         this.panelManager = new PanelManager(this, mainPanel);
         MinecraftForge.EVENT_BUS.post(new BuildPanelEvent.MainPanel(this));
     }
@@ -640,11 +635,29 @@ public class ModularScreen implements Renderable {
 
     /**
      * @return the owner and name as a {@link ResourceLocation}
-     * @see #getOwner()
-     * @see #getName()
+     * @deprecated Use {@link #getId()}
      */
+    @Deprecated(forRemoval = true)
     public ResourceLocation getResourceLocation() {
-        return ResourceLocation.fromNamespaceAndPath(this.owner, this.name);
+        return this.getId();
+    }
+
+    /**
+     * The owner of this screen. Usually a modid. This is mainly used to find theme overrides.
+     */
+    public String getOwner() {
+        return this.getId().getNamespace();
+    }
+
+    /**
+     * The name of this screen, which is also the name of the panel. Every UI under one owner should have a different
+     * name.
+     * Unfortunately there is no good way to verify this, so it's the UI implementors responsibility to set a proper
+     * name for the main panel.
+     * This is mainly used to find theme overrides.
+     */
+    public String getName() {
+        return this.getId().getPath();
     }
 
     public ModularSyncManager getSyncManager() {
