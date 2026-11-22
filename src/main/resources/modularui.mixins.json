@@ -16,6 +16,7 @@
     "emi.RecipeScreenMixin",
     "jei.RecipeLayoutBuilderMixin",
     "jei.RecipeLayoutMixin",
+    "jei.RecipeGuiLogicMixin",
     "rei.DefaultDisplayViewingScreenMixin",
     "rei.EntryWidgetAccessor"
   ],
@@ -24,10 +25,10 @@
     "common.CombinedInvWrapperAccessor",
     "common.ComponentMixin",
     "common.ComponentSerializationMixin",
-    "common.SlotAccessor",
     "common.RegistryFriendlyByteBufMixin",
     "common.ReloadableServerResourcesMixin",
     "common.ServerPlayerAccessor",
+    "common.SlotAccessor",
     "common.TextColorMixin",
     "common.WorldLoaderMixin"
   ],
