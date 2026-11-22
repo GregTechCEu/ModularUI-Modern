@@ -4,7 +4,7 @@ minecraft = "1.20.1"
 forge = "47.4.28"
 parchment = "2023.09.03" # https://parchmentmc.org/docs/getting-started
 shadow = "8.3.5"
-editorconfig = "0.1.0"
+spotless = "8.1.0"
 modDevGradle = "2.0.86"
 lombok = "8.14"
 
@@ -25,5 +25,5 @@ mcdevAnnotations = { module = "com.demonwav.mcdev:annotations", version.ref = "m
 [plugins]
 modDevGradle = { id = "net.neoforged.moddev.legacyforge", version.ref = "modDevGradle" }
 shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
-editorconfig = { id = "org.ec4j.editorconfig", version.ref = "editorconfig" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 lombok = { id = "io.freefair.lombok", version.ref = "lombok" }
