@@ -23,7 +23,6 @@ import net.minecraft.resources.ResourceLocation;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import mezz.jei.api.gui.IRecipeLayoutDrawable;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.builder.ITooltipBuilder;
@@ -146,27 +145,25 @@ public abstract class ModularUIJeiCategory<T> implements IRecipeCategory<T> {
         return screen;
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @ApiStatus.OverrideOnly
     public IWidget transformWidget(IRecipeExtrasBuilder builder, IWidget widget) {
-        if (!(widget instanceof JeiRecipeViewerSlot recipeViewerSlot)) return widget;
+        if (!(widget instanceof JeiRecipeViewerSlot<?, ?> recipeViewerSlot)) return widget;
 
         String name = recipeViewerSlot.getName();
         assert name != null; // the slots should always have a name assigned in createRecipeSlotForWidget()
         // the JEI slot should also always exist as it's created in the same method
         IRecipeSlotDrawable slot = builder.getRecipeSlots().findSlotByName(name).orElseThrow();
 
-        recipeViewerSlot.setSlotWidget(slot, builder instanceof IRecipeLayoutDrawable<?> drawable ? drawable : null);
+        recipeViewerSlot.setSlotWidget(slot);
         builder.addSlottedWidget(recipeViewerSlot, List.of(slot));
 
         return recipeViewerSlot;
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @ApiStatus.OverrideOnly
     @MustBeInvokedByOverriders
     public IWidget createRecipeSlotForWidget(IRecipeLayoutBuilder builder, IWidget widget, T recipe, IFocusGroup focuses, MutableInt index) {
-        if (!(widget instanceof JeiRecipeViewerSlot recipeViewerSlot)) return widget;
+        if (!(widget instanceof JeiRecipeViewerSlot<?, ?> recipeViewerSlot)) return widget;
 
         if (recipeViewerSlot.getName() == null) {
             recipeViewerSlot.name("jei_slot_" + index.getAndIncrement());

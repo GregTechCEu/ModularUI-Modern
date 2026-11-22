@@ -1,17 +1,5 @@
 package brachy.modularui.test;
 
-import brachy.modularui.integration.emi.recipe.ModularUIEmiCategory;
-import brachy.modularui.utils.handlers.fluid.EmptyFluidTank;
-import brachy.modularui.utils.handlers.fluid.IMultiTankFluidHandler;
-import brachy.modularui.utils.handlers.fluid.MultiTankFluidHandler;
-
-import mezz.jei.api.forge.ForgeTypes;
-
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
-
 import brachy.modularui.ModularUI;
 import brachy.modularui.api.widget.IWidget;
 import brachy.modularui.integration.emi.recipe.ModularUIEmiRecipe;
@@ -21,6 +9,10 @@ import brachy.modularui.integration.recipeviewer.RecipeSlotRole;
 import brachy.modularui.integration.recipeviewer.handlers.IngredientProvider;
 import brachy.modularui.integration.rei.recipe.ModularUIReiDisplay;
 import brachy.modularui.integration.rei.recipe.ModularUIReiCategory;
+import brachy.modularui.integration.emi.recipe.ModularUIEmiCategory;
+import brachy.modularui.utils.handlers.fluid.EmptyFluidTank;
+import brachy.modularui.utils.handlers.fluid.IMultiTankFluidHandler;
+import brachy.modularui.utils.handlers.fluid.MultiTankFluidHandler;
 import brachy.modularui.screen.ModularPanel;
 import brachy.modularui.value.DoubleValue;
 import brachy.modularui.widgets.slot.FluidSlot;
@@ -47,7 +39,12 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.neoforge.NeoForgeTypes;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.IFluidTank;
@@ -215,10 +212,10 @@ public class TestRecipeViewerGuis {
             public void setupRecipeIngredients(IRecipeLayoutBuilder builder, TestMachine.Recipe recipe, IFocusGroup focuses) {
                 builder.addSlot(RecipeIngredientRole.INPUT)
                         .addItemStacks(recipe.inItems)
-                        .addIngredients(ForgeTypes.FLUID_STACK, recipe.inFluids);
+                        .addIngredients(NeoForgeTypes.FLUID_STACK, recipe.inFluids);
                 builder.addSlot(RecipeIngredientRole.OUTPUT)
                         .addItemStacks(recipe.outItems)
-                        .addIngredients(ForgeTypes.FLUID_STACK, recipe.outFluids);
+                        .addIngredients(NeoForgeTypes.FLUID_STACK, recipe.outFluids);
             }
 
             @Override
