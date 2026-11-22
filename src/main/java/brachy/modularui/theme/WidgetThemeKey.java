@@ -1,5 +1,6 @@
 package brachy.modularui.theme;
 
+import brachy.modularui.api.ITheme;
 import brachy.modularui.utils.serialization.codec.CodecUtil;
 
 import net.minecraft.util.ExtraCodecs;
@@ -15,6 +16,15 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * A widget theme key represents a specific type of data (e.g. item slot theme, fluid slot theme, button theme, etc), which a theme may contain.<br>
+ * The theme key contains a codec for serialising this data, as well as the default.<br>
+ *
+ * @see WidgetThemeEntry
+ * @see ITheme
+ *
+ * @param <T> The class which the theme data uses.
+ */
 public class WidgetThemeKey<T extends WidgetTheme> implements Comparable<WidgetThemeKey<?>> {
 
     private static final Map<String, WidgetThemeKey<?>> KEYS = new Object2ReferenceOpenHashMap<>();

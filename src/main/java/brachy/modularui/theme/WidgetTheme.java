@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 public class WidgetTheme {
 
     public static WidgetThemeEntry<WidgetTheme> getDefault() {
-        return ThemeAPI.DEFAULT_THEME.getFallback();
+        return ThemeAPI.DEFAULT_THEME.getFallbackEntry();
     }
 
     @Getter private final int defaultWidth;

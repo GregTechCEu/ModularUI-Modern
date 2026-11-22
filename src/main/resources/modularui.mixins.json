@@ -13,11 +13,6 @@
     "client.StringSplitterAccessor",
     "emi.EmiRenderHelperMixin",
     "emi.RecipeScreenMixin",
-    "jei.RecipeLayoutAccessor",
-    "jei.RecipeLayoutBuilderAccessor",
-    "jei.RecipeLayoutBuilderMixin",
-    "jei.RecipeLayoutMixin",
-    "jei.RecipeSlotAccessor",
     "rei.DefaultDisplayViewingScreenMixin",
     "rei.EntryWidgetAccessor"
   ],
@@ -27,7 +22,9 @@
     "common.ComponentMixin",
     "common.ComponentSerializerMixin",
     "common.SlotAccessor",
-    "common.TextColorMixin"
+    "common.TextColorMixin",
+    "jei.RecipeLayoutBuilderMixin",
+    "jei.RecipeLayoutMixin"
   ],
   "injectors": {
     "defaultRequire": 1,

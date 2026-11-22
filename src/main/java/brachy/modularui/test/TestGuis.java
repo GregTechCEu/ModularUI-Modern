@@ -17,7 +17,6 @@ import brachy.modularui.drawable.GuiDraw;
 import brachy.modularui.drawable.GuiTextures;
 import brachy.modularui.drawable.ItemDrawable;
 import brachy.modularui.drawable.Rectangle;
-import brachy.modularui.drawable.SchemaRenderer;
 import brachy.modularui.drawable.UITexture;
 import brachy.modularui.drawable.graph.GraphDrawable;
 import brachy.modularui.drawable.progress.CircularProgressDrawable;
@@ -438,7 +437,7 @@ public class TestGuis extends CustomModularScreen {
                         .children(12, i -> new Widget<>()
                                 .widthRel(1f)
                                 .height(16)
-                                .widgetTheme(IThemeApi.BUTTON)
+                                .widgetThemeKey(IThemeApi.BUTTON)
                                 .overlay(Text.str(String.valueOf(i + 1)))
                                 .onUpdateListener(w -> {
                                     if (rnd.nextDouble() < 0.05) {
@@ -468,12 +467,12 @@ public class TestGuis extends CustomModularScreen {
                                             .height(20).widthRel(1f)
                                             .padding(2)
                                             .marginBottom(-1)
-                                            .widgetTheme(IThemeApi.BUTTON)
+                                            .widgetThemeKey(IThemeApi.BUTTON)
                                             .mainAxisAlignment(Alignment.MainAxis.SPACE_BETWEEN)
                                             .setEnabledIf(w -> text.toLowerCase().contains(searchValue.getStringValue()))
                                             .child(new ItemDrawable(stack).asWidget())
                                             .child(new ScrollingTextWidget(Text.str(text))
-                                                    .widgetTheme(IThemeApi.BUTTON)
+                                                    .widgetThemeKey(IThemeApi.BUTTON)
                                                     .textAlign(Alignment.CENTER)
                                                     .expanded()
                                                     .height(16)
@@ -617,7 +616,7 @@ public class TestGuis extends CustomModularScreen {
                                 .mainAxisAlignment(Alignment.MainAxis.SPACE_BETWEEN)
                                 .child(new ItemDrawable(item).asWidget())
                                 .child(Text.str(item.getDisplayName().getString()).asWidget()
-                                        .widgetTheme(IThemeApi.BUTTON)
+                                        .widgetThemeKey(IThemeApi.BUTTON)
                                         .invisible()))
                 );
     }

@@ -46,7 +46,7 @@ public class ThemeManager extends SimplePreparableReloadListener<Map<String, Lis
     public static final String THEMES_PATH = "themes.json";
     public static final FileToIdConverter THEME_LISTER = FileToIdConverter.json("themes");
     protected static final WidgetThemeEntry<WidgetTheme> defaultFallbackWidgetTheme = IThemeApi.get()
-            .getDefaultTheme().getWidgetTheme(IThemeApi.FALLBACK);
+            .getDefaultTheme().getWidgetThemeEntry(IThemeApi.FALLBACK);
 
     private static JsonWidgetThemeStorage jsons;
 
@@ -317,7 +317,7 @@ public class ThemeManager extends SimplePreparableReloadListener<Map<String, Lis
 
             // parse fallback theme for widget themes
             WidgetThemeMap widgetThemes = new WidgetThemeMap();
-            WidgetThemeEntry<?> parentWidgetTheme = parent.getFallback(); // fallback theme of parent
+            WidgetThemeEntry<?> parentWidgetTheme = parent.getFallbackEntry(); // fallback theme of parent
             // fallback theme of new theme
             var incompleteFallbackJson = ImmutableJson.of(jsonBuilder.getJson()); // themes should only inherit values which are declared here
             var fallbackJson = IThemeApi.FALLBACK.getMerger().merge(
@@ -373,11 +373,11 @@ public class ThemeManager extends SimplePreparableReloadListener<Map<String, Lis
             if (key.isSubWidgetTheme()) fallback = ImmutableJson.EMPTY;
             ImmutableJson widgetThemeJson;
             if (rawWidgetThemeJson != null) {
-                T parentWidgetTheme = key.isSubWidgetTheme() ? map.getTheme(key.getParent()).theme() : parent.getWidgetTheme(key).theme();
+                T parentWidgetTheme = key.isSubWidgetTheme() ? map.getTheme(key.getParent()).theme() : parent.getWidgetThemeEntry(key).theme();
                 // sub widget themes strictly only inherit from their parent widget theme and not the parent theme
                 widgetThemeJson = ImmutableJson.of(merger.merge(rawWidgetThemeJson, ThemeManager.jsons.get(key, parentWidgetTheme), fallback));
             } else {
-                widgetThemeJson = ThemeManager.jsons.get(key, parent.getWidgetTheme(key).theme());
+                widgetThemeJson = ThemeManager.jsons.get(key, parent.getWidgetThemeEntry(key).theme());
             }
 
             if (!definedHover && definedStandard) {
@@ -387,7 +387,7 @@ public class ThemeManager extends SimplePreparableReloadListener<Map<String, Lis
             }
 
             // only inherit from the widget theme if it was actually defined, otherwise use parent
-            ImmutableJson parentWidgetHoverTheme = definedStandard ? widgetThemeJson : ThemeManager.jsons.get(key, parent.getWidgetTheme(key).hoverTheme());
+            ImmutableJson parentWidgetHoverTheme = definedStandard ? widgetThemeJson : ThemeManager.jsons.get(key, parent.getWidgetThemeEntry(key).hoverTheme());
             JsonObject widgetThemeHover = merger.merge(widgetThemeHoverJson, parentWidgetHoverTheme, fallback);
             var immutableHoverWidgetTheme = ImmutableJson.of(widgetThemeHover);
 

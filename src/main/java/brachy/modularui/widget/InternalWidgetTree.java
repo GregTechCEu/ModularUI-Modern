@@ -75,7 +75,7 @@ public class InternalWidgetTree {
         if (canBeSeen) {
             // draw widget
             graphics.setColor(1f, 1f, 1f, alpha);
-            WidgetThemeEntry<?> widgetTheme = parent.getWidgetTheme(parent.getPanel().getTheme());
+            WidgetThemeEntry<?> widgetTheme = parent.getWidgetThemeEntry(parent.getTheme());
             if (shouldDrawBackground) parent.drawBackground(context, widgetTheme);
             parent.draw(context, widgetTheme);
             parent.drawOverlay(context, widgetTheme);
@@ -164,7 +164,7 @@ public class InternalWidgetTree {
 
         // draw widget
         graphics.setColor(1f, 1f, 1f, alpha);
-        WidgetThemeEntry<?> widgetTheme = parent.getWidgetTheme(parent.getPanel().getTheme());
+        WidgetThemeEntry<?> widgetTheme = parent.getWidgetThemeEntry(parent.getTheme());
         parent.drawBackground(context, widgetTheme);
 
         graphics.pose().popPose();

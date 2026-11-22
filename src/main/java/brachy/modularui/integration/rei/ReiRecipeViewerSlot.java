@@ -1,13 +1,11 @@
 package brachy.modularui.integration.rei;
 
 import brachy.modularui.core.mixins.rei.EntryWidgetAccessor;
-import brachy.modularui.drawable.ClientTooltipComponentIcon;
+import brachy.modularui.drawable.TooltipComponentIcon;
 import brachy.modularui.integration.recipeviewer.RecipeSlotRole;
 import brachy.modularui.integration.recipeviewer.RecipeViewerSlotWidget;
 import brachy.modularui.screen.viewport.ModularGuiContext;
 import brachy.modularui.theme.WidgetThemeEntry;
-
-import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 
 import lombok.Getter;
 import me.shedaniel.math.Point;
@@ -37,7 +35,7 @@ public class ReiRecipeViewerSlot<I> extends RecipeViewerSlotWidget<I, ReiRecipeV
                     if (e.isText()) {
                         r.addLine(e.getAsText());
                     } else if (e.isTooltipComponent()) {
-                        r.addDrawableLine(new ClientTooltipComponentIcon(ClientTooltipComponent.create(e.getAsTooltipComponent())));
+                        r.addDrawableLine(new TooltipComponentIcon(e.getAsTooltipComponent(), false));
                     }
                 });
             }

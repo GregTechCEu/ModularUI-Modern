@@ -25,7 +25,7 @@ public class Theme extends AbstractTheme {
             if (!this.widgetThemes.containsKey(IThemeApi.FALLBACK)) {
                 this.widgetThemes.putTheme(IThemeApi.FALLBACK, ThemeManager.defaultFallbackWidgetTheme);
             }
-            for (WidgetThemeEntry<?> entry : DefaultTheme.INSTANCE.getWidgetThemes()) {
+            for (WidgetThemeEntry<?> entry : DefaultTheme.INSTANCE.getWidgetThemeEntries()) {
                 if (!this.widgetThemes.containsKey(entry.key())) {
                     this.widgetThemes.put(entry.key(), entry);
                 }
@@ -34,12 +34,12 @@ public class Theme extends AbstractTheme {
     }
 
     @Override
-    public @UnmodifiableView Collection<WidgetThemeEntry<?>> getWidgetThemes() {
+    public @UnmodifiableView Collection<WidgetThemeEntry<?>> getWidgetThemeEntries() {
         return Collections.unmodifiableCollection(this.widgetThemes.values());
     }
 
     @Override
-    public <T extends WidgetTheme> WidgetThemeEntry<T> getWidgetTheme(WidgetThemeKey<T> key) {
+    public <T extends WidgetTheme> WidgetThemeEntry<T> getWidgetThemeEntry(WidgetThemeKey<T> key) {
         WidgetThemeEntry<T> widgetTheme = this.widgetThemes.getTheme(key);
         while (widgetTheme == null && key.isSubWidgetTheme()) {
             widgetTheme = this.widgetThemes.getTheme(key.getParent());

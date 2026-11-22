@@ -52,7 +52,7 @@ public class WidgetTree extends TreeUtil {
             .append(widget.isEnabled());
     public static final WidgetInfo WIDGET_INFO_WIDGET_THEME = (root, widget, builder) -> builder
             .append("Widget theme: ")
-            .append(widget.getWidgetTheme(widget.getPanel().getTheme()).key().getFullName());
+            .append(widget.getWidgetThemeEntry(widget.getTheme()).key().getFullName());
 
     private WidgetTree() {}
 

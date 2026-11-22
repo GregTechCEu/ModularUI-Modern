@@ -33,12 +33,12 @@ tasks.matching { it.name.startsWith('prepare') }.configureEach {
 // This block of code expands all declared replace properties in the specified resource targets.
 // A missing property will result in an error. Properties are expanded using ${} Groovy notation.
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
-    var forgeVers = libs.versions.forge.get().split("\\.")[0]
+    var forgeVers = libs.versions.forge.get().substring(0, libs.versions.forge.get().lastIndexOf('.'))
     var replaceProperties = [
             version              : version_toml,
             mod_id               : mod_id,
             minecraft_version    : libs.versions.minecraft.get(),
-            loader_version       : forgeVers,
+            loader_version       : libs.versions.forge.get().split("\\.")[0], // javafml only reports the major version in dev
             forge_version        : forgeVers, // only specify major version of forge
 
             jei_version          : forge.versions.jei.get(),

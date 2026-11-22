@@ -68,7 +68,7 @@ public abstract class AbstractScrollWidget<I extends IWidget, W extends Abstract
 
     public void beforeResize(boolean onOpen) {
         super.beforeResize(onOpen);
-        this.scroll.applyWidgetTheme(getPanel().getTheme().getScrollbarTheme().getTheme(isHovering()));
+        this.scroll.applyWidgetTheme(getTheme().getScrollbarThemeEntry().getTheme(isHovering()));
         checkScrollbarActive(false);
         getScrollArea().getScrollPadding().scrollPaddingAll(0);
         applyAdditionalOffset(this.scroll.getScrollX());
@@ -141,7 +141,7 @@ public abstract class AbstractScrollWidget<I extends IWidget, W extends Abstract
     public void postDraw(ModularGuiContext context, boolean transformed) {
         if (!transformed) {
             context.getStencil().pop();
-            WidgetThemeEntry<WidgetTheme> scrollbarTheme = getPanel().getTheme().getScrollbarTheme();
+            WidgetThemeEntry<WidgetTheme> scrollbarTheme = getTheme().getScrollbarThemeEntry();
             this.scroll.drawScrollbar(context, scrollbarTheme.getTheme(isHovering()), scrollbarTheme.theme().getBackground());
             if (this.showScrollShadows) this.scroll.drawScrollShadow(context);
         }

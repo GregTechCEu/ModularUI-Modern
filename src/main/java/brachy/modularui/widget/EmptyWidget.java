@@ -1,5 +1,6 @@
 package brachy.modularui.widget;
 
+import brachy.modularui.api.ITheme;
 import brachy.modularui.api.layout.IViewportStack;
 import brachy.modularui.api.widget.IWidget;
 import brachy.modularui.screen.ModularPanel;
@@ -103,5 +104,10 @@ public class EmptyWidget implements IWidget {
     @Override
     public String getName() {
         return null;
+    }
+
+    @Override
+    public ITheme getTheme() {
+        return ITheme.getDefault();
     }
 }
