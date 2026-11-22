@@ -5,6 +5,8 @@ import brachy.modularui.utils.handlers.fluid.EmptyFluidTank;
 import brachy.modularui.utils.handlers.fluid.IMultiTankFluidHandler;
 import brachy.modularui.utils.handlers.fluid.MultiTankFluidHandler;
 
+import mezz.jei.api.forge.ForgeTypes;
+
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -211,8 +213,12 @@ public class TestRecipeViewerGuis {
 
             @Override
             public void setupRecipeIngredients(IRecipeLayoutBuilder builder, TestMachine.Recipe recipe, IFocusGroup focuses) {
-                recipe.inItems.forEach(item -> builder.addSlot(RecipeIngredientRole.INPUT).addItemStack(item));
-                recipe.outItems.forEach(item -> builder.addSlot(RecipeIngredientRole.OUTPUT).addItemStack(item));
+                builder.addSlot(RecipeIngredientRole.INPUT)
+                        .addItemStacks(recipe.inItems)
+                        .addIngredients(ForgeTypes.FLUID_STACK, recipe.inFluids);
+                builder.addSlot(RecipeIngredientRole.OUTPUT)
+                        .addItemStacks(recipe.outItems)
+                        .addIngredients(ForgeTypes.FLUID_STACK, recipe.outFluids);
             }
 
             @Override
