@@ -4,13 +4,12 @@ import brachy.modularui.ModularUI;
 import brachy.modularui.integration.emi.handler.EmiScreenHandler;
 import brachy.modularui.screen.ContainerScreenWrapper;
 import brachy.modularui.screen.ScreenWrapper;
+
 import brachy.modularui.test.TestRecipeViewerGuis;
-import brachy.modularui.test.TestRegistration;
 
 import dev.emi.emi.api.EmiEntrypoint;
 import dev.emi.emi.api.EmiPlugin;
 import dev.emi.emi.api.EmiRegistry;
-import dev.emi.emi.api.stack.EmiStack;
 
 @EmiEntrypoint
 public class ModularUIEmiPlugin implements EmiPlugin {
@@ -22,10 +21,6 @@ public class ModularUIEmiPlugin implements EmiPlugin {
 
         if (ModularUI.isDev()) {
             TestRecipeViewerGuis.EMI.register(registry);
-        } else {
-            registry.removeEmiStacks(EmiStack.of(TestRegistration.TEST_ITEM.get()));
-            registry.removeEmiStacks(EmiStack.of(TestRegistration.TEST_BLOCK_ITEM.get()));
-            registry.removeEmiStacks(EmiStack.of(TestRegistration.TEST_MACHINE_BLOCK_ITEM.get()));
         }
     }
 }

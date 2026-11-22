@@ -1,0 +1,16 @@
+{
+    "values": [
+        {
+            "id": "modularui:test_item",
+            "required": false
+        },
+        {
+            "id": "modularui:test_block",
+            "required": false
+        },
+        {
+            "id": "modularui:machine_block",
+            "required": false
+        }
+    ]
+}
