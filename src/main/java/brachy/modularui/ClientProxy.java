@@ -42,8 +42,9 @@ public class ClientProxy extends CommonProxy {
     @Getter
     private static final Timer timer60Fps = new Timer(60f, 0);
 
-    ClientProxy() {
-        IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
+    ClientProxy(FMLJavaModLoadingContext ctx) {
+        super(ctx);
+        IEventBus modBus = ctx.getModEventBus();
         modBus.addListener(this::onClientStartup);
         modBus.addListener(this::onRegisterClientTooltipComponents);
         modBus.addListener(this::onRegisterAssetReloadListeners);

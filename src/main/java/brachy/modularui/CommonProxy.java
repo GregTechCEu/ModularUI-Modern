@@ -18,7 +18,6 @@ import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
@@ -26,8 +25,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 public class CommonProxy {
 
-    CommonProxy() {
-        IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
+    CommonProxy(FMLJavaModLoadingContext ctx) {
+        IEventBus modBus = ctx.getModEventBus();
         modBus.addListener(this::onPreInit);
         modBus.addListener(this::onInit);
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
@@ -36,7 +35,7 @@ public class CommonProxy {
         forgeBus.addListener(this::onTick);
         forgeBus.addListener(this::onPlayerLeave);
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ModularUIConfig.CONFIG, ModularUI.MOD_ID + ".toml");
+        ctx.registerConfig(ModConfig.Type.CLIENT, ModularUIConfig.CONFIG, ModularUI.MOD_ID + ".toml");
 
         /* MUI Initialization */
         UIFactories.init();
