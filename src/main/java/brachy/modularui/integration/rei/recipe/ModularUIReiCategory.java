@@ -1,8 +1,8 @@
 package brachy.modularui.integration.rei.recipe;
 
-import net.minecraft.network.chat.Component;
-
 import brachy.modularui.integration.recipeviewer.RecipeViewerUtils;
+
+import net.minecraft.network.chat.Component;
 
 import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.api.client.gui.widgets.Widget;
@@ -42,7 +42,9 @@ public abstract class ModularUIReiCategory<D extends ModularUIReiDisplay> implem
 
     /**
      * Return the maximum expected display height here.<br>
-     * You should also return a per-category display height that's at most this value in {@link #getDisplayHeight(ModularUIReiDisplay)}.
+     * You should also return a per-category display height that's at most this value in
+     * {@link #getDisplayHeight(ModularUIReiDisplay)}.
+     * 
      * @return The maximum expected display height
      */
     public abstract int getMaxDisplayHeight();

@@ -5,14 +5,11 @@ import brachy.modularui.utils.Rectangle;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.Screen;
+
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
-
 import org.jetbrains.annotations.Nullable;
-
-import java.util.function.Predicate;
 
 public class EmbedHandler {
 
@@ -24,7 +21,8 @@ public class EmbedHandler {
         return screen.getMainPanel().getArea().height;
     }
 
-    public static void drawEmbed(ModularScreen screen, GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public static void drawEmbed(ModularScreen screen, GuiGraphics graphics, int mouseX, int mouseY,
+                                 float partialTicks) {
         drawEmbed(screen, graphics, mouseX, mouseY, partialTicks, null, null);
     }
 

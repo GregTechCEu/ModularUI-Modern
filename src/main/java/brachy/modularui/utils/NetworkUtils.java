@@ -80,7 +80,6 @@ public class NetworkUtils {
     }
 
     public static String readStringSafe(ByteBuf buffer) {
-
         int length = VarInt.read(buffer);
         if (length > MAX_ENCODED) {
             return null;

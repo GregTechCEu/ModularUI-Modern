@@ -61,7 +61,8 @@ public class ThemeAPI implements IThemeApi {
     }
 
     @Override
-    public ITheme getThemeForScreen(String owner, String name, @Nullable String panel, @Nullable String defaultTheme, @Nullable String fallbackTheme) {
+    public ITheme getThemeForScreen(String owner, String name, @Nullable String panel, @Nullable String defaultTheme,
+                                    @Nullable String fallbackTheme) {
         String theme = getThemeIdForScreen(owner, name, panel);
         if (theme != null) return getTheme(theme);
         if (defaultTheme != null) return getTheme(defaultTheme);
@@ -100,7 +101,9 @@ public class ThemeAPI implements IThemeApi {
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends WidgetTheme> WidgetThemeKey<T> registerWidgetTheme(String id, T defaultTheme, T defaultHoverTheme, WidgetThemeMerger<T> merger, WidgetThemeCodec<T> codec) {
+    public <T extends WidgetTheme> WidgetThemeKey<T> registerWidgetTheme(String id, T defaultTheme, T defaultHoverTheme,
+                                                                         WidgetThemeMerger<T> merger,
+                                                                         WidgetThemeCodec<T> codec) {
         Objects.requireNonNull(id, "Id for widget theme must not be null");
         Objects.requireNonNull(defaultTheme, "Default widget theme must not be null, but is null for id '" + id + "'.");
         Objects.requireNonNull(merger, "Merger for widget theme must not be null, but is null for id '" + id + "'.");

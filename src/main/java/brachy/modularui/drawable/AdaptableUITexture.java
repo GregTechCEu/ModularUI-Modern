@@ -4,8 +4,8 @@ import brachy.modularui.screen.viewport.GuiContext;
 
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
-import com.mojang.blaze3d.systems.RenderSystem;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.joml.Matrix4f;
@@ -19,14 +19,18 @@ import java.util.Objects;
 @Accessors(fluent = true)
 public class AdaptableUITexture extends UITexture {
 
-    @Getter private final int imageWidth, imageHeight, bl, bt, br, bb;
-    @Getter private final boolean tiled;
+    @Getter
+    private final int imageWidth, imageHeight, bl, bt, br, bb;
+    @Getter
+    private final boolean tiled;
 
     /**
      * Use {@link UITexture#builder()} with {@link Builder#adaptable(int, int)}
      */
-    AdaptableUITexture(ResourceLocation location, float u0, float v0, float u1, float v1, ColorType colorType, boolean nonOpaque,
-                       int colorOverride, int imageWidth, int imageHeight, int bl, int bt, int br, int bb, boolean tiled) {
+    AdaptableUITexture(ResourceLocation location, float u0, float v0, float u1, float v1, ColorType colorType,
+                       boolean nonOpaque,
+                       int colorOverride, int imageWidth, int imageHeight, int bl, int bt, int br, int bb,
+                       boolean tiled) {
         super(location, u0, v0, u1, v1, colorType, nonOpaque, colorOverride);
         this.imageWidth = imageWidth;
         this.imageHeight = imageHeight;
@@ -45,7 +49,8 @@ public class AdaptableUITexture extends UITexture {
     @Override
     public AdaptableUITexture getSubArea(float uStart, float vStart, float uEnd, float vEnd) {
         return new AdaptableUITexture(this.location, lerpU(uStart), lerpV(vStart), lerpU(uEnd), lerpV(vEnd),
-                this.colorType, this.nonOpaque, this.colorOverride, this.imageWidth, this.imageHeight, this.bl, this.bt, this.br, this.bb,
+                this.colorType, this.nonOpaque, this.colorOverride, this.imageWidth, this.imageHeight, this.bl, this.bt,
+                this.br, this.bb,
                 this.tiled);
     }
 
@@ -154,9 +159,11 @@ public class AdaptableUITexture extends UITexture {
 
         if ((this.bl > 0 || this.br > 0) && this.bt <= 0 && this.bb <= 0) {
             // left border
-            GuiDraw.drawTiledTexture(pose, x, y, this.bl, height, this.u0, this.v0, uInnerStart, this.v1, this.bl, th, 0);
+            GuiDraw.drawTiledTexture(pose, x, y, this.bl, height, this.u0, this.v0, uInnerStart, this.v1, this.bl, th,
+                    0);
             // right border
-            GuiDraw.drawTiledTexture(pose, x1 - this.br, y, this.br, height, uInnerEnd, this.v0, this.u1, this.v1, this.br, th, 0);
+            GuiDraw.drawTiledTexture(pose, x1 - this.br, y, this.br, height, uInnerEnd, this.v0, this.u1, this.v1,
+                    this.br, th, 0);
             // center
             GuiDraw.drawTiledTexture(pose, x + this.bl, y, width - this.bl - this.br, height, uInnerStart, this.v0,
                     uInnerEnd, this.v1, tw - this.bl - this.br, th, 0);

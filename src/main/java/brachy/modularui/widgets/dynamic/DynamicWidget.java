@@ -16,8 +16,10 @@ import java.util.function.Supplier;
 /**
  * A widget which can update its child based on a function in {@link DynamicSyncHandler}.
  * Such a sync handler must be supplied or else this widget has no effect.
- * The dynamic child can be a widget tree of any size which can also contain {@link SyncHandler}s. These sync handlers MUST be registered
- * via a variant of {@link brachy.modularui.value.sync.PanelSyncManager#getOrCreateSyncHandler(String, Class, Supplier)}.
+ * The dynamic child can be a widget tree of any size which can also contain {@link SyncHandler}s. These sync handlers
+ * MUST be registered
+ * via a variant of
+ * {@link brachy.modularui.value.sync.PanelSyncManager#getOrCreateSyncHandler(String, Class, Supplier)}.
  *
  * @param <W> type of this widget
  */

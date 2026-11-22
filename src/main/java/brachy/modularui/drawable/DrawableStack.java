@@ -5,10 +5,10 @@ import brachy.modularui.screen.viewport.GuiContext;
 import brachy.modularui.theme.WidgetTheme;
 import brachy.modularui.utils.serialization.codec.CodecUtil;
 
-import net.minecraft.util.ExtraCodecs;
-import com.mojang.serialization.Codec;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+
+import com.mojang.serialization.Codec;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -19,9 +19,9 @@ import java.util.List;
  */
 public record DrawableStack(IDrawable... drawables) implements IDrawable {
 
-    public static final Codec<IDrawable> CODEC = Codec.lazyInitialized(() ->
-            CodecUtil.checkedEncoder(IDrawable.CODEC.listOf().xmap(DrawableStack::fromList, DrawableStack::toList),
-                    d -> d instanceof DrawableStack));
+    public static final Codec<IDrawable> CODEC = Codec.lazyInitialized(() -> CodecUtil.checkedEncoder(
+            IDrawable.CODEC.listOf().xmap(DrawableStack::fromList, DrawableStack::toList),
+            d -> d instanceof DrawableStack));
 
     public static final IDrawable[] EMPTY_BACKGROUND = {};
     public static final DrawableStack EMPTY = new DrawableStack(EMPTY_BACKGROUND);

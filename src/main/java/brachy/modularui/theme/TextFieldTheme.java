@@ -34,7 +34,7 @@ public class TextFieldTheme extends WidgetTheme {
     }
 
     public static class Builder<T extends TextFieldTheme, B extends TextFieldTheme.Builder<T, B>>
-            extends WidgetThemeBuilder<T, B> {
+                               extends WidgetThemeBuilder<T, B> {
 
         public B markedColor(int markedColor) {
             add(IThemeApi.MARKED_COLOR, ThemeBuilder.colorJson(markedColor));

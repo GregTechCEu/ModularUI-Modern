@@ -16,7 +16,8 @@ import java.util.Objects;
  * This class and subclasses are holding necessary data to find the exact same GUI on client and server.
  * For example, if the GUI was opened by right-clicking a BlockEntity, then this data needs a world and a block pos.
  * <p>
- * Also see {@link PosGuiData} (useful for BlockEntities) and {@link SidedPosGuiData} (useful for covers from GregTech) and
+ * Also see {@link PosGuiData} (useful for BlockEntities) and {@link SidedPosGuiData} (useful for covers from GregTech)
+ * and
  * {@link PlayerInventoryGuiData} (useful for GUIs opened by interacting with an item in the players inventory)
  * for default implementations.
  * </p>

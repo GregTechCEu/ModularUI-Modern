@@ -13,24 +13,28 @@ import org.jetbrains.annotations.NotNull;
 public enum Interpolation implements IInterpolation, StringRepresentable {
 
     LINEAR("linear") {
+
         @Override
         public float interpolate(float a, float b, float x) {
             return Interpolations.lerp(a, b, x);
         }
     },
     QUAD_IN("quad_in") {
+
         @Override
         public float interpolate(float a, float b, float x) {
             return a + (b - a) * x * x;
         }
     },
     QUAD_OUT("quad_out") {
+
         @Override
         public float interpolate(float a, float b, float x) {
             return a - (b - a) * x * (x - 2);
         }
     },
     QUAD_INOUT("quad_inout") {
+
         @Override
         public float interpolate(float a, float b, float x) {
             x *= 2;
@@ -43,12 +47,14 @@ public enum Interpolation implements IInterpolation, StringRepresentable {
         }
     },
     CUBIC_IN("cubic_in") {
+
         @Override
         public float interpolate(float a, float b, float x) {
             return a + (b - a) * x * x * x;
         }
     },
     CUBIC_OUT("cubic_out") {
+
         @Override
         public float interpolate(float a, float b, float x) {
             x -= 1;
@@ -56,6 +62,7 @@ public enum Interpolation implements IInterpolation, StringRepresentable {
         }
     },
     CUBIC_INOUT("cubic_inout") {
+
         @Override
         public float interpolate(float a, float b, float x) {
             x *= 2;
@@ -68,18 +75,21 @@ public enum Interpolation implements IInterpolation, StringRepresentable {
         }
     },
     EXP_IN("exp_in") {
+
         @Override
         public float interpolate(float a, float b, float x) {
             return a + (b - a) * (float) Math.pow(2, 10 * (x - 1));
         }
     },
     EXP_OUT("exp_out") {
+
         @Override
         public float interpolate(float a, float b, float x) {
             return a + (b - a) * (float) (-Math.pow(2, -10 * x) + 1);
         }
     },
     EXP_INOUT("exp_inout") {
+
         @Override
         public float interpolate(float a, float b, float x) {
             if (x == 0) return a;
@@ -96,6 +106,7 @@ public enum Interpolation implements IInterpolation, StringRepresentable {
     },
     /* Following interpolations below were copied from: https://easings.net/ */
     BACK_IN("back_in") {
+
         @Override
         public float interpolate(float a, float b, float x) {
             final float c1 = 1.70158F;
@@ -105,6 +116,7 @@ public enum Interpolation implements IInterpolation, StringRepresentable {
         }
     },
     BACK_OUT("back_out") {
+
         @Override
         public float interpolate(float a, float b, float x) {
             final float c1 = 1.70158F;
@@ -114,6 +126,7 @@ public enum Interpolation implements IInterpolation, StringRepresentable {
         }
     },
     BACK_INOUT("back_inout") {
+
         @Override
         public float interpolate(float a, float b, float x) {
             final float c1 = 1.70158F;
@@ -126,6 +139,7 @@ public enum Interpolation implements IInterpolation, StringRepresentable {
         }
     },
     ELASTIC_IN("elastic_in") {
+
         @Override
         public float interpolate(float a, float b, float x) {
             final float c4 = (2 * (float) Math.PI) / 3;
@@ -137,6 +151,7 @@ public enum Interpolation implements IInterpolation, StringRepresentable {
         }
     },
     ELASTIC_OUT("elastic_out") {
+
         @Override
         public float interpolate(float a, float b, float x) {
             final float c4 = (2 * (float) Math.PI) / 3;
@@ -148,25 +163,28 @@ public enum Interpolation implements IInterpolation, StringRepresentable {
         }
     },
     ELASTIC_INOUT("elastic_inout") {
+
         @Override
         public float interpolate(float a, float b, float x) {
             final float c5 = (2 * (float) Math.PI) / 4.5F;
 
             float v = (float) Math.sin((20 * x - 11.125) * c5);
             float factor = x == 0 ? 0 : (x == 1 ? 1 :
-                                         (x < 0.5 ? -((float) Math.pow(2, 20 * x - 10) * v) / 2 :
-                                          ((float) Math.pow(2, -20 * x + 10) * v) / 2 + 1));
+                    (x < 0.5 ? -((float) Math.pow(2, 20 * x - 10) * v) / 2 :
+                            ((float) Math.pow(2, -20 * x + 10) * v) / 2 + 1));
 
             return Interpolations.lerp(a, b, factor);
         }
     },
     BOUNCE_IN("bounce_in") {
+
         @Override
         public float interpolate(float a, float b, float x) {
             return Interpolations.lerp(a, b, 1 - BOUNCE_OUT.interpolate(0, 1, 1 - x));
         }
     },
     BOUNCE_OUT("bounce_out") {
+
         @Override
         public float interpolate(float a, float b, float x) {
             final float n1 = 7.5625F;
@@ -187,6 +205,7 @@ public enum Interpolation implements IInterpolation, StringRepresentable {
         }
     },
     BOUNCE_INOUT("bounce_inout") {
+
         @Override
         public float interpolate(float a, float b, float x) {
             float factor = x < 0.5 ? (1 - BOUNCE_OUT.interpolate(0, 1, 1 - 2 * x)) / 2 :
@@ -196,6 +215,7 @@ public enum Interpolation implements IInterpolation, StringRepresentable {
         }
     },
     SINE_IN("sine_in") {
+
         @Override
         public float interpolate(float a, float b, float x) {
             float factor = 1 - (float) Math.cos((x * Math.PI) / 2);
@@ -204,6 +224,7 @@ public enum Interpolation implements IInterpolation, StringRepresentable {
         }
     },
     SINE_OUT("sine_out") {
+
         @Override
         public float interpolate(float a, float b, float x) {
             float factor = (float) Math.sin((x * Math.PI) / 2);
@@ -212,6 +233,7 @@ public enum Interpolation implements IInterpolation, StringRepresentable {
         }
     },
     SINE_INOUT("sine_inout") {
+
         @Override
         public float interpolate(float a, float b, float x) {
             float factor = (float) (-(Math.cos(Math.PI * x) - 1) / 2);
@@ -220,6 +242,7 @@ public enum Interpolation implements IInterpolation, StringRepresentable {
         }
     },
     QUART_IN("quart_in") {
+
         @Override
         public float interpolate(float a, float b, float x) {
             float factor = x * x * x * x;
@@ -228,6 +251,7 @@ public enum Interpolation implements IInterpolation, StringRepresentable {
         }
     },
     QUART_OUT("quart_out") {
+
         @Override
         public float interpolate(float a, float b, float x) {
             float factor = 1 - (float) Math.pow(1 - x, 4);
@@ -236,6 +260,7 @@ public enum Interpolation implements IInterpolation, StringRepresentable {
         }
     },
     QUART_INOUT("quart_inout") {
+
         @Override
         public float interpolate(float a, float b, float x) {
             float factor = x < 0.5 ? 8 * x * x * x * x : 1 - (float) Math.pow(-2 * x + 2, 4) / 2;
@@ -244,6 +269,7 @@ public enum Interpolation implements IInterpolation, StringRepresentable {
         }
     },
     QUINT_IN("quint_in") {
+
         @Override
         public float interpolate(float a, float b, float x) {
             float factor = x * x * x * x * x;
@@ -252,6 +278,7 @@ public enum Interpolation implements IInterpolation, StringRepresentable {
         }
     },
     QUINT_OUT("quint_out") {
+
         @Override
         public float interpolate(float a, float b, float x) {
             float factor = 1 - (float) Math.pow(1 - x, 5);
@@ -260,6 +287,7 @@ public enum Interpolation implements IInterpolation, StringRepresentable {
         }
     },
     QUINT_INOUT("quint_inout") {
+
         @Override
         public float interpolate(float a, float b, float x) {
             float factor = x < 0.5 ? 16 * x * x * x * x * x : 1 - (float) Math.pow(-2 * x + 2, 5) / 2;
@@ -268,6 +296,7 @@ public enum Interpolation implements IInterpolation, StringRepresentable {
         }
     },
     CIRCLE_IN("circle_in") {
+
         @Override
         public float interpolate(float a, float b, float x) {
             x = Mth.clamp(x, 0, 1);
@@ -278,6 +307,7 @@ public enum Interpolation implements IInterpolation, StringRepresentable {
         }
     },
     CIRCLE_OUT("circle_out") {
+
         @Override
         public float interpolate(float a, float b, float x) {
             x = Mth.clamp(x, 0, 1);
@@ -288,6 +318,7 @@ public enum Interpolation implements IInterpolation, StringRepresentable {
         }
     },
     CIRCLE_INOUT("circle_inout") {
+
         @Override
         public float interpolate(float a, float b, float x) {
             x = Mth.clamp(x, 0, 1);

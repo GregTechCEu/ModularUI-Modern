@@ -48,7 +48,9 @@ public abstract class RecipeLayoutBuilderMixin<T> implements IRecipeLayoutBuilde
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @ModifyExpressionValue(method = { "createShapelessIcon", "getRecipeTransferButtonPosition" },
-            at = @At(value = "INVOKE", target = "Lmezz/jei/api/recipe/category/IRecipeCategory;getWidth()I"), require = 0)
+                           at = @At(value = "INVOKE",
+                                    target = "Lmezz/jei/api/recipe/category/IRecipeCategory;getWidth()I"),
+                           require = 0)
     private static int modularui$makeWidthRecipeDependent(int original,
                                                           @Local(argsOnly = true) IRecipeCategory recipeCategory) {
         if (recipeCategory instanceof ModularUIJeiCategory muiCategory) {
@@ -59,7 +61,9 @@ public abstract class RecipeLayoutBuilderMixin<T> implements IRecipeLayoutBuilde
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @ModifyExpressionValue(method = { "createShapelessIcon", "getRecipeTransferButtonPosition" },
-            at = @At(value = "INVOKE", target = "Lmezz/jei/api/recipe/category/IRecipeCategory;getHeight()I"), require = 0)
+                           at = @At(value = "INVOKE",
+                                    target = "Lmezz/jei/api/recipe/category/IRecipeCategory;getHeight()I"),
+                           require = 0)
     private static int modularui$makeHeightRecipeDependent(int original,
                                                            @Local(argsOnly = true) IRecipeCategory recipeCategory) {
         if (recipeCategory instanceof ModularUIJeiCategory muiCategory) {

@@ -13,7 +13,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public class ShortSyncValue extends ValueSyncHandler<ByteBuf, Short, ShortSyncValue> implements IShortSyncValue<ByteBuf, Short>, IIntSyncValue<ByteBuf, Short>, IStringSyncValue<ByteBuf, Short> {
+public class ShortSyncValue extends ValueSyncHandler<ByteBuf, Short, ShortSyncValue>
+                            implements IShortSyncValue<ByteBuf, Short>, IIntSyncValue<ByteBuf, Short>,
+                            IStringSyncValue<ByteBuf, Short> {
 
     private short cache;
     private final ShortValue.Supplier getter;

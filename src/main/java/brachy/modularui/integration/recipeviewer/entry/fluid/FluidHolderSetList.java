@@ -17,7 +17,8 @@ public final class FluidHolderSetList implements FluidEntryList {
     @Getter
     private final List<FluidHolderSetEntry> entries = new ArrayList<>();
 
-    public static FluidHolderSetList of(@NotNull HolderSet<Fluid> set, int amount, @NotNull DataComponentPatch componentPatch) {
+    public static FluidHolderSetList of(@NotNull HolderSet<Fluid> set, int amount,
+                                        @NotNull DataComponentPatch componentPatch) {
         var list = new FluidHolderSetList();
         list.add(set, amount, componentPatch);
         return list;
@@ -43,7 +44,8 @@ public final class FluidHolderSetList implements FluidEntryList {
                 .toList();
     }
 
-    public record FluidHolderSetEntry(@NotNull HolderSet<Fluid> set, int amount, @NotNull DataComponentPatch componentPatch) {
+    public record FluidHolderSetEntry(@NotNull HolderSet<Fluid> set, int amount,
+                                      @NotNull DataComponentPatch componentPatch) {
 
         public Stream<FluidStack> stacks() {
             return set.stream().map(holder -> new FluidStack(holder, amount, componentPatch));

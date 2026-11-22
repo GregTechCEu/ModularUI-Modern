@@ -12,23 +12,22 @@ import brachy.modularui.screen.RichTooltip;
 import brachy.modularui.screen.viewport.ModularGuiContext;
 import brachy.modularui.theme.SlotTheme;
 import brachy.modularui.theme.WidgetThemeEntry;
-import brachy.modularui.utils.handlers.fluid.EmptyFluidTank;
-import brachy.modularui.utils.handlers.fluid.IMultiTankFluidHandler;
 import brachy.modularui.utils.LangUtil;
 import brachy.modularui.utils.MouseData;
+import brachy.modularui.utils.handlers.fluid.EmptyFluidTank;
+import brachy.modularui.utils.handlers.fluid.IMultiTankFluidHandler;
 import brachy.modularui.value.sync.FluidSlotSyncHandler;
 import brachy.modularui.widgets.AbstractFluidDisplayWidget;
 
 import net.minecraft.world.item.ItemStack;
-import com.mojang.blaze3d.platform.InputConstants;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.SoundActions;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.IFluidTank;
-import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
+import com.mojang.blaze3d.platform.InputConstants;
+import com.mojang.blaze3d.systems.RenderSystem;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.jetbrains.annotations.NotNull;
@@ -38,7 +37,7 @@ import java.text.DecimalFormat;
 
 @Accessors(fluent = true, chain = true)
 public class FluidSlot extends AbstractFluidDisplayWidget<FluidSlot>
-        implements Interactable, GhostIngredientSlot<FluidStack>, IngredientProvider<FluidStack> {
+                       implements Interactable, GhostIngredientSlot<FluidStack>, IngredientProvider<FluidStack> {
 
     public static final int DEFAULT_SIZE = 18;
     public static final String UNIT_BUCKET = "B";
@@ -52,7 +51,8 @@ public class FluidSlot extends AbstractFluidDisplayWidget<FluidSlot>
 
     private FluidSlotSyncHandler syncHandler;
 
-    @Getter private boolean alwaysShowFull = true;
+    @Getter
+    private boolean alwaysShowFull = true;
 
     public FluidSlot() {
         tooltip().autoUpdate(true);

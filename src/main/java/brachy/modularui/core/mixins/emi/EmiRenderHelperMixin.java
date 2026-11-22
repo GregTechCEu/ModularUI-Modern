@@ -14,7 +14,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class EmiRenderHelperMixin {
 
     @Inject(method = "renderRecipe",
-            at = @At(value = "INVOKE", target = "Ldev/emi/emi/api/recipe/EmiRecipe;addWidgets(Ldev/emi/emi/api/widget/WidgetHolder;)V"))
+            at = @At(value = "INVOKE",
+                     target = "Ldev/emi/emi/api/recipe/EmiRecipe;addWidgets(Ldev/emi/emi/api/widget/WidgetHolder;)V"))
     private static void modularui$tellTheRecipeItsInATooltip(EmiRecipe recipe, EmiDrawContext context, int x, int y,
                                                              boolean showMissing, int overlayColor,
                                                              CallbackInfo ci) {

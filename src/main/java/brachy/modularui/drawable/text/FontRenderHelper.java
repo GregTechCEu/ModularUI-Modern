@@ -17,9 +17,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.FormattedCharSink;
-
 import net.neoforged.api.distmarker.Dist;
-
 import net.neoforged.api.distmarker.OnlyIn;
 
 import org.apache.commons.lang3.mutable.MutableBoolean;
@@ -67,12 +65,14 @@ public class FontRenderHelper {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static void drawComponent(Component comp, GuiContext context, int x, int y, int width, int height, WidgetTheme widgetTheme) {
+    public static void drawComponent(Component comp, GuiContext context, int x, int y, int width, int height,
+                                     WidgetTheme widgetTheme) {
         drawComponent(comp, context, x, y, width, height, widgetTheme, 1f);
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static void drawComponent(Component comp, GuiContext context, int x, int y, int width, int height, WidgetTheme widgetTheme, float scale) {
+    public static void drawComponent(Component comp, GuiContext context, int x, int y, int width, int height,
+                                     WidgetTheme widgetTheme, float scale) {
         Text.renderer.setAlignment(Alignment.CENTER, width, height);
         Text.renderer.setColor(widgetTheme.getTextColor());
         Text.renderer.setScale(scale);
@@ -251,11 +251,13 @@ public class FontRenderHelper {
     }
 
     private static boolean feedChar(Style style, FormattedCharSink sink, int position, char character) {
-        return Character.isSurrogate(character) ? sink.accept(position, style, 65533) : sink.accept(position, style, character);
+        return Character.isSurrogate(character) ? sink.accept(position, style, 65533) :
+                sink.accept(position, style, character);
     }
 
     /**
-     * Copied and edited from {@link net.minecraft.util.StringDecomposer#iterateFormatted(String, int, Style, Style, FormattedCharSink)}.
+     * Copied and edited from
+     * {@link net.minecraft.util.StringDecomposer#iterateFormatted(String, int, Style, Style, FormattedCharSink)}.
      */
     public static boolean iterateFormatted(String text, int skip, Style currentStyle, Style defaultStyle,
                                            FormattedCharSink sink, StyleSink styleSink) {
@@ -274,7 +276,8 @@ public class FontRenderHelper {
                 char c1 = text.charAt(j + 1);
                 ChatFormatting chatformatting = ChatFormatting.getByCode(c1);
                 if (chatformatting != null) {
-                    style = chatformatting == ChatFormatting.RESET ? defaultStyle : style.applyLegacyFormat(chatformatting);
+                    style = chatformatting == ChatFormatting.RESET ? defaultStyle :
+                            style.applyLegacyFormat(chatformatting);
                     styleChanged = true;
                 }
 

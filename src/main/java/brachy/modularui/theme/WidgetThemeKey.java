@@ -3,11 +3,9 @@ package brachy.modularui.theme;
 import brachy.modularui.api.ITheme;
 import brachy.modularui.utils.serialization.codec.CodecUtil;
 
-import net.minecraft.util.ExtraCodecs;
+import com.google.gson.JsonObject;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
-
-import com.google.gson.JsonObject;
 import it.unimi.dsi.fastutil.objects.Object2ReferenceOpenHashMap;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
@@ -17,7 +15,8 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * A widget theme key represents a specific type of data (e.g. item slot theme, fluid slot theme, button theme, etc), which a theme may contain.<br>
+ * A widget theme key represents a specific type of data (e.g. item slot theme, fluid slot theme, button theme, etc),
+ * which a theme may contain.<br>
  * The theme key contains a codec for serialising this data, as well as the default.<br>
  *
  * @see WidgetThemeEntry
@@ -28,7 +27,8 @@ import java.util.Objects;
 public class WidgetThemeKey<T extends WidgetTheme> implements Comparable<WidgetThemeKey<?>> {
 
     private static final Map<String, WidgetThemeKey<?>> KEYS = new Object2ReferenceOpenHashMap<>();
-    public static final Codec<WidgetThemeKey<?>> CODEC = CodecUtil.chainedCodec(CodecUtil.nullCodec(), Codec.stringResolver(WidgetThemeKey::getFullName, KEYS::get));
+    public static final Codec<WidgetThemeKey<?>> CODEC = CodecUtil.chainedCodec(CodecUtil.nullCodec(),
+            Codec.stringResolver(WidgetThemeKey::getFullName, KEYS::get));
 
     @Nullable
     public static WidgetThemeKey<?> getFromFullName(String key) {
@@ -38,21 +38,28 @@ public class WidgetThemeKey<T extends WidgetTheme> implements Comparable<WidgetT
     @Nullable
     @Getter
     private final WidgetThemeKey<T> parent;
-    @Getter private final Class<T> type;
-    @Getter private final String name;
+    @Getter
+    private final Class<T> type;
+    @Getter
+    private final String name;
     @Nullable
     @Getter
     private final String subName;
-    @Getter private final T defaultValue;
-    @Getter private final T defaultHoverValue;
-    @Getter private final WidgetThemeMerger<T> merger;
-    @Getter private final WidgetThemeCodec<T> codec;
+    @Getter
+    private final T defaultValue;
+    @Getter
+    private final T defaultHoverValue;
+    @Getter
+    private final WidgetThemeMerger<T> merger;
+    @Getter
+    private final WidgetThemeCodec<T> codec;
 
     WidgetThemeKey(Class<T> type, String name, T defaultValue, WidgetThemeMerger<T> merger, WidgetThemeCodec<T> codec) {
         this(type, name, defaultValue, defaultValue, merger, codec);
     }
 
-    WidgetThemeKey(Class<T> type, String name, T defaultValue, T defaultHoverValue, WidgetThemeMerger<T> merger, WidgetThemeCodec<T> codec) {
+    WidgetThemeKey(Class<T> type, String name, T defaultValue, T defaultHoverValue, WidgetThemeMerger<T> merger,
+                   WidgetThemeCodec<T> codec) {
         this(null, type, name, null, defaultValue, defaultHoverValue, merger, codec);
     }
 

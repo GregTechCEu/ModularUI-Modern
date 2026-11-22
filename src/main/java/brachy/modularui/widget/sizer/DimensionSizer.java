@@ -8,7 +8,6 @@ import brachy.modularui.api.widget.IWidget;
 import brachy.modularui.utils.serialization.codec.MutableObjectCodec;
 
 import com.mojang.serialization.Codec;
-
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,8 +24,10 @@ public class DimensionSizer {
 
     public static final MutableObjectCodec<DimensionSizer> CODEC = MutableObjectCodec.builder(DimensionSizer.class)
             .baseCopy(sizer -> new DimensionSizer(sizer.resizer, sizer.axis))
-            .addOpt("coverChildrenMinSize", DimensionSizer::setCoverChildrenMinSize, DimensionSizer::getCoverChildrenMinSize, Codec.INT, -1)
-            .addOpt("start", DimensionSizer::setStart, DimensionSizer::getStart, Unit.CODEC, Unit.ZERO).neverWriteDefault()
+            .addOpt("coverChildrenMinSize", DimensionSizer::setCoverChildrenMinSize,
+                    DimensionSizer::getCoverChildrenMinSize, Codec.INT, -1)
+            .addOpt("start", DimensionSizer::setStart, DimensionSizer::getStart, Unit.CODEC, Unit.ZERO)
+            .neverWriteDefault()
             .addOpt("end", DimensionSizer::setEnd, DimensionSizer::getEnd, Unit.CODEC, Unit.ZERO).neverWriteDefault()
             .addOpt("size", DimensionSizer::setSize, DimensionSizer::getSize, Unit.CODEC, Unit.ZERO).neverWriteDefault()
             .build();
@@ -35,7 +36,8 @@ public class DimensionSizer {
     private final GuiAxis axis;
 
     private final Unit p1 = new Unit(), p2 = new Unit();
-    @Getter(AccessLevel.PRIVATE) private Unit start, end, size;
+    @Getter(AccessLevel.PRIVATE)
+    private Unit start, end, size;
     private Unit next = p1;
 
     @Getter
@@ -292,7 +294,7 @@ public class DimensionSizer {
                 } else if (this.end != null) {
                     p = calcPoint(this.end, s, parentSize, parentCalculated) - s;
                 } else {
-                    p = area.getRelativePoint(this.axis) + p0/* + area.getMargin().getStart(this.axis)*/;
+                    p = area.getRelativePoint(this.axis) + p0/* + area.getMargin().getStart(this.axis) */;
                     moveAmount = -p0;
                 }
                 area.setRelativePoint(this.axis, p);
@@ -400,7 +402,9 @@ public class DimensionSizer {
 
     public void detectConflictingConfiguration() {
         if (this.expanded && this.coverChildrenMinSize >= 0) {
-            ModularUI.LOGGER.warn("Resizer '{}' has expanded() and coverChildren() on {} axis. This conflicts and may cause layout issues.", this.resizer, this.axis);
+            ModularUI.LOGGER.warn(
+                    "Resizer '{}' has expanded() and coverChildren() on {} axis. This conflicts and may cause layout issues.",
+                    this.resizer, this.axis);
         }
         // TODO detect when this depends and all siblings depend on parent and parent depends on all children
     }

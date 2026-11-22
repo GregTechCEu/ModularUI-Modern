@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.AssertionFailureBuilder.assertionFailure;
 import static brachy.modularui.utils.Color.*;
+import static org.junit.jupiter.api.AssertionFailureBuilder.assertionFailure;
 
 public class ColorTest {
 
@@ -86,7 +86,8 @@ public class ColorTest {
             throw assertionFailure()
                     .expected(Arrays.toString(Color.getARGBValues(c1)))
                     .actual(Arrays.toString(Color.getARGBValues(c2)))
-                    .reason("Color components differ by " + Color.getLargestDiff(c1, c2) + ", but only " + tolerance + " is allowed. ")
+                    .reason("Color components differ by " + Color.getLargestDiff(c1, c2) + ", but only " + tolerance +
+                            " is allowed. ")
                     .message(extraMsg)
                     .build();
         }

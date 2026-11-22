@@ -14,7 +14,7 @@ import java.util.List;
  * </p>
  */
 public abstract sealed class RecipeTransferError permits RecipeTransferError.Internal, RecipeTransferError.UserFacing,
-        RecipeTransferError.Cosmetic {
+                                                 RecipeTransferError.Cosmetic {
 
     public abstract boolean allowsTransfer();
 
@@ -40,7 +40,7 @@ public abstract sealed class RecipeTransferError permits RecipeTransferError.Int
      * has many (or all) of the items required for a recipe in their inventory, it is shown first.
      *
      * @return the number of input recipes slots are missing ingredient's in the player's inventory.
-     * Return -1 by default to avoid sorting
+     *         Return -1 by default to avoid sorting
      * @since 19.2.0
      */
     public int getMissingCountHint() {

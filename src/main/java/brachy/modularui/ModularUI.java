@@ -14,7 +14,6 @@ import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
-import com.mojang.brigadier.Command;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
@@ -32,6 +31,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
+import com.mojang.brigadier.Command;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
@@ -122,7 +122,7 @@ public class ModularUI {
     /**
      * @return if the game is the <strong>PHYSICAL</strong> client, e.g. not a dedicated server.
      * @apiNote Do not use this to check if you're currently on the server thread for side-specific actions!
-     * It does <strong>NOT</strong> work for that. Use {@link #isClientThread()} instead.
+     *          It does <strong>NOT</strong> work for that. Use {@link #isClientThread()} instead.
      * @see #isClientThread()
      */
     public static boolean isClientSide() {
@@ -133,7 +133,7 @@ public class ModularUI {
      * This check isn't the same for client and server!
      *
      * @return if it's safe to access the current instance {@link net.minecraft.world.level.Level Level} on client or if
-     * it's safe to access any level on server.
+     *         it's safe to access any level on server.
      */
     public static boolean canGetServerLevel() {
         if (isClientSide()) {
@@ -173,7 +173,8 @@ public class ModularUI {
                         .executes(ctx -> {
                             ThemeManager.reload();
                             // TODO translations for this
-                            ctx.getSource().sendSuccess(() -> Component.literal("ModularUI Themes reloaded").withStyle(Text.GREEN), true);
+                            ctx.getSource().sendSuccess(
+                                    () -> Component.literal("ModularUI Themes reloaded").withStyle(Text.GREEN), true);
                             return Command.SINGLE_SUCCESS;
                         }));
         event.getDispatcher().register(command);
@@ -181,14 +182,14 @@ public class ModularUI {
 
     public enum Mods {
 
-        //BLUR(ModIds.BLUR),
-        //BOGOSORTER(ModIds.BOGOSORTER),
+        // BLUR(ModIds.BLUR),
+        // BOGOSORTER(ModIds.BOGOSORTER),
         CURIOS(ModIds.CURIOS),
         EMI(ModIds.EMI),
         JEI(ModIds.JEI),
         REI(ModIds.REI),
-        //MODNAMETOOLTIP(ModIds.MODNAMETOOLTIP),
-        //NEA(ModIds.NEA),
+        // MODNAMETOOLTIP(ModIds.MODNAMETOOLTIP),
+        // NEA(ModIds.NEA),
         SODIUM(ModIds.SODIUM),
         IRIS(ModIds.IRIS);
 

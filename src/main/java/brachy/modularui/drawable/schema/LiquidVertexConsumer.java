@@ -3,9 +3,9 @@ package brachy.modularui.drawable.schema;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.core.SectionPos;
+
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-
 import org.joml.Matrix4f;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -98,7 +98,8 @@ public class LiquidVertexConsumer implements VertexConsumer {
     public void putBulkData(PoseStack.Pose poseEntry, BakedQuad quad, float[] brightness,
                             float red, float green, float blue, float alpha,
                             int[] combinedLights, int combinedOverlay, boolean mulColor) {
-        delegate.putBulkData(poseEntry, quad, brightness, red, green, blue, alpha, combinedLights, combinedOverlay, mulColor);
+        delegate.putBulkData(poseEntry, quad, brightness, red, green, blue, alpha, combinedLights, combinedOverlay,
+                mulColor);
     }
 
     @Override

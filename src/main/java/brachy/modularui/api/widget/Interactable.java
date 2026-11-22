@@ -4,10 +4,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.sounds.SoundEvents;
-import com.mojang.blaze3d.platform.InputConstants;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
@@ -22,8 +22,8 @@ public interface Interactable {
      *
      * @param button mouse button that was pressed.
      * @return result that determines what happens to other widgets
-     * {@link #onMouseTapped(int)} is only called if this returns {@link Result#ACCEPT} or
-     * {@link Result#SUCCESS}
+     *         {@link #onMouseTapped(int)} is only called if this returns {@link Result#ACCEPT} or
+     *         {@link Result#SUCCESS}
      */
     @NotNull
     default Result onMousePressed(int button) {
@@ -35,7 +35,7 @@ public interface Interactable {
      *
      * @param button mouse button that was released.
      * @return whether other widgets should get called to. If this returns false,
-     * {@link #onMouseTapped(int)} will NOT be called.
+     *         {@link #onMouseTapped(int)} will NOT be called.
      */
     default boolean onMouseReleased(int button) {
         return false;
@@ -46,9 +46,9 @@ public interface Interactable {
      *
      * @param button mouse button that was pressed.
      * @return result that determines if other widgets should get tapped to
-     * {@link Result#IGNORE IGNORE} and {@link Result#ACCEPT ACCEPT} will both "ignore" the result and
-     * {@link Result#STOP STOP} and {@link Result#SUCCESS SUCCESS} will both stop other widgets
-     * from getting tapped.
+     *         {@link Result#IGNORE IGNORE} and {@link Result#ACCEPT ACCEPT} will both "ignore" the result and
+     *         {@link Result#STOP STOP} and {@link Result#SUCCESS SUCCESS} will both stop other widgets
+     *         from getting tapped.
      */
     @NotNull
     default Result onMouseTapped(int button) {
@@ -62,8 +62,8 @@ public interface Interactable {
      * @param scanCode  character that was pressed.
      * @param modifiers any modifiers that were used.
      * @return result that determines what happens to other widgets
-     * {@link #onKeyTapped(int, int, int)} is only called if this returns {@link Result#ACCEPT} or
-     * {@link Result#SUCCESS}
+     *         {@link #onKeyTapped(int, int, int)} is only called if this returns {@link Result#ACCEPT} or
+     *         {@link Result#SUCCESS}
      */
     @NotNull
     default Result onKeyPressed(int keyCode, int scanCode, int modifiers) {
@@ -77,7 +77,7 @@ public interface Interactable {
      * @param scanCode  character that was pressed.
      * @param modifiers any modifiers that were used.
      * @return whether other widgets should get called too. If this returns false, {@link #onKeyTapped(int, int, int)}
-     * will NOT be called.
+     *         will NOT be called.
      */
     default boolean onKeyReleased(int keyCode, int scanCode, int modifiers) {
         return false;
@@ -90,8 +90,8 @@ public interface Interactable {
      * @param scanCode  character that was pressed.
      * @param modifiers any modifiers that were used.
      * @return result that determines if other widgets should get tapped to
-     * {@link Result#IGNORE} and {@link Result#ACCEPT} will both "ignore" the result and {@link Result#STOP} and
-     * {@link Result#SUCCESS} will both stop other widgets from getting tapped.
+     *         {@link Result#IGNORE} and {@link Result#ACCEPT} will both "ignore" the result and {@link Result#STOP} and
+     *         {@link Result#SUCCESS} will both stop other widgets from getting tapped.
      */
     @NotNull
     default Result onKeyTapped(int keyCode, int scanCode, int modifiers) {
@@ -104,8 +104,8 @@ public interface Interactable {
      * @param codePoint character that was typed
      * @param modifiers any modifiers that were used.
      * @return result that determines what happens to other widgets
-     * {@link #onKeyTapped(int, int, int)} is only called if this returns {@link Result#ACCEPT} or
-     * {@link Result#SUCCESS}
+     *         {@link #onKeyTapped(int, int, int)} is only called if this returns {@link Result#ACCEPT} or
+     *         {@link Result#SUCCESS}
      */
     @NotNull
     default Result onCharTyped(char codePoint, int modifiers) {

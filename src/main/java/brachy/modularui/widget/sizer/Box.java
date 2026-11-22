@@ -6,7 +6,6 @@ import brachy.modularui.utils.Interpolations;
 import brachy.modularui.utils.serialization.codec.MutableObjectCodec;
 
 import com.mojang.serialization.Codec;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;

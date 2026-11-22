@@ -7,7 +7,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 
 import com.mojang.blaze3d.platform.Window;
-
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import mezz.jei.api.gui.handlers.IGuiProperties;
@@ -42,7 +41,7 @@ public class ModularUIJeiProperties implements IGuiProperties {
         this.screenClass = screen.wrappedScreen().getClass();
 
         // we have to assign default values to gui size if the size is 0 (e.g. during the instant it's created)
-        //  because MUI initializes the screen/panel sizing data after JEI wants to use them
+        // because MUI initializes the screen/panel sizing data after JEI wants to use them
         Window window = Minecraft.getInstance().getWindow();
         Area screenArea = screen.screen().getScreenArea();
         this.screenWidth = screenArea.width == 0 ? window.getGuiScaledWidth() : screenArea.width;

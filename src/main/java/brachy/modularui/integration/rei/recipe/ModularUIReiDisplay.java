@@ -42,12 +42,14 @@ public abstract class ModularUIReiDisplay implements Display {
 
     private final ResourceLocation recipeId;
     private final Supplier<IWidget> recipeUI;
-    @Getter protected final CategoryIdentifier<?> categoryIdentifier;
+    @Getter
+    protected final CategoryIdentifier<?> categoryIdentifier;
 
     private boolean sizeCalculated = false;
     private int displayWidth, displayHeight;
 
-    public ModularUIReiDisplay(ResourceLocation recipeId, Supplier<IWidget> recipeUI, CategoryIdentifier<?> categoryId) {
+    public ModularUIReiDisplay(ResourceLocation recipeId, Supplier<IWidget> recipeUI,
+                               CategoryIdentifier<?> categoryId) {
         this.recipeId = recipeId;
         this.recipeUI = recipeUI;
         this.categoryIdentifier = categoryId;
@@ -55,7 +57,8 @@ public abstract class ModularUIReiDisplay implements Display {
 
     /**
      * Calculates the size of the recipe if not already done.<br>
-     * This should be called in subclasses' constructors. Otherwise, the size of ALL the recipes in the same category are calculated
+     * This should be called in subclasses' constructors. Otherwise, the size of ALL the recipes in the same category
+     * are calculated
      * at once, which can make the game lag for a few seconds.
      */
     protected void calculateSize() {
@@ -65,7 +68,8 @@ public abstract class ModularUIReiDisplay implements Display {
         IWidget ui = this.recipeUI.get();
         int w = ui.resizer().getFixedPixelWidth(), h = ui.resizer().getFixedPixelHeight();
         if (w < 0 || h < 0) {
-            ModularScreen screen = createScreen(ui, this.recipeId.getNamespace(), SCREEN_NAME_PREFIX + this.recipeId.getPath());
+            ModularScreen screen = createScreen(ui, this.recipeId.getNamespace(),
+                    SCREEN_NAME_PREFIX + this.recipeId.getPath());
             w = EmbedHandler.getEmbedWidth(screen);
             h = EmbedHandler.getEmbedHeight(screen);
         }
@@ -84,7 +88,8 @@ public abstract class ModularUIReiDisplay implements Display {
     }
 
     private ModularScreen createScreen() {
-        return createScreen(this.recipeUI.get(), this.recipeId.getNamespace(), SCREEN_NAME_PREFIX + this.recipeId.getPath());
+        return createScreen(this.recipeUI.get(), this.recipeId.getNamespace(),
+                SCREEN_NAME_PREFIX + this.recipeId.getPath());
     }
 
     @ApiStatus.OverrideOnly
@@ -155,7 +160,8 @@ public abstract class ModularUIReiDisplay implements Display {
             }, () -> {
                 screen.getContext().popMatrix();
             });
-            Tooltip tooltip = this.getTooltip(TooltipContext.ofMouse(Item.TooltipContext.of(Minecraft.getInstance().level)));
+            Tooltip tooltip = this
+                    .getTooltip(TooltipContext.ofMouse(Item.TooltipContext.of(Minecraft.getInstance().level)));
             if (tooltip != null) {
                 tooltip.queue();
             }
@@ -193,7 +199,7 @@ public abstract class ModularUIReiDisplay implements Display {
 
         @Override
         public void mouseMoved(double mouseX, double mouseY) {
-            //this.screen.mouseMoved(mouseX, mouseY);
+            // this.screen.mouseMoved(mouseX, mouseY);
         }
 
         @Override

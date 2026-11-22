@@ -1,7 +1,6 @@
 package brachy.modularui.network;
 
 import brachy.modularui.api.IMuiScreen;
-import brachy.modularui.api.IPacketWriter;
 import brachy.modularui.network.packets.SyncHandlerPacket;
 import brachy.modularui.utils.NetworkUtils;
 import brachy.modularui.value.sync.ModularSyncManager;
@@ -13,7 +12,6 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -27,7 +25,8 @@ import java.util.UUID;
 @ApiStatus.Internal
 public abstract class ModularNetwork {
 
-    // You have to make sure you are choosing the logical side you are currently on otherwise you can mess things up badly,
+    // You have to make sure you are choosing the logical side you are currently on otherwise you can mess things up
+    // badly,
     // since there is no validation.
     public static final Client CLIENT = new Client();
     public static final ServerManager SERVER = new ServerManager();
@@ -121,12 +120,14 @@ public abstract class ModularNetwork {
         }
 
         @Override
-        public void sendSyncHandlerPacket(String panel, SyncHandler<?> syncHandler, RegistryFriendlyByteBuf packet, Player player) {
+        public void sendSyncHandlerPacket(String panel, SyncHandler<?> syncHandler, RegistryFriendlyByteBuf packet,
+                                          Player player) {
             get(player).sendSyncHandlerPacket(panel, syncHandler, packet, player);
         }
 
         @Override
-        public void sendActionPacket(ModularSyncManager msm, String panel, String key, RegistryFriendlyByteBuf packet, Player player) {
+        public void sendActionPacket(ModularSyncManager msm, String panel, String key, RegistryFriendlyByteBuf packet,
+                                     Player player) {
             get(player).sendActionPacket(msm, panel, key, packet, player);
         }
 

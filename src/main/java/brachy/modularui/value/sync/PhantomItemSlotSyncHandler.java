@@ -6,9 +6,9 @@ import brachy.modularui.widgets.slot.ModularSlot;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import com.mojang.blaze3d.platform.InputConstants;
 import net.neoforged.api.distmarker.Dist;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
@@ -101,7 +101,8 @@ public class PhantomItemSlotSyncHandler extends ItemSlotSyncHandler {
             this.lastStoredPhantomItem = stackToPut.copy();
         } else if (slotStack.isEmpty()) {
             if (cursorStack.isEmpty()) {
-                if (mouseData.mouseButton() == InputConstants.MOUSE_BUTTON_RIGHT && !this.lastStoredPhantomItem.isEmpty()) {
+                if (mouseData.mouseButton() == InputConstants.MOUSE_BUTTON_RIGHT &&
+                        !this.lastStoredPhantomItem.isEmpty()) {
                     stackToPut = this.lastStoredPhantomItem.copy();
                 } else {
                     return;

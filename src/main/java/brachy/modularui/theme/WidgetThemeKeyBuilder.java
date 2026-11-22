@@ -45,26 +45,31 @@ public class WidgetThemeKeyBuilder<T extends WidgetTheme> {
         return this;
     }
 
-    public <V> WidgetThemeKeyBuilder<T> field(String name, Class<V> type, Codec<V> codec, FieldReader<T, V> fieldReader) {
+    public <V> WidgetThemeKeyBuilder<T> field(String name, Class<V> type, Codec<V> codec,
+                                              FieldReader<T, V> fieldReader) {
         return field(name, type, codec, fieldReader, false);
     }
 
-    public <V> WidgetThemeKeyBuilder<T> fallbackField(String name, Class<V> type, Codec<V> codec, FieldReader<T, V> fieldReader) {
+    public <V> WidgetThemeKeyBuilder<T> fallbackField(String name, Class<V> type, Codec<V> codec,
+                                                      FieldReader<T, V> fieldReader) {
         return field(name, type, codec, fieldReader, true);
     }
 
     /**
-     * Adds a field to the codec. The widget theme must have a public constructor with all the fields in the same order they were added.
+     * Adds a field to the codec. The widget theme must have a public constructor with all the fields in the same order
+     * they were added.
      * The constructor is found and used via reflection.
      *
      * @param name        name of the field, used to read and write in JSON
      * @param type        type of the field in the constructor, must be exact
      * @param codec       codec for this field
      * @param fieldReader reads the field from a widget theme
-     * @param canFallback determines if values are inherited from parent or fallback first, if this is true fallback is used first,
+     * @param canFallback determines if values are inherited from parent or fallback first, if this is true fallback is
+     *                    used first,
      *                    but can be disabled individually via the "inherited" property in JSON
      */
-    public <V> WidgetThemeKeyBuilder<T> field(String name, Class<V> type, Codec<V> codec, FieldReader<T, V> fieldReader, boolean canFallback) {
+    public <V> WidgetThemeKeyBuilder<T> field(String name, Class<V> type, Codec<V> codec, FieldReader<T, V> fieldReader,
+                                              boolean canFallback) {
         this.fields.add(new WidgetThemeField<>(name, type, codec, fieldReader, canFallback));
         return this;
     }
@@ -89,16 +94,19 @@ public class WidgetThemeKeyBuilder<T extends WidgetTheme> {
                 merger = (WidgetThemeMerger<T>) this.parser.getMerger();
             }
         }
-        if (this.fields.isEmpty() && (merger == null || codec == null)) throw new IllegalArgumentException("No fields for codec provided!");
+        if (this.fields.isEmpty() && (merger == null || codec == null))
+            throw new IllegalArgumentException("No fields for codec provided!");
         if (merger == null) merger = new WidgetThemeMerger<>(this.fields);
         if (codec == null) {
             Constructor<T> ctor;
             Class<?>[] types = this.fields.stream().map(WidgetThemeField::type).toArray(Class[]::new);
             try {
-                ctor = this.type.getDeclaredConstructor(this.fields.stream().map(WidgetThemeField::type).toArray(Class[]::new));
+                ctor = this.type
+                        .getDeclaredConstructor(this.fields.stream().map(WidgetThemeField::type).toArray(Class[]::new));
             } catch (NoSuchMethodException e) {
                 String sTypes = Arrays.stream(types).map(Class::getSimpleName).reduce("", (a, b) -> a + b + ", ");
-                throw new IllegalArgumentException("No constructor found for the fields with the given types in that order. Types: " + sTypes);
+                throw new IllegalArgumentException(
+                        "No constructor found for the fields with the given types in that order. Types: " + sTypes);
             }
             codec = new WidgetThemeCodec<>(this.type, this.fields, ctor);
         }

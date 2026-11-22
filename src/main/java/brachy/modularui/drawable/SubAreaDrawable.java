@@ -7,14 +7,15 @@ import brachy.modularui.utils.Interpolations;
 import brachy.modularui.utils.serialization.codec.MutableObjectCodec;
 
 import net.minecraft.util.Mth;
-import com.mojang.serialization.Codec;
 
+import com.mojang.serialization.Codec;
 import lombok.Getter;
 import org.jetbrains.annotations.Nullable;
 
 public class SubAreaDrawable extends DelegateDrawable {
 
-    public static final MutableObjectCodec<SubAreaDrawable> CODEC = MutableObjectCodec.drawableBuilder(SubAreaDrawable::new)
+    public static final MutableObjectCodec<SubAreaDrawable> CODEC = MutableObjectCodec
+            .drawableBuilder(SubAreaDrawable::new)
             .add("drawable", SubAreaDrawable::drawable, SubAreaDrawable::getWrappedDrawable, IDrawable.CODEC)
             .addOpt("u0", SubAreaDrawable::u0, SubAreaDrawable::getU0, Codec.FLOAT, 0f).alias("uStart")
             .addOpt("v0", SubAreaDrawable::v0, SubAreaDrawable::getV0, Codec.FLOAT, 0f).alias("vStart")
@@ -35,7 +36,8 @@ public class SubAreaDrawable extends DelegateDrawable {
 
     @Override
     public void draw(GuiContext context, int x, int y, int width, int height, WidgetTheme widgetTheme) {
-        context.getStencil().push(x + this.u0 * width, y + this.v0 * height, (this.u1 - this.u0) * width, (this.v1 - this.v0) * height);
+        context.getStencil().push(x + this.u0 * width, y + this.v0 * height, (this.u1 - this.u0) * width,
+                (this.v1 - this.v0) * height);
         super.draw(context, x, y, width, height, widgetTheme);
         context.getStencil().pop();
     }

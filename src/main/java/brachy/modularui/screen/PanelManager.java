@@ -216,7 +216,8 @@ public class PanelManager {
     }
 
     /**
-     * Closes all panels. Note that this won't close the screen and can put the screen and main panel into an invalid state if used
+     * Closes all panels. Note that this won't close the screen and can put the screen and main panel into an invalid
+     * state if used
      * incorrectly. Use {@link #closePanelsAndScreen()} to actually close all panels and the screen properly.
      *
      * @return if the screen was open

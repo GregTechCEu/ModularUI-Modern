@@ -17,10 +17,14 @@ import lombok.Getter;
 public class ScrollingTextWidget extends TextWidget<ScrollingTextWidget> {
 
     private TextRenderer.Line line;
-    @Getter private float progress = 0;
-    @Getter private IAnimator animator;
-    @Getter private Animator forward;
-    @Getter private Animator backward;
+    @Getter
+    private float progress = 0;
+    @Getter
+    private IAnimator animator;
+    @Getter
+    private Animator forward;
+    @Getter
+    private Animator backward;
 
     private int speed = 15;
 

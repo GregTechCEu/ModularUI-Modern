@@ -10,9 +10,9 @@ import brachy.modularui.utils.Color;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.RenderType;
+
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -285,12 +285,16 @@ public class GraphDrawable implements IDrawable {
     public final boolean equals(Object o) {
         if (!(o instanceof GraphDrawable that)) return false;
 
-        return backgroundColor == that.backgroundColor && Float.compare(majorTickThickness, that.majorTickThickness) == 0 &&
+        return backgroundColor == that.backgroundColor &&
+                Float.compare(majorTickThickness, that.majorTickThickness) == 0 &&
                 Float.compare(majorTickLength, that.majorTickLength) == 0 &&
                 Float.compare(minorTickThickness, that.minorTickThickness) == 0 &&
-                Float.compare(minorTickLength, that.minorTickLength) == 0 && Float.compare(gridLineWidth, that.gridLineWidth) == 0 &&
-                gridLineColor == that.gridLineColor && Float.compare(minorGridLineWidth, that.minorGridLineWidth) == 0 &&
-                minorGridLineColor == that.minorGridLineColor && view.equals(that.view) && x.equals(that.x) && y.equals(that.y) &&
+                Float.compare(minorTickLength, that.minorTickLength) == 0 &&
+                Float.compare(gridLineWidth, that.gridLineWidth) == 0 &&
+                gridLineColor == that.gridLineColor &&
+                Float.compare(minorGridLineWidth, that.minorGridLineWidth) == 0 &&
+                minorGridLineColor == that.minorGridLineColor && view.equals(that.view) && x.equals(that.x) &&
+                y.equals(that.y) &&
                 plots.equals(that.plots);
     }
 

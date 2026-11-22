@@ -35,7 +35,8 @@ public class PlayerInventoryUIFactory extends AbstractUIFactory<PlayerInventoryG
         if (!ModularUI.Mods.CURIOS.isLoaded()) {
             throw new IllegalArgumentException("Can't open UI for curio item when curios is not loaded!");
         }
-        GuiManager.open(this, PlayerInventoryGuiData.of(player, InventoryTypes.CURIOS, type, index), verifyServerSide(player));
+        GuiManager.open(this, PlayerInventoryGuiData.of(player, InventoryTypes.CURIOS, type, index),
+                verifyServerSide(player));
     }
 
     public <T> void open(Player player, InventoryType<T> type, T context, int index) {

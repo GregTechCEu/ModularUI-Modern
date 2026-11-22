@@ -29,7 +29,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public class EmiScreenHandler<T extends Screen & IMuiScreen> extends RecipeViewerHandler
-        implements EmiExclusionArea<T>, EmiDragDropHandler<T>, EmiStackProvider<T> {
+                             implements EmiExclusionArea<T>, EmiDragDropHandler<T>, EmiStackProvider<T> {
 
     private static final Map<Class<?>, EmiScreenHandler<?>> CACHE = new Reference2ReferenceOpenHashMap<>();
 
@@ -102,7 +102,7 @@ public class EmiScreenHandler<T extends Screen & IMuiScreen> extends RecipeViewe
             if (converter == null) {
                 return EmiStackInteraction.EMPTY;
             }
-            @SuppressWarnings({"rawtypes", "unchecked"})
+            @SuppressWarnings({ "rawtypes", "unchecked" })
             var converted = ((EmiStackConverter.Converter) converter).convertTo(provider);
             return new EmiStackInteraction(converted, null, false);
         }

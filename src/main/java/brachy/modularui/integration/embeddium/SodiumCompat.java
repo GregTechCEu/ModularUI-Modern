@@ -1,8 +1,7 @@
 package brachy.modularui.integration.embeddium;
 
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-
 import net.caffeinemc.mods.sodium.api.texture.SpriteUtil;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 
 import java.util.Collection;
 

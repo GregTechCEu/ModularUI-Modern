@@ -19,7 +19,8 @@ import java.util.function.Consumer;
 import java.util.function.IntFunction;
 import java.util.function.Supplier;
 
-public class GenericListSyncHandler<B extends ByteBuf, T> extends GenericCollectionSyncHandler<B, T, List<T>, GenericListSyncHandler<B, T>> {
+public class GenericListSyncHandler<B extends ByteBuf, T>
+                                   extends GenericCollectionSyncHandler<B, T, List<T>, GenericListSyncHandler<B, T>> {
 
     private final List<T> cache = new ObjectArrayList<>();
 
@@ -69,7 +70,8 @@ public class GenericListSyncHandler<B extends ByteBuf, T> extends GenericCollect
     }
 
     /**
-     * Allows safe modification of the cached value. Normally modifying the cached value can cause the value to never be synced.
+     * Allows safe modification of the cached value. Normally modifying the cached value can cause the value to never be
+     * synced.
      * This method forces a sync after the modification.
      *
      * @param consumer function that operates on the current cached value
@@ -79,8 +81,10 @@ public class GenericListSyncHandler<B extends ByteBuf, T> extends GenericCollect
     }
 
     /**
-     * Allows safe modification of the cached value. Normally modifying the cached value can cause the value to never be synced.
-     * This method can automatically sync the cache after the modification. Be careful with potential issues when the sync arg is false.
+     * Allows safe modification of the cached value. Normally modifying the cached value can cause the value to never be
+     * synced.
+     * This method can automatically sync the cache after the modification. Be careful with potential issues when the
+     * sync arg is false.
      *
      * @param consumer function that operates on the current cached value
      */
@@ -93,7 +97,8 @@ public class GenericListSyncHandler<B extends ByteBuf, T> extends GenericCollect
         return new Builder<>();
     }
 
-    public static class Builder<B extends ByteBuf, T> extends GenericCollectionSyncHandler.Builder<B, T, List<T>, Builder<B, T>> {
+    public static class Builder<B extends ByteBuf, T>
+                               extends GenericCollectionSyncHandler.Builder<B, T, List<T>, Builder<B, T>> {
 
         public Builder<B, T> getterArray(Supplier<T[]> getter) {
             getter(() -> Arrays.asList(getter.get()));

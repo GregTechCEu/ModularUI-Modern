@@ -17,7 +17,8 @@ public final class ItemHolderSetList implements ItemEntryList {
     @Getter
     private final List<ItemHolderSetEntry> entries = new ArrayList<>();
 
-    public static ItemHolderSetList of(@NotNull HolderSet<Item> set, int amount, @NotNull DataComponentPatch componentPatch) {
+    public static ItemHolderSetList of(@NotNull HolderSet<Item> set, int amount,
+                                       @NotNull DataComponentPatch componentPatch) {
         var list = new ItemHolderSetList();
         list.add(set, amount, componentPatch);
         return list;
@@ -43,7 +44,8 @@ public final class ItemHolderSetList implements ItemEntryList {
                 .toList();
     }
 
-    public record ItemHolderSetEntry(@NotNull HolderSet<Item> set, int amount, @NotNull DataComponentPatch componentPatch) {
+    public record ItemHolderSetEntry(@NotNull HolderSet<Item> set, int amount,
+                                     @NotNull DataComponentPatch componentPatch) {
 
         public Stream<ItemStack> stacks() {
             return set.stream().map(holder -> ItemTagList.stackWithComponents(holder, amount, componentPatch));

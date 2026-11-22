@@ -274,7 +274,7 @@ public class DAM {
 
     public static double[] diff(double[] src) {
         if (src.length < 2) return EMPTY;
-        if (src.length == 2) return new double[]{src[1] - src[0]};
+        if (src.length == 2) return new double[] { src[1] - src[0] };
         double[] res = new double[src.length - 1];
         for (int i = 0; i < res.length; i++) {
             res[i] = src[i + 1] - src[i];

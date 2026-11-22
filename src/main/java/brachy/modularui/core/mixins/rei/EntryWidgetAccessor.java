@@ -1,9 +1,8 @@
 package brachy.modularui.core.mixins.rei;
 
-import me.shedaniel.rei.impl.client.gui.widget.EntryWidget;
-
 import net.minecraft.client.gui.GuiGraphics;
 
+import me.shedaniel.rei.impl.client.gui.widget.EntryWidget;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
 

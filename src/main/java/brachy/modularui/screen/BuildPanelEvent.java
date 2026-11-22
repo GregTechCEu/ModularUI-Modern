@@ -11,14 +11,18 @@ import java.util.function.UnaryOperator;
  * An event that is invoked after a panel has been build.
  * Sub panels can be completely replaced using the {@link SubPanel sub panel event}.
  * Main panels can not be replaced, but it's children can be by using
- * {@link brachy.modularui.api.widget.IWidget#visitTransformAllChildren(UnaryOperator) IWidget.visitTransformAllChildren(UnaryOperator)}.
+ * {@link brachy.modularui.api.widget.IWidget#visitTransformAllChildren(UnaryOperator)
+ * IWidget.visitTransformAllChildren(UnaryOperator)}.
  */
 @ApiStatus.NonExtendable
 public class BuildPanelEvent extends Event {
 
-    @Getter private final ModularScreen screen;
-    @Getter private final ModularPanel<?> mainPanel;
-    @Getter protected ModularPanel<?> openingPanel;
+    @Getter
+    private final ModularScreen screen;
+    @Getter
+    private final ModularPanel<?> mainPanel;
+    @Getter
+    protected ModularPanel<?> openingPanel;
 
     protected BuildPanelEvent(ModularScreen screen, ModularPanel<?> openingPanel) {
         this.screen = screen;
@@ -47,7 +51,8 @@ public class BuildPanelEvent extends Event {
     }
 
     public boolean matches(String screenOwner, String mainPanel, String openingPanel) {
-        return getScreenName().equals(screenOwner) && getMainPanelName().equals(mainPanel) && getOpeningPanelName().equals(openingPanel);
+        return getScreenName().equals(screenOwner) && getMainPanelName().equals(mainPanel) &&
+                getOpeningPanelName().equals(openingPanel);
     }
 
     public static final class MainPanel extends BuildPanelEvent {

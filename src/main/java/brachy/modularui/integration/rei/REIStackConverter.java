@@ -75,12 +75,14 @@ public class REIStackConverter {
                 return null;
             }
             dev.architectury.fluid.FluidStack fluidStack = stack.castValue();
-            return new FluidStack(fluidStack.getFluid().builtInRegistryHolder(), MathUtils.saturatedCast(fluidStack.getAmount()),
+            return new FluidStack(fluidStack.getFluid().builtInRegistryHolder(),
+                    MathUtils.saturatedCast(fluidStack.getAmount()),
                     fluidStack.getPatch());
         }
 
         private static dev.architectury.fluid.FluidStack toREIStack(FluidStack stack) {
-            return dev.architectury.fluid.FluidStack.create(stack.getFluid(), stack.getAmount(), stack.getComponentsPatch());
+            return dev.architectury.fluid.FluidStack.create(stack.getFluid(), stack.getAmount(),
+                    stack.getComponentsPatch());
         }
 
         private static EntryIngredient toREIIngredient(Stream<FluidStack> stream) {
@@ -123,12 +125,12 @@ public class REIStackConverter {
         return (Converter<T>) CONVERTERS.get(clazz);
     }
 
-
     public static <T> Optional<Converter<T>> getFor(Class<T> clazz) {
         return Optional.ofNullable(getForNullable(clazz));
     }
 
-    public static <T> EntryIngredient convertToReiEntry(EntryList<T> entries, float chance, UnaryOperator<T> renderMappingFunction) {
+    public static <T> EntryIngredient convertToReiEntry(EntryList<T> entries, float chance,
+                                                        UnaryOperator<T> renderMappingFunction) {
         REIStackConverter.Converter<T> converter = REIStackConverter.getForNullable(entries.getType());
         if (converter != null) {
             return converter.convertTo(entries, chance, renderMappingFunction);

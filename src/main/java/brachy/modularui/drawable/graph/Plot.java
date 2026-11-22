@@ -1,17 +1,17 @@
 package brachy.modularui.drawable.graph;
 
-import brachy.modularui.utils.MUIRenderTypes;
 import brachy.modularui.api.GuiAxis;
 import brachy.modularui.drawable.GuiDraw;
 import brachy.modularui.utils.Color;
 import brachy.modularui.utils.Interpolations;
+import brachy.modularui.utils.MUIRenderTypes;
 import brachy.modularui.utils.math.DAM;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.util.Mth;
-import com.mojang.blaze3d.systems.RenderSystem;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import lombok.Getter;
 
 public class Plot {

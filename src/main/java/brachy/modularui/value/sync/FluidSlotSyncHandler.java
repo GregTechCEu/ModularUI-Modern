@@ -1,8 +1,8 @@
 package brachy.modularui.value.sync;
 
+import brachy.modularui.utils.MouseData;
 import brachy.modularui.utils.handlers.fluid.FluidTankHandler;
 import brachy.modularui.utils.handlers.fluid.IMultiTankFluidHandler;
-import brachy.modularui.utils.MouseData;
 
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.sounds.SoundEvent;
@@ -41,11 +41,13 @@ public class FluidSlotSyncHandler extends ValueSyncHandler<RegistryFriendlyByteB
     private final IFluidHandler fluidHandler;
     /**
      * The index of this slot's contents in {@link #fluidHandler this.fluidHandler}.<br>
-     * Note that if this FluidSlotSyncHandler was constructed with only a fluid tank and no fluid handler, this field's value will be
+     * Note that if this FluidSlotSyncHandler was constructed with only a fluid tank and no fluid handler, this field's
+     * value will be
      * {@link #UNKNOWN_TANK_INDEX} so you should check that instead of assuming it's nonnegative (>=0).
      */
     @Accessors(fluent = false)
-    @Getter private final int tankIndex;
+    @Getter
+    private final int tankIndex;
     @Getter
     @Setter
     private boolean canFillSlot = true, canDrainSlot = true, phantom = false;
@@ -176,10 +178,12 @@ public class FluidSlotSyncHandler extends ValueSyncHandler<RegistryFriendlyByteB
         if (maxAmount <= 0) return false;
         boolean performedTransfer = false;
         for (int i = 0; i < maxAttempts; i++) {
-            FluidActionResult result = FluidUtil.tryEmptyContainer(currentStack, this.fluidHandler, maxAmount, null, false);
+            FluidActionResult result = FluidUtil.tryEmptyContainer(currentStack, this.fluidHandler, maxAmount, null,
+                    false);
             ItemStack remainingStack = result.getResult();
             if (!result.isSuccess() ||
-                    (currentStack.getCount() > 1 && !remainingStack.isEmpty() && !player.getInventory().add(remainingStack))) {
+                    (currentStack.getCount() > 1 && !remainingStack.isEmpty() &&
+                            !player.getInventory().add(remainingStack))) {
                 player.drop(remainingStack, true);
                 break; // do not continue if we can't add resulting container into inventory
             }
@@ -203,19 +207,23 @@ public class FluidSlotSyncHandler extends ValueSyncHandler<RegistryFriendlyByteB
         return performedTransfer;
     }
 
-    private boolean drainSlot(Player player, ItemStack currentStack, int maxAttempts, int maxAmount, boolean playSound) {
+    private boolean drainSlot(Player player, ItemStack currentStack, int maxAttempts, int maxAmount,
+                              boolean playSound) {
         FluidStack currentFluid = this.fluidTank.getFluid();
         if (currentFluid.isEmpty() || maxAmount <= 0) return false;
         boolean performedTransfer = false;
         for (int i = 0; i < maxAttempts; i++) {
-            FluidActionResult result = FluidUtil.tryFillContainer(currentStack, this.fluidHandler, maxAmount, null, false);
+            FluidActionResult result = FluidUtil.tryFillContainer(currentStack, this.fluidHandler, maxAmount, null,
+                    false);
             ItemStack remainingStack = result.getResult();
             if (!result.isSuccess() ||
-                    (currentStack.getCount() > 1 && !remainingStack.isEmpty() && !player.getInventory().add(remainingStack))) {
+                    (currentStack.getCount() > 1 && !remainingStack.isEmpty() &&
+                            !player.getInventory().add(remainingStack))) {
                 break; // do not continue if we can't add resulting container into inventory
             }
 
-            remainingStack = FluidUtil.tryFillContainer(currentStack, this.fluidHandler, maxAmount, playSound ? player : null, true).result;
+            remainingStack = FluidUtil.tryFillContainer(currentStack, this.fluidHandler, maxAmount,
+                    playSound ? player : null, true).result;
             if (currentStack.getCount() == 1) {
                 currentStack = remainingStack;
             } else {
@@ -243,7 +251,8 @@ public class FluidSlotSyncHandler extends ValueSyncHandler<RegistryFriendlyByteB
             if (this.canFillSlot) {
                 // set slot to fluid of tank item
                 if (fluidHandlerItem != null) {
-                    FluidStack cellFluid = fluidHandlerItem.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE);
+                    FluidStack cellFluid = fluidHandlerItem.drain(Integer.MAX_VALUE,
+                            IFluidHandler.FluidAction.SIMULATE);
                     if (!cellFluid.isEmpty()) {
                         if (FluidStack.isSameFluidSameComponents(cellFluid, currentFluid)) {
                             // if it already contains the same fluid increase the amount by the cells amount
@@ -290,7 +299,8 @@ public class FluidSlotSyncHandler extends ValueSyncHandler<RegistryFriendlyByteB
         }
     }
 
-    private void drainSlotPhantom(boolean shift, Player player, FluidStack currentFluid, IFluidHandlerItem fluidHandlerItem) {
+    private void drainSlotPhantom(boolean shift, Player player, FluidStack currentFluid,
+                                  IFluidHandlerItem fluidHandlerItem) {
         currentFluid = currentFluid.copy();
         if (this.controlsAmount && !shift) {
             if (fluidHandlerItem != null) {
@@ -366,7 +376,8 @@ public class FluidSlotSyncHandler extends ValueSyncHandler<RegistryFriendlyByteB
         if (sound == null) return;
         // on client, it needs the player to play the sound
         // on server the player is an exception
-        player.level().playSound(getSyncManager().isClient() ? player : null, player.getX(), player.getY() + 0.5, player.getZ(), sound,
+        player.level().playSound(getSyncManager().isClient() ? player : null, player.getX(), player.getY() + 0.5,
+                player.getZ(), sound,
                 SoundSource.BLOCKS, 1.0F, 1.0F);
     }
 

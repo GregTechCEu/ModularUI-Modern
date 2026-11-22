@@ -13,9 +13,8 @@ import brachy.modularui.utils.serialization.codec.CodecRegistry;
 import brachy.modularui.widget.sizer.Area;
 import brachy.modularui.widget.sizer.StandardResizer;
 
-import com.mojang.serialization.Codec;
-
 import com.google.common.base.CharMatcher;
+import com.mojang.serialization.Codec;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import org.jetbrains.annotations.NotNull;
@@ -75,7 +74,8 @@ public interface IWidget extends ITreeNode<IWidget> {
     /**
      * @return the panel this widget is in
      */
-    @NotNull ModularPanel<?> getPanel();
+    @NotNull
+    ModularPanel<?> getPanel();
 
     /**
      * @return the area this widget occupies
@@ -298,6 +298,7 @@ public interface IWidget extends ITreeNode<IWidget> {
 
     /**
      * Gets the theme that is currently in use for this widget.
+     * 
      * @return The gui theme.
      */
     ITheme getTheme();

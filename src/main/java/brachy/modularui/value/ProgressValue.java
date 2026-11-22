@@ -8,7 +8,8 @@ import java.util.concurrent.TimeUnit;
 
 public class ProgressValue extends DoubleValue {
 
-    @Getter private final int duration;
+    @Getter
+    private final int duration;
 
     public ProgressValue(int duration) {
         super(0);

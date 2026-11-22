@@ -9,10 +9,10 @@ import brachy.modularui.utils.Alignment;
 import brachy.modularui.utils.serialization.codec.MutableObjectCodec;
 import brachy.modularui.widget.sizer.Box;
 
-import com.mojang.serialization.Codec;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
+import com.mojang.serialization.Codec;
 import lombok.Getter;
 
 /**
@@ -29,11 +29,16 @@ public class Icon implements IIcon {
             .addOpt("margin", Icon::margin, Icon::getMargin, Box.CODEC, Box.ZERO)
             .build();
 
-    @Getter private IDrawable drawable;
-    @Getter private int width = 0, height = 0;
-    @Getter private float aspectRatio = 0;
-    @Getter private Alignment alignment = Alignment.Center;
-    @Getter private final Box margin = new Box();
+    @Getter
+    private IDrawable drawable;
+    @Getter
+    private int width = 0, height = 0;
+    @Getter
+    private float aspectRatio = 0;
+    @Getter
+    private Alignment alignment = Alignment.Center;
+    @Getter
+    private final Box margin = new Box();
 
     private Icon() {
         this.drawable = IDrawable.EMPTY;

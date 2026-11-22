@@ -2,7 +2,6 @@ package brachy.modularui.test;
 
 import brachy.modularui.ModularUI;
 
-import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -59,12 +58,14 @@ public class TestRegistration {
         event.registerItem(Capabilities.ItemHandler.ITEM, (stack, ctx) -> {
             return new ItemStackHandler(4);
         }, TestRegistration.TEST_ITEM.get());
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, TestRegistration.TEST_MACHINE_BLOCK_ENTITY.get(), (machine, dir) -> {
-            return machine.getItemHandler();
-        });
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, TestRegistration.TEST_MACHINE_BLOCK_ENTITY.get(), (machine, dir) -> {
-            return machine.getFluidHandler();
-        });
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, TestRegistration.TEST_MACHINE_BLOCK_ENTITY.get(),
+                (machine, dir) -> {
+                    return machine.getItemHandler();
+                });
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, TestRegistration.TEST_MACHINE_BLOCK_ENTITY.get(),
+                (machine, dir) -> {
+                    return machine.getFluidHandler();
+                });
     }
 
     public static void register(IEventBus modBus) {

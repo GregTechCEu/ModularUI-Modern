@@ -75,7 +75,7 @@ public class FormattingUtil {
      * @param string Any string with ASCII characters.
      * @return A string that is all lowercase, with underscores inserted before word/number boundaries:
      *
-     * <pre>
+     *         <pre>
      *         <br>{@code "maragingSteel300" -> "maraging_steel_300"}
      *         <br>{@code "modularui:maraging_steel_300" -> "modularui:maraging_steel_300"}
      *         <br>{@code "maragingSteel_300" -> "maraging_steel_300"}
@@ -299,7 +299,7 @@ public class FormattingUtil {
      *
      * @param string Any string with ASCII characters.
      * @return A string that is all lowercase, with underscores inserted before word/number boundaries:
-     * "maraging_steel_300" -> "maragingSteel300"
+     *         "maraging_steel_300" -> "maragingSteel300"
      */
     public static String lowerUnderscoreToUpperCamel(String string) {
         StringBuilder result = new StringBuilder();

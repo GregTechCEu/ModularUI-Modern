@@ -5,14 +5,14 @@ import brachy.modularui.api.drawable.IInterpolation;
 import brachy.modularui.utils.serialization.codec.CodecUtil;
 
 import net.minecraft.util.Mth;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 import com.google.gson.JsonObject;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import java.util.Locale;
 import java.util.Random;
@@ -610,7 +610,7 @@ public class Color {
      * @return rgba as an array [red, green, blue]
      */
     public static int[] getRGBValues(int argb) {
-        return new int[]{getRed(argb), getGreen(argb), getBlue(argb)};
+        return new int[] { getRed(argb), getGreen(argb), getBlue(argb) };
     }
 
     /**
@@ -619,7 +619,7 @@ public class Color {
      * @return rgba as an array [red, green, blue, alpha]
      */
     public static int[] getARGBValues(int argb) {
-        return new int[]{getRed(argb), getGreen(argb), getBlue(argb), getAlpha(argb)};
+        return new int[] { getRed(argb), getGreen(argb), getBlue(argb), getAlpha(argb) };
     }
 
     /**
@@ -629,7 +629,7 @@ public class Color {
      * @return HSV values array
      */
     public static float[] getHSVValues(int argb) {
-        return new float[]{getHue(argb), getHSVSaturation(argb), getValue(argb)};
+        return new float[] { getHue(argb), getHSVSaturation(argb), getValue(argb) };
     }
 
     /**
@@ -639,7 +639,7 @@ public class Color {
      * @return HSL values array
      */
     public static float[] getHSLValues(int argb) {
-        return new float[]{getHue(argb), getHSLSaturation(argb), getLightness(argb)};
+        return new float[] { getHue(argb), getHSLSaturation(argb), getLightness(argb) };
     }
 
     /**
@@ -649,7 +649,7 @@ public class Color {
      * @return CMYK values array
      */
     public static float[] getCMYKValues(int argb) {
-        return new float[]{getCyan(argb), getMagenta(argb), getYellow(argb), getBlack(argb)};
+        return new float[] { getCyan(argb), getMagenta(argb), getYellow(argb), getBlack(argb) };
     }
 
     /**
@@ -836,11 +836,13 @@ public class Color {
     }
 
     public static int getLargestDiff(int argb1, int argb2) {
-        return Math.max(Math.abs(getRed(argb1) - getRed(argb2)), Math.max(Math.abs(getGreen(argb1) - getGreen(argb2)), Math.abs(getBlue(argb1) - getBlue(argb2))));
+        return Math.max(Math.abs(getRed(argb1) - getRed(argb2)),
+                Math.max(Math.abs(getGreen(argb1) - getGreen(argb2)), Math.abs(getBlue(argb1) - getBlue(argb2))));
     }
 
     public static float getLargestDiffFloat(int argb1, int argb2) {
-        return Math.max(Math.abs(getRedF(argb1) - getRedF(argb2)), Math.max(Math.abs(getGreenF(argb1) - getGreenF(argb2)), Math.abs(getBlueF(argb1) - getBlueF(argb2))));
+        return Math.max(Math.abs(getRedF(argb1) - getRedF(argb2)),
+                Math.max(Math.abs(getGreenF(argb1) - getGreenF(argb2)), Math.abs(getBlueF(argb1) - getBlueF(argb2))));
     }
 
     public static boolean areSameColor(int argb1, int argb2) {
@@ -932,41 +934,39 @@ public class Color {
         return s;
     }
 
-    public static final Codec<Integer> CODEC_STRING = Codec.STRING.comapFlatMap(Color::parseString, c -> "#" + argbToFullHexString(c));
+    public static final Codec<Integer> CODEC_STRING = Codec.STRING.comapFlatMap(Color::parseString,
+            c -> "#" + argbToFullHexString(c));
 
     public static final Codec<Integer> CODEC_ARGB = RecordCodecBuilder.create(instance -> instance.group(
             Codec.FLOAT.fieldOf("r").forGetter(Color::getRedF),
             Codec.FLOAT.fieldOf("g").forGetter(Color::getGreenF),
             Codec.FLOAT.fieldOf("b").forGetter(Color::getBlueF),
-            Codec.FLOAT.optionalFieldOf("a", 1f).forGetter(Color::getAlphaF)
-    ).apply(instance, Color::argb));
+            Codec.FLOAT.optionalFieldOf("a", 1f).forGetter(Color::getAlphaF)).apply(instance, Color::argb));
 
     public static final Codec<Integer> CODEC_HSV = RecordCodecBuilder.create(instance -> instance.group(
             Codec.FLOAT.fieldOf("h").forGetter(Color::getHue),
             Codec.FLOAT.fieldOf("s").forGetter(Color::getHSVSaturation),
             Codec.FLOAT.fieldOf("v").forGetter(Color::getValue),
-            Codec.FLOAT.optionalFieldOf("a", 1f).forGetter(Color::getAlphaF)
-    ).apply(instance, Color::ofHSV));
+            Codec.FLOAT.optionalFieldOf("a", 1f).forGetter(Color::getAlphaF)).apply(instance, Color::ofHSV));
 
     public static final Codec<Integer> CODEC_HSL = RecordCodecBuilder.create(instance -> instance.group(
             Codec.FLOAT.fieldOf("h").forGetter(Color::getHue),
             Codec.FLOAT.fieldOf("s").forGetter(Color::getHSLSaturation),
             Codec.FLOAT.fieldOf("l").forGetter(Color::getLightness),
-            Codec.FLOAT.optionalFieldOf("a", 1f).forGetter(Color::getAlphaF)
-    ).apply(instance, Color::ofHSL));
+            Codec.FLOAT.optionalFieldOf("a", 1f).forGetter(Color::getAlphaF)).apply(instance, Color::ofHSL));
 
     public static final Codec<Integer> CODEC_CMYK = RecordCodecBuilder.create(instance -> instance.group(
             Codec.FLOAT.fieldOf("c").forGetter(Color::getCyan),
             Codec.FLOAT.fieldOf("m").forGetter(Color::getMagenta),
             Codec.FLOAT.fieldOf("y").forGetter(Color::getYellow),
             Codec.FLOAT.fieldOf("k").forGetter(Color::getBlack),
-            Codec.FLOAT.optionalFieldOf("a", 1f).forGetter(Color::getAlphaF)
-    ).apply(instance, Color::ofCMYK));
+            Codec.FLOAT.optionalFieldOf("a", 1f).forGetter(Color::getAlphaF)).apply(instance, Color::ofCMYK));
 
     /**
      * Encodes into hex string and decodes, hex string, arg obj, hsv obj, hsl obj, cmyk obj and then raw argb integer.
      */
-    public static final Codec<Integer> CODEC = CodecUtil.codecOf(CODEC_STRING, CODEC_STRING, CODEC_ARGB, CODEC_HSV, CODEC_HSL, CODEC_CMYK, Codec.INT);
+    public static final Codec<Integer> CODEC = CodecUtil.codecOf(CODEC_STRING, CODEC_STRING, CODEC_ARGB, CODEC_HSV,
+            CODEC_HSL, CODEC_CMYK, Codec.INT);
 
     public static DataResult<Integer> parseString(String colorString) {
         return parseString(colorString, WHITE.main);
@@ -976,8 +976,10 @@ public class Color {
      * Parses a color ARGB int from a string.
      * The string can be a number in decimal (no prefix), hexadecimal (0x, 0X or # prefix) or octal (0 prefix).
      * Otherwise, it can be a name from a {@link ColorShade} instance. The default instances can be found at the bottom
-     * of this class. These names can be suffixed with colon and a negative number for darker colors or positive number for brighter colors.
-     * The number is an index to an array with predefined shades. 0 is the main color. If no color for a name is found, the fallback value
+     * of this class. These names can be suffixed with colon and a negative number for darker colors or positive number
+     * for brighter colors.
+     * The number is an index to an array with predefined shades. 0 is the main color. If no color for a name is found,
+     * the fallback value
      * is returned. The shade index is clamped to valid values.
      * <p>
      * Example: "deep_purple:-3" returns 0xFF4527A0
@@ -1001,7 +1003,8 @@ public class Color {
                 return DataResult.success(color);
             } catch (NumberFormatException e) {
                 String finalColorString = colorString;
-                return DataResult.error(() -> String.format("Failed to decode color of string '%s'.", finalColorString), fallback);
+                return DataResult.error(() -> String.format("Failed to decode color of string '%s'.", finalColorString),
+                        fallback);
             }
         }
 
@@ -1025,14 +1028,17 @@ public class Color {
         if (colorShade != null) {
             if (fail != null) {
                 String finalFail = fail;
-                return DataResult.error(() -> String.format("If the color is a word then after teh : must come a negative or positive integer, but got '%s'.", finalFail), colorShade.main);
+                return DataResult.error(() -> String.format(
+                        "If the color is a word then after teh : must come a negative or positive integer, but got '%s'.",
+                        finalFail), colorShade.main);
             }
             if (index == 0) return DataResult.success(colorShade.main);
             if (index > 0) return DataResult.success(colorShade.brighterSafe(index - 1));
             return DataResult.success(colorShade.darkerSafe(-index - 1));
         }
         String finalColorString1 = colorString;
-        return DataResult.error(() -> String.format("No color shade for name '%s' was found", finalColorString1), fallback);
+        return DataResult.error(() -> String.format("No color shade for name '%s' was found", finalColorString1),
+                fallback);
     }
 
     private static boolean hasRGB(JsonObject json) {

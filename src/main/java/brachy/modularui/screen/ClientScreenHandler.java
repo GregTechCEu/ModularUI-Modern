@@ -45,9 +45,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.HitResult;
-import com.mojang.blaze3d.platform.InputConstants;
-import com.mojang.blaze3d.platform.Lighting;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -59,6 +56,9 @@ import net.neoforged.neoforge.client.event.ScreenEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.common.NeoForge;
 
+import com.mojang.blaze3d.platform.InputConstants;
+import com.mojang.blaze3d.platform.Lighting;
+import com.mojang.blaze3d.systems.RenderSystem;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import lombok.Getter;
 import org.jetbrains.annotations.ApiStatus;
@@ -111,8 +111,9 @@ public class ClientScreenHandler {
         OverlayStack.foreach(ms -> ms.onResize(event.getScreen().width, event.getScreen().height), false);
     }
 
-    // TODO: Figure out when exactly early inputs (before recipe viewer) for mouse press, mouse release, key press, key release,
-    //  mouse scroll and mouse drag are needed. One case would may be draggable widgets.
+    // TODO: Figure out when exactly early inputs (before recipe viewer) for mouse press, mouse release, key press, key
+    // release,
+    // mouse scroll and mouse drag are needed. One case would may be draggable widgets.
     @SubscribeEvent
     public static void onScreenKeyPressedHigh(ScreenEvent.KeyPressed.Pre event) {
         defaultContext.updateKey(event.getKeyCode(), event.getScanCode(), event.getModifiers(), true);
@@ -373,7 +374,8 @@ public class ClientScreenHandler {
         }
         if (!hasLevel) return false; // E only closes in world
         if (Minecraft.getInstance().options.keyInventory
-                .isActiveAndMatches(InputConstants.getKey(keyCode, scanCode)) && !RecipeViewerHandler.getCurrent().isSearchFocused()) {
+                .isActiveAndMatches(InputConstants.getKey(keyCode, scanCode)) &&
+                !RecipeViewerHandler.getCurrent().isSearchFocused()) {
             dropOrClosePanel();
             return true;
         }
@@ -449,7 +451,8 @@ public class ClientScreenHandler {
         }
     }
 
-    public static void drawScreenInternal(GuiGraphics graphics, ModularScreen muiScreen, Screen mcScreen, int mouseX, int mouseY, float partialTicks) {
+    public static void drawScreenInternal(GuiGraphics graphics, ModularScreen muiScreen, Screen mcScreen, int mouseX,
+                                          int mouseY, float partialTicks) {
         Stencil.reset();
         muiScreen.getContext().reset();
         muiScreen.getContext().getStencil().push(muiScreen.getScreenArea());
@@ -554,12 +557,14 @@ public class ClientScreenHandler {
     }
 
     @ApiStatus.Internal
-    public static void drawVanillaElements(GuiGraphics graphics, Screen mcScreen, int mouseX, int mouseY, float partialTicks) {
+    public static void drawVanillaElements(GuiGraphics graphics, Screen mcScreen, int mouseX, int mouseY,
+                                           float partialTicks) {
         drawVanillaElements(graphics, mcScreen, mouseX, mouseY, partialTicks, r -> true);
     }
 
     @ApiStatus.Internal
-    public static void drawVanillaElements(GuiGraphics graphics, Screen mcScreen, int mouseX, int mouseY, float partialTicks, Predicate<Renderable> filter) {
+    public static void drawVanillaElements(GuiGraphics graphics, Screen mcScreen, int mouseX, int mouseY,
+                                           float partialTicks, Predicate<Renderable> filter) {
         for (Renderable renderable : mcScreen.renderables) {
             if (filter.test(renderable)) {
                 renderable.render(graphics, mouseX, mouseY, partialTicks);
@@ -567,7 +572,8 @@ public class ClientScreenHandler {
         }
     }
 
-    public static void drawDebugScreen(GuiGraphics graphics, @Nullable ModularScreen muiScreen, @Nullable ModularScreen fallback) {
+    public static void drawDebugScreen(GuiGraphics graphics, @Nullable ModularScreen muiScreen,
+                                       @Nullable ModularScreen fallback) {
         fpsCounter.onDraw();
         if (!ModularUIConfig.Dev.debugUI()) return;
         if (muiScreen == null) {
@@ -586,8 +592,10 @@ public class ClientScreenHandler {
 
         int mouseX = context.getAbsMouseX(), mouseY = context.getAbsMouseY();
         int screenH = muiScreen.getScreenArea().height;
-        int outlineColor = Color.parseString(ModularUIConfig.DEBUG_OUTLINE_COLOR.get(), DEFAULT_DEBUG_OUTLINE_COLOR).resultOrPartial(s -> {}).orElseThrow();
-        int textColor = Color.parseString(ModularUIConfig.DEBUG_TEXT_COLOR.get(), DEFAULT_DEBUG_TEXT_COLOR).resultOrPartial(s -> {}).orElseThrow();
+        int outlineColor = Color.parseString(ModularUIConfig.DEBUG_OUTLINE_COLOR.get(), DEFAULT_DEBUG_OUTLINE_COLOR)
+                .resultOrPartial(s -> {}).orElseThrow();
+        int textColor = Color.parseString(ModularUIConfig.DEBUG_TEXT_COLOR.get(), DEFAULT_DEBUG_TEXT_COLOR)
+                .resultOrPartial(s -> {}).orElseThrow();
         float scale = ModularUIConfig.Dev.scale();
         int shift = (int) (11 * scale + 0.5f);
         int lineY = screenH - shift - 2;
@@ -639,7 +647,8 @@ public class ClientScreenHandler {
             locatedHovered.unapplyMatrix(context);
             if (showHovered) {
                 if (ModularUIConfig.Dev.showWidgetTheme()) {
-                    s = I18n.get("modularui.debug.widget_theme_key", hovered.getWidgetThemeEntry(hovered.getTheme()).key().getFullName());
+                    s = I18n.get("modularui.debug.widget_theme_key",
+                            hovered.getWidgetThemeEntry(hovered.getTheme()).key().getFullName());
                     GuiDraw.drawText(graphics, s, 5, lineY, scale, textColor, true);
                     lineY -= shift;
                 }
@@ -662,7 +671,8 @@ public class ClientScreenHandler {
                     lineY -= 10;
                 }
                 if (ModularUIConfig.Dev.showParentWidgetTheme()) {
-                    s = I18n.get("modularui.debug.widget_theme_key", parent.getWidgetThemeEntry(parent.getTheme()).key().getFullName());
+                    s = I18n.get("modularui.debug.widget_theme_key",
+                            parent.getWidgetThemeEntry(parent.getTheme()).key().getFullName());
                     GuiDraw.drawText(graphics, s, 5, lineY, scale, textColor, true);
                     lineY -= shift;
                 }
@@ -694,7 +704,8 @@ public class ClientScreenHandler {
                     if (slotWidget.isSynced()) {
                         SlotGroup slotGroup = slot.getSlotGroup();
                         boolean allowShiftTransfer = slotGroup != null && slotGroup.isAllowShiftTransfer();
-                        s = I18n.get("modularui.debug.shift_click_priority", allowShiftTransfer ? slotGroup.getShiftClickPriority() : "DISABLED");
+                        s = I18n.get("modularui.debug.shift_click_priority",
+                                allowShiftTransfer ? slotGroup.getShiftClickPriority() : "DISABLED");
                         GuiDraw.drawText(graphics, s, 5, lineY, scale, textColor, true);
                     }
                 } else if (hovered instanceof RichTextWidget richTextWidget) {

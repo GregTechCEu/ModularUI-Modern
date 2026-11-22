@@ -253,7 +253,8 @@ public abstract class ScrollData {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public abstract void drawScrollbar(ModularGuiContext context, ScrollArea area, WidgetTheme widgetTheme, IDrawable texture);
+    public abstract void drawScrollbar(ModularGuiContext context, ScrollArea area, WidgetTheme widgetTheme,
+                                       IDrawable texture);
 
     @OnlyIn(Dist.CLIENT)
     protected void drawScrollBar(ModularGuiContext context, int x, int y, int w, int h, WidgetTheme widgetTheme,

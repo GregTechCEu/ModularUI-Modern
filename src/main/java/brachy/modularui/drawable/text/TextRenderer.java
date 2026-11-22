@@ -260,7 +260,8 @@ public class TextRenderer {
             maxWidth = this.maxWidth;
         }
         if (this.alignment.x > 0 && maxWidth > 0) {
-            return Math.max(this.x, this.x + Math.round(maxWidth * this.alignment.x) - Math.round(lineWidth * this.alignment.x));
+            return Math.max(this.x,
+                    this.x + Math.round(maxWidth * this.alignment.x) - Math.round(lineWidth * this.alignment.x));
         }
         return this.x;
     }

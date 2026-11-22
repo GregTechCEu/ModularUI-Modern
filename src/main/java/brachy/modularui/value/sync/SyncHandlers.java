@@ -1,9 +1,9 @@
 package brachy.modularui.value.sync;
 
+import brachy.modularui.widgets.slot.ModularSlot;
+
 import net.neoforged.neoforge.fluids.IFluidTank;
 import net.neoforged.neoforge.items.IItemHandlerModifiable;
-
-import brachy.modularui.widgets.slot.ModularSlot;
 
 import io.netty.buffer.ByteBuf;
 import it.unimi.dsi.fastutil.booleans.BooleanConsumer;

@@ -23,8 +23,8 @@ public abstract class AbstractWidgetMixin {
 
     @Inject(method = "render",
             at = @At(value = "FIELD",
-                    opcode = Opcodes.PUTFIELD,
-                    target = "Lnet/minecraft/client/gui/components/AbstractWidget;isHovered:Z"))
+                     opcode = Opcodes.PUTFIELD,
+                     target = "Lnet/minecraft/client/gui/components/AbstractWidget;isHovered:Z"))
     public void mui$fixHoveredState(GuiGraphics guiGraphics, int mouseX, int mouseY,
                                     float partialTick, CallbackInfo ci) {
         // fixes buttons being hovered when an overlay element is already hovered

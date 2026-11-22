@@ -19,10 +19,10 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import com.mojang.blaze3d.platform.InputConstants;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import lombok.Getter;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Contract;
@@ -63,14 +63,16 @@ public class ModularContainerMenu extends AbstractContainerMenu {
         super(ModularUIMenuTypes.MODULAR_CONTAINER.get(), containerId);
     }
 
-    public <T extends GuiData> ModularContainerMenu(int containerId, Inventory playerInv, @Nullable FriendlyByteBuf data) {
+    public <T extends GuiData> ModularContainerMenu(int containerId, Inventory playerInv,
+                                                    @Nullable FriendlyByteBuf data) {
         this(containerId);
         // TODO: Better integration with menu types for custom containers and screens.
         throw new IllegalArgumentException("Do not open the modular container the forge way. Use an UIFactory!");
     }
 
     @ApiStatus.Internal
-    public void construct(Player player, ModularSyncManager msm, UISettings settings, String mainPanelName, GuiData guiData) {
+    public void construct(Player player, ModularSyncManager msm, UISettings settings, String mainPanelName,
+                          GuiData guiData) {
         this.player = player;
         this.syncManager = msm;
         this.syncManager.construct(this, mainPanelName);
@@ -170,7 +172,8 @@ public class ModularContainerMenu extends AbstractContainerMenu {
         if (slot.getSlotGroupName() != null) {
             SlotGroup slotGroup = getSyncManager().getSlotGroup(panelName, slot.getSlotGroupName());
             if (slotGroup == null) {
-                ModularUI.LOGGER.throwing(new IllegalArgumentException("SlotGroup '" + slot.getSlotGroupName() + "' is not registered!"));
+                ModularUI.LOGGER.throwing(
+                        new IllegalArgumentException("SlotGroup '" + slot.getSlotGroupName() + "' is not registered!"));
                 return;
             }
             slot.slotGroup(slotGroup);
@@ -189,7 +192,8 @@ public class ModularContainerMenu extends AbstractContainerMenu {
     @Contract("_, null, null -> fail")
     @NotNull
     @ApiStatus.Internal
-    public SlotGroup validateSlotGroup(String panelName, @Nullable String slotGroupName, @Nullable SlotGroup slotGroup) {
+    public SlotGroup validateSlotGroup(String panelName, @Nullable String slotGroupName,
+                                       @Nullable SlotGroup slotGroup) {
         if (slotGroup != null) {
             if (getSyncManager().getSlotGroup(panelName, slotGroup.getName()) == null) {
                 throw new IllegalArgumentException("Slot group is not registered in the GUI.");
@@ -324,19 +328,19 @@ public class ModularContainerMenu extends AbstractContainerMenu {
                         }
                     } else if (heldStack.getMaxStackSize() > 1 &&
                             ItemStack.isSameItemSameComponents(slotStack, heldStack) && !slotStack.isEmpty()) {
-                        int stackCount = slotStack.getCount();
+                                int stackCount = slotStack.getCount();
 
-                        if (stackCount + heldStack.getCount() <= heldStack.getMaxStackSize()) {
-                            heldStack.grow(stackCount);
-                            slotStack = clickedSlot.remove(stackCount);
+                                if (stackCount + heldStack.getCount() <= heldStack.getMaxStackSize()) {
+                                    heldStack.grow(stackCount);
+                                    slotStack = clickedSlot.remove(stackCount);
 
-                            if (slotStack.isEmpty()) {
-                                clickedSlot.setByPlayer(ItemStack.EMPTY);
+                                    if (slotStack.isEmpty()) {
+                                        clickedSlot.setByPlayer(ItemStack.EMPTY);
+                                    }
+
+                                    clickedSlot.onTake(player, this.getCarried());
+                                }
                             }
-
-                            clickedSlot.onTake(player, this.getCarried());
-                        }
-                    }
                 }
                 clickedSlot.setChanged();
             }
@@ -352,7 +356,8 @@ public class ModularContainerMenu extends AbstractContainerMenu {
             int step = mouseButton == InputConstants.MOUSE_BUTTON_LEFT ? 1 : -1;
 
             for (int i = 0; i < 2; ++i) {
-                for (int s = start; s >= 0 && s < slots.size() && carried.getCount() < carried.getMaxStackSize(); s += step) {
+                for (int s = start; s >= 0 && s < slots.size() &&
+                        carried.getCount() < carried.getMaxStackSize(); s += step) {
                     Slot current = slots.get(s);
                     if (current instanceof ModularSlot modularSlot && modularSlot.isPhantom()) continue;
 
@@ -381,80 +386,85 @@ public class ModularContainerMenu extends AbstractContainerMenu {
             broadcastChanges();
         } else if (clickTypeIn == ClickType.SWAP &&
                 ((mouseButton >= 0 && mouseButton < 9) || mouseButton == Inventory.SLOT_OFFHAND)) {
-            // minecraft does not check if the hotbar slot can actually take and put items
-            Slot hotbarSlot = findPlayerSlot(player, mouseButton); // mouseButton is the slot index here
-            if (hotbarSlot == null && mouseButton == Inventory.SLOT_OFFHAND) {
-                // the offhand is usually not bound as a slot, but it still needs to respect stack size limits
-                hotbarSlot = new Slot(inventory, Inventory.SLOT_OFFHAND, 0, 0);
-            }
-            if (hotbarSlot != null && slotId >= 0) {
-                Slot fromSlot = getSlot(slotId);
-                ItemStack fromStack = fromSlot.getItem().copy();
-                ItemStack hotbarStack = hotbarSlot.getItem().copy();
-
-                if (!fromStack.isEmpty() && !hotbarSlot.mayPlace(fromStack)) return;
-                if (!hotbarStack.isEmpty() && !fromSlot.mayPlace(hotbarStack)) return;
-                if (!fromStack.isEmpty() && !fromSlot.mayPickup(player)) return;
-                if (!hotbarStack.isEmpty() && !hotbarSlot.mayPickup(player)) return;
-
-                if (!fromStack.isEmpty() && !hotbarStack.isEmpty() && ItemStack.isSameItemSameComponents(fromStack, hotbarStack)) {
-                    int hotbarLimit = hotbarSlot.getMaxStackSize(fromStack);
-                    if (hotbarStack.getCount() < hotbarLimit) {
-                        int toMove = Math.min(fromStack.getCount(), hotbarLimit - hotbarStack.getCount());
-                        hotbarStack.grow(toMove);
-                        fromStack.shrink(toMove);
-                        hotbarSlot.set(hotbarStack);
-                        fromSlot.set(fromStack);
+                    // minecraft does not check if the hotbar slot can actually take and put items
+                    Slot hotbarSlot = findPlayerSlot(player, mouseButton); // mouseButton is the slot index here
+                    if (hotbarSlot == null && mouseButton == Inventory.SLOT_OFFHAND) {
+                        // the offhand is usually not bound as a slot, but it still needs to respect stack size limits
+                        hotbarSlot = new Slot(inventory, Inventory.SLOT_OFFHAND, 0, 0);
                     }
-                    return;
-                }
-                boolean canFitInHotbar = fromStack.isEmpty() || fromStack.getCount() <= hotbarSlot.getMaxStackSize(fromStack);
-                boolean canFitInFromSlot = hotbarStack.isEmpty() || hotbarStack.getCount() <= fromSlot.getMaxStackSize(hotbarStack);
+                    if (hotbarSlot != null && slotId >= 0) {
+                        Slot fromSlot = getSlot(slotId);
+                        ItemStack fromStack = fromSlot.getItem().copy();
+                        ItemStack hotbarStack = hotbarSlot.getItem().copy();
 
-                if (canFitInHotbar && canFitInFromSlot) {
-                    fromSlot.setByPlayer(hotbarStack);
-                    hotbarSlot.setByPlayer(fromStack);
-                    fromSlot.onTake(player, fromStack);
-                    return;
+                        if (!fromStack.isEmpty() && !hotbarSlot.mayPlace(fromStack)) return;
+                        if (!hotbarStack.isEmpty() && !fromSlot.mayPlace(hotbarStack)) return;
+                        if (!fromStack.isEmpty() && !fromSlot.mayPickup(player)) return;
+                        if (!hotbarStack.isEmpty() && !hotbarSlot.mayPickup(player)) return;
+
+                        if (!fromStack.isEmpty() && !hotbarStack.isEmpty() &&
+                                ItemStack.isSameItemSameComponents(fromStack, hotbarStack)) {
+                            int hotbarLimit = hotbarSlot.getMaxStackSize(fromStack);
+                            if (hotbarStack.getCount() < hotbarLimit) {
+                                int toMove = Math.min(fromStack.getCount(), hotbarLimit - hotbarStack.getCount());
+                                hotbarStack.grow(toMove);
+                                fromStack.shrink(toMove);
+                                hotbarSlot.set(hotbarStack);
+                                fromSlot.set(fromStack);
+                            }
+                            return;
+                        }
+                        boolean canFitInHotbar = fromStack.isEmpty() ||
+                                fromStack.getCount() <= hotbarSlot.getMaxStackSize(fromStack);
+                        boolean canFitInFromSlot = hotbarStack.isEmpty() ||
+                                hotbarStack.getCount() <= fromSlot.getMaxStackSize(hotbarStack);
+
+                        if (canFitInHotbar && canFitInFromSlot) {
+                            fromSlot.setByPlayer(hotbarStack);
+                            hotbarSlot.setByPlayer(fromStack);
+                            fromSlot.onTake(player, fromStack);
+                            return;
+                        }
+                        if (hotbarStack.isEmpty() && !fromStack.isEmpty()) {
+                            int moveAmt = hotbarSlot.getMaxStackSize(fromStack);
+                            hotbarStack = fromStack.copyWithCount(moveAmt);
+                            fromStack.shrink(moveAmt);
+                            fromSlot.set(fromStack);
+                            hotbarSlot.setByPlayer(hotbarStack);
+                        } else if (fromStack.isEmpty() && !hotbarStack.isEmpty()) {
+                            int moveAmt = fromSlot.getMaxStackSize(hotbarStack);
+                            fromStack = hotbarStack.copyWithCount(moveAmt);
+                            hotbarStack.shrink(moveAmt);
+                            fromSlot.setByPlayer(fromStack);
+                            hotbarSlot.set(hotbarStack);
+                        }
+                    }
+                } else
+            if (clickTypeIn == ClickType.THROW && getCarried().isEmpty() && slotId >= 0) {
+                Slot slot = getSlot(slotId);
+
+                if (slot.hasItem() && slot.mayPickup(player)) {
+                    ItemStack stackInSlot = slot.getItem().copy();
+                    int amountToDrop = 1;
+                    // mouseButton 1 is CTRL+Q
+                    if (mouseButton == 1) {
+                        amountToDrop = Math.min(stackInSlot.getCount(), stackInSlot.getMaxStackSize());
+                    }
+
+                    if (amountToDrop > 0) {
+                        ItemStack droppedStack = stackInSlot.copyWithCount(amountToDrop);
+                        stackInSlot.shrink(amountToDrop);
+                        slot.set(stackInSlot);
+                        player.drop(droppedStack, true);
+                    }
                 }
-                if (hotbarStack.isEmpty() && !fromStack.isEmpty()) {
-                    int moveAmt = hotbarSlot.getMaxStackSize(fromStack);
-                    hotbarStack = fromStack.copyWithCount(moveAmt);
-                    fromStack.shrink(moveAmt);
-                    fromSlot.set(fromStack);
-                    hotbarSlot.setByPlayer(hotbarStack);
-                } else if (fromStack.isEmpty() && !hotbarStack.isEmpty()) {
-                    int moveAmt = fromSlot.getMaxStackSize(hotbarStack);
-                    fromStack = hotbarStack.copyWithCount(moveAmt);
-                    hotbarStack.shrink(moveAmt);
-                    fromSlot.setByPlayer(fromStack);
-                    hotbarSlot.set(hotbarStack);
-                }
+            } else {
+                superClicked(slotId, mouseButton, clickTypeIn, player);
             }
-        } else if (clickTypeIn == ClickType.THROW && getCarried().isEmpty() && slotId >= 0) {
-            Slot slot = getSlot(slotId);
-
-            if (slot.hasItem() && slot.mayPickup(player)) {
-                ItemStack stackInSlot = slot.getItem().copy();
-                int amountToDrop = 1;
-                // mouseButton 1 is CTRL+Q
-                if (mouseButton == 1) {
-                    amountToDrop = Math.min(stackInSlot.getCount(), stackInSlot.getMaxStackSize());
-                }
-
-                if (amountToDrop > 0) {
-                    ItemStack droppedStack = stackInSlot.copyWithCount(amountToDrop);
-                    stackInSlot.shrink(amountToDrop);
-                    slot.set(stackInSlot);
-                    player.drop(droppedStack, true);
-                }
-            }
-        } else {
-            superClicked(slotId, mouseButton, clickTypeIn, player);
-        }
     }
 
-    protected final void superClicked(int slotId, int mouseButton, @NotNull ClickType clickTypeIn, @NotNull Player player) {
+    protected final void superClicked(int slotId, int mouseButton, @NotNull ClickType clickTypeIn,
+                                      @NotNull Player player) {
         super.clicked(slotId, mouseButton, clickTypeIn, player);
     }
 
@@ -508,7 +518,8 @@ public class ModularContainerMenu extends AbstractContainerMenu {
                 slot.onTake(playerIn, remainder);
                 slot.onCraftShiftClick(playerIn, remainder);
 
-                return copy; // return a non-empty stack if insertion was successful, this causes this function to be called again, important for crafting
+                return copy; // return a non-empty stack if insertion was successful, this causes this function to be
+                             // called again, important for crafting
             }
         }
         return ItemStack.EMPTY;
@@ -522,7 +533,8 @@ public class ModularContainerMenu extends AbstractContainerMenu {
             SlotGroup slotGroup = Objects.requireNonNull(toSlot.getSlotGroup());
             if (slotGroup != fromSlotGroup && toSlot.isActive() && toSlot.mayPlace(fromStack)) {
                 ItemStack toStack = toSlot.getItem().copy();
-                if (!fromSlot.isPhantom() && !toSlot.isPhantom() && ItemStack.isSameItemSameComponents(fromStack, toStack)) {
+                if (!fromSlot.isPhantom() && !toSlot.isPhantom() &&
+                        ItemStack.isSameItemSameComponents(fromStack, toStack)) {
                     int j = toStack.getCount() + fromStack.getCount();
                     // Math.min(toSlot.getMaxStackSize(), fromStack.getMaxStackSize());
                     int maxSize = toSlot.getMaxStackSize(fromStack);

@@ -12,8 +12,8 @@ import brachy.modularui.utils.serialization.codec.MutableObjectCodec;
 
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.util.Mth;
-import com.mojang.serialization.Codec;
 
+import com.mojang.serialization.Codec;
 import lombok.Getter;
 
 import java.util.Objects;

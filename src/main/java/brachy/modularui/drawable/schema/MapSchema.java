@@ -83,7 +83,8 @@ public class MapSchema implements ISchema {
     public Iterator<Map.Entry<BlockPos, BlockState>> iterator() {
         return new AbstractIterator<>() {
 
-            private final ObjectIterator<Long2ReferenceMap.Entry<BlockState>> it = blocks.long2ReferenceEntrySet().fastIterator();
+            private final ObjectIterator<Long2ReferenceMap.Entry<BlockState>> it = blocks.long2ReferenceEntrySet()
+                    .fastIterator();
 
             @Override
             protected Map.Entry<BlockPos, BlockState> computeNext() {

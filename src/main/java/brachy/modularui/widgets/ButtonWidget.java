@@ -29,8 +29,10 @@ public class ButtonWidget<W extends ButtonWidget<W>> extends SingleChildWidget<W
                 });
     }
 
-    @Getter private boolean playClickSound = true;
-    @Getter private Runnable clickSound;
+    @Getter
+    private boolean playClickSound = true;
+    @Getter
+    private Runnable clickSound;
     private IGuiAction.MousePressed mousePressed;
     private IGuiAction.MouseReleased mouseReleased;
     private IGuiAction.MousePressed mouseTapped;

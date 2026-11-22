@@ -21,7 +21,8 @@ public class RichTextWidget extends Widget<RichTextWidget> implements IRichTextB
     private final RichText text = new RichText();
     private Consumer<RichText> builder;
     private boolean dirty = false;
-    @Getter private boolean autoUpdate = false;
+    @Getter
+    private boolean autoUpdate = false;
 
     public void markDirty() {
         this.dirty = true;
@@ -43,7 +44,8 @@ public class RichTextWidget extends Widget<RichTextWidget> implements IRichTextB
     @Override
     public void drawForeground(ModularGuiContext context) {
         super.drawForeground(context);
-        if (!context.getUISettings().drawTooltipExternally() && getHoveredElement(context) instanceof IHoverable hoverable) {
+        if (!context.getUISettings().drawTooltipExternally() &&
+                getHoveredElement(context) instanceof IHoverable hoverable) {
             hoverable.onHover();
             RichTooltip tooltip = hoverable.getTooltip();
             if (tooltip != null) {

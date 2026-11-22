@@ -16,10 +16,12 @@ public interface ICopy<T> {
     }
 
     @SuppressWarnings("unchecked")
-    static <B extends ByteBuf, T> ICopy<T> ofSerializer(StreamEncoder<B, T> serializer, StreamDecoder<B, T> deserializer) {
+    static <B extends ByteBuf, T> ICopy<T> ofSerializer(StreamEncoder<B, T> serializer,
+                                                        StreamDecoder<B, T> deserializer) {
         return t -> {
             // the lowest subclass of ByteBuf is RegistryFriendlyByteBuf so this *should* work
-            RegistryFriendlyByteBuf buf = IRegistryFriendlyByteBufExtension.createEmpty(RegistryAccessContainer.current());
+            RegistryFriendlyByteBuf buf = IRegistryFriendlyByteBufExtension
+                    .createEmpty(RegistryAccessContainer.current());
             serializer.encode((B) buf, t);
             return deserializer.decode((B) buf);
         };

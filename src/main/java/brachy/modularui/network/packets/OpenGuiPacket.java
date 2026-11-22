@@ -15,7 +15,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public record OpenGuiPacket<T extends GuiData>(int windowId, int networkId, UIFactory<T> factory, RegistryFriendlyByteBuf data)
+public record OpenGuiPacket<T extends GuiData>(int windowId, int networkId, UIFactory<T> factory,
+                                               RegistryFriendlyByteBuf data)
         implements CustomPacketPayload {
 
     public static final ResourceLocation ID = ModularUI.id("open_gui");

@@ -18,8 +18,8 @@ public class WorldLoaderMixin {
 
     @Inject(method = "load",
             at = @At(value = "INVOKE",
-                    target = "Lnet/minecraft/resources/RegistryDataLoader;load(Lnet/minecraft/server/packs/resources/ResourceManager;Lnet/minecraft/core/RegistryAccess;Ljava/util/List;)Lnet/minecraft/core/RegistryAccess$Frozen;",
-                    shift = At.Shift.BEFORE))
+                     target = "Lnet/minecraft/resources/RegistryDataLoader;load(Lnet/minecraft/server/packs/resources/ResourceManager;Lnet/minecraft/core/RegistryAccess;Ljava/util/List;)Lnet/minecraft/core/RegistryAccess$Frozen;",
+                     shift = At.Shift.BEFORE))
     private static <D, R> void mui$captureRegistries1(CallbackInfoReturnable<CompletableFuture<R>> cir,
                                                       @Local(ordinal = 0) RegistryAccess.Frozen registriesWithDimensions) {
         RegistryAccessContainer.update(registriesWithDimensions, null);
@@ -27,8 +27,8 @@ public class WorldLoaderMixin {
 
     @Inject(method = "load",
             at = @At(value = "INVOKE_ASSIGN",
-                    target = "Lnet/minecraft/resources/RegistryDataLoader;load(Lnet/minecraft/server/packs/resources/ResourceManager;Lnet/minecraft/core/RegistryAccess;Ljava/util/List;)Lnet/minecraft/core/RegistryAccess$Frozen;",
-                    shift = At.Shift.AFTER))
+                     target = "Lnet/minecraft/resources/RegistryDataLoader;load(Lnet/minecraft/server/packs/resources/ResourceManager;Lnet/minecraft/core/RegistryAccess;Ljava/util/List;)Lnet/minecraft/core/RegistryAccess$Frozen;",
+                     shift = At.Shift.AFTER))
     private static <D, R> void mui$captureRegistries2(CallbackInfoReturnable<CompletableFuture<R>> cir,
                                                       @Local(ordinal = 1) RegistryAccess.Frozen registriesWithEverything) {
         RegistryAccessContainer.update(registriesWithEverything, null);

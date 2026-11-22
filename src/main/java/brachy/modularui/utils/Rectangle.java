@@ -325,7 +325,8 @@ public class Rectangle {
     }
 
     public void subArea(float u0, float v0, float u1, float v1) {
-        set((int) (this.x + u0 * this.width), (int) (this.y + v0 * this.height), (int) ((u1 - u0) * this.width), (int) ((v1 - v0) * this.height));
+        set((int) (this.x + u0 * this.width), (int) (this.y + v0 * this.height), (int) ((u1 - u0) * this.width),
+                (int) ((v1 - v0) * this.height));
     }
 
     public PointF getCenter() {

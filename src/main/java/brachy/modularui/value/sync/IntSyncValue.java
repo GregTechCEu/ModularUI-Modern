@@ -16,7 +16,9 @@ import java.util.Objects;
 import java.util.function.IntConsumer;
 import java.util.function.IntSupplier;
 
-public class IntSyncValue extends ValueSyncHandler<ByteBuf, Integer, IntSyncValue> implements IIntSyncValue<ByteBuf, Integer>, IDoubleSyncValue<ByteBuf, Integer>, IStringSyncValue<ByteBuf, Integer> {
+public class IntSyncValue extends ValueSyncHandler<ByteBuf, Integer, IntSyncValue>
+                          implements IIntSyncValue<ByteBuf, Integer>, IDoubleSyncValue<ByteBuf, Integer>,
+                          IStringSyncValue<ByteBuf, Integer> {
 
     private int cache;
     private final IntSupplier getter;

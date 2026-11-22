@@ -11,8 +11,8 @@ import brachy.modularui.widget.Widget;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
-import com.mojang.blaze3d.platform.InputConstants;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
@@ -20,14 +20,22 @@ import org.joml.Vector3fc;
 
 public class SchemaWidget extends Widget<SchemaWidget> implements Interactable {
 
-    @Getter private final BaseSchemaRenderer schemaRenderer;
-    @Getter private boolean enableRotation = true;
-    @Getter private boolean enableTranslation = true;
-    @Getter private boolean enableScaling = true;
-    @Getter private float scale = 10f;
-    @Getter private float pitch = MathUtils.PI_QUART;
-    @Getter private float yaw = 0;
-    @Getter private final Vector3f offset = new Vector3f();
+    @Getter
+    private final BaseSchemaRenderer schemaRenderer;
+    @Getter
+    private boolean enableRotation = true;
+    @Getter
+    private boolean enableTranslation = true;
+    @Getter
+    private boolean enableScaling = true;
+    @Getter
+    private float scale = 10f;
+    @Getter
+    private float pitch = MathUtils.PI_QUART;
+    @Getter
+    private float yaw = 0;
+    @Getter
+    private final Vector3f offset = new Vector3f();
 
     public SchemaWidget(ISchema schema) {
         this(new BaseSchemaRenderer(schema));

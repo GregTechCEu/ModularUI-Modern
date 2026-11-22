@@ -40,7 +40,8 @@ public class DummyChunkSource extends ChunkSource {
         // remove all 'filled' blocks from the schema level
         this.chunks.values().forEach(chunk -> {
             ChunkPos chunkPos = chunk.getPos();
-            for (BlockPos pos : BlockPos.betweenClosed(chunkPos.getMinBlockX(), chunk.getMinBuildHeight(), chunkPos.getMinBlockZ(),
+            for (BlockPos pos : BlockPos.betweenClosed(chunkPos.getMinBlockX(), chunk.getMinBuildHeight(),
+                    chunkPos.getMinBlockZ(),
                     chunkPos.getMaxBlockX(), chunk.getMaxBuildHeight(), chunkPos.getMaxBlockZ())) {
                 this.level.removeFilledBlock(pos);
             }

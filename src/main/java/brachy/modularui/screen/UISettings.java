@@ -31,8 +31,10 @@ public class UISettings {
     @OnlyIn(Dist.CLIENT)
     private GuiCreator guiSupplier;
     private Predicate<Player> canInteractWith;
-    @Getter private String theme;
-    @Getter private final RecipeViewerSettings recipeViewerSettings;
+    @Getter
+    private String theme;
+    @Getter
+    private final RecipeViewerSettings recipeViewerSettings;
     @Getter
     @Setter
     @Accessors(fluent = true)

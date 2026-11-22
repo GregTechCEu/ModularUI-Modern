@@ -45,6 +45,10 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.neoforged.neoforge.client.model.data.ModelData;
+
+import com.google.common.collect.Lists;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.shaders.FogShape;
@@ -58,10 +62,6 @@ import com.mojang.blaze3d.vertex.VertexBuffer;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.blaze3d.vertex.VertexSorting;
-import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
-import net.neoforged.neoforge.client.model.data.ModelData;
-
-import com.google.common.collect.Lists;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import it.unimi.dsi.fastutil.objects.Reference2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.Reference2ObjectLinkedOpenHashMap;
@@ -99,12 +99,16 @@ public class BaseSchemaRenderer implements IDrawable {
 
     private static final DummyLightTexture lightTexture = new DummyLightTexture();
 
-    @Getter private final ISchema schema;
+    @Getter
+    private final ISchema schema;
     private final RenderLevel renderLevel;
     private final Viewport viewport = new Viewport();
-    @Getter private final Camera camera = new Camera();
-    @Getter private BlockHitResult lastRayTrace = null;
-    @Getter private RenderFilter renderFilter = RenderFilter.ALL;
+    @Getter
+    private final Camera camera = new Camera();
+    @Getter
+    private BlockHitResult lastRayTrace = null;
+    @Getter
+    private RenderFilter renderFilter = RenderFilter.ALL;
 
     private RenderCompileTask lastRenderCompileTask = null;
     private final SectionBufferBuilderPack sectionBufferBuilders;
@@ -113,9 +117,13 @@ public class BaseSchemaRenderer implements IDrawable {
     private boolean dirty = true;
 
     // projection * model view matrix
-    @Getter private final Matrix4f projection = new Matrix4f();
-    @Getter @Setter private boolean captureDebugInfo;
-    @Getter private final Vector3f openGLMousePos = new Vector3f();
+    @Getter
+    private final Matrix4f projection = new Matrix4f();
+    @Getter
+    @Setter
+    private boolean captureDebugInfo;
+    @Getter
+    private final Vector3f openGLMousePos = new Vector3f();
     private final List<Vector3f> pos = new ArrayList<>();
 
     public BaseSchemaRenderer(ISchema schema) {
@@ -160,8 +168,9 @@ public class BaseSchemaRenderer implements IDrawable {
 
         RenderCompileResults compileResults = new RenderCompileResults();
         CompletableFuture.supplyAsync(
-                        Util.wrapThreadWithTaskName("scm_chk_rebuild", () -> this.lastRenderCompileTask.compileBlockBuffers(compileResults)),
-                        Util.backgroundExecutor())
+                Util.wrapThreadWithTaskName("scm_chk_rebuild",
+                        () -> this.lastRenderCompileTask.compileBlockBuffers(compileResults)),
+                Util.backgroundExecutor())
                 .thenCompose(Function.identity())
                 .whenComplete((result, error) -> {
                     if (error != null) {
@@ -269,8 +278,7 @@ public class BaseSchemaRenderer implements IDrawable {
                         vc,
                         p.getX(), p.getY(), p.getZ(),
                         p.getX() + 1, p.getY() + 1, p.getZ() + 1,
-                        1f, 0f, 0f, 1f
-                );
+                        1f, 0f, 0f, 1f);
             }
         }
         bufferSource.endBatch(RenderType.lines());
@@ -298,7 +306,6 @@ public class BaseSchemaRenderer implements IDrawable {
 
         // if we're still compiling, send previous result
         return res;
-
     }
 
     @SuppressWarnings("deprecation")
@@ -385,7 +392,8 @@ public class BaseSchemaRenderer implements IDrawable {
         ShaderInstance shader = RenderSystem.getShader();
         assert shader != null;
 
-        shader.setDefaultUniforms(renderType.mode(),RenderSystem.getModelViewMatrix(), RenderSystem.getProjectionMatrix(),
+        shader.setDefaultUniforms(renderType.mode(), RenderSystem.getModelViewMatrix(),
+                RenderSystem.getProjectionMatrix(),
                 Minecraft.getInstance().getWindow());
         if (shader.CHUNK_OFFSET != null) {
             shader.CHUNK_OFFSET.set(-camera.pos().x, -camera.pos().y, -camera.pos().z);
@@ -416,7 +424,8 @@ public class BaseSchemaRenderer implements IDrawable {
         renderType.clearRenderState();
     }
 
-    protected void renderBlockEntities(RenderCompileResults renderResult, MultiBufferSource bufferSource, float partialTick) {
+    protected void renderBlockEntities(RenderCompileResults renderResult, MultiBufferSource bufferSource,
+                                       float partialTick) {
         PoseStack poseStack = new PoseStack();
 
         for (BlockEntity blockEntity : renderResult.blockEntities) {
@@ -446,7 +455,8 @@ public class BaseSchemaRenderer implements IDrawable {
     protected void setupCamera(int width, int height) {
         // setup viewport and clear GL buffers
         int clearColor = getClearColor();
-        RenderSystem.clearColor(Color.getRedF(clearColor), Color.getGreenF(clearColor), Color.getBlueF(clearColor), Color.getAlphaF(clearColor));
+        RenderSystem.clearColor(Color.getRedF(clearColor), Color.getGreenF(clearColor), Color.getBlueF(clearColor),
+                Color.getAlphaF(clearColor));
         RenderSystem.backupProjectionMatrix();
 
         float near = 0.05f;
@@ -513,7 +523,8 @@ public class BaseSchemaRenderer implements IDrawable {
                     var p = e.getKey();
                     boolean reuseVec = this.pos.size() > i;
                     var vec = reuseVec ? this.pos.get(i) : new Vector3f();
-                    vec = m.project(p.getX() + 0.5f, p.getY() + 0.5f, p.getZ() + 0.5f, this.viewport.getViewport(), vec);
+                    vec = m.project(p.getX() + 0.5f, p.getY() + 0.5f, p.getZ() + 0.5f, this.viewport.getViewport(),
+                            vec);
                     if (reuseVec) this.pos.set(i, vec);
                     else this.pos.add(vec);
                     i++;
@@ -561,7 +572,8 @@ public class BaseSchemaRenderer implements IDrawable {
         return screenToOpenGLPos(x, y, width, height, depth, false, dest);
     }
 
-    private Vector3f screenToOpenGLPos(int x, int y, int width, int height, float depth, boolean readDepth, Vector3f dest) {
+    private Vector3f screenToOpenGLPos(int x, int y, int width, int height, float depth, boolean readDepth,
+                                       Vector3f dest) {
         this.viewport.rescaleToViewport(x, y, width, height, dest);
         if (readDepth) depth = MatrixUtils.readDepth((int) dest.x, (int) dest.y);
         dest.z = depth;
@@ -569,7 +581,8 @@ public class BaseSchemaRenderer implements IDrawable {
     }
 
     public Vector3f screenToWorldPos(int x, int y, int screenWidth, int screenHeight) {
-        return screenToWorldPos(projection(), screenToOpenGLPos(x, y, screenWidth, screenHeight, new Vector3f()), new Vector3f());
+        return screenToWorldPos(projection(), screenToOpenGLPos(x, y, screenWidth, screenHeight, new Vector3f()),
+                new Vector3f());
     }
 
     private Vector3f screenToWorldPos(Matrix4f projection, Vector3f openGLPos) {
@@ -627,7 +640,8 @@ public class BaseSchemaRenderer implements IDrawable {
     public boolean equals(Object o) {
         if (!(o instanceof BaseSchemaRenderer that)) return false;
 
-        return this.schema.equals(that.schema) && this.renderLevel.equals(that.renderLevel) && this.camera.equals(that.camera) &&
+        return this.schema.equals(that.schema) && this.renderLevel.equals(that.renderLevel) &&
+                this.camera.equals(that.camera) &&
                 Objects.equals(this.viewport, that.viewport) && Objects.equals(this.renderFilter, that.renderFilter);
     }
 
@@ -666,7 +680,8 @@ public class BaseSchemaRenderer implements IDrawable {
 
             RandomSource randomSource = RandomSource.create();
             PoseStack poseStack = new PoseStack();
-            Map<RenderType, BufferBuilder> bufferLayers = new Reference2ObjectArrayMap<>(RenderType.chunkBufferLayers().size());
+            Map<RenderType, BufferBuilder> bufferLayers = new Reference2ObjectArrayMap<>(
+                    RenderType.chunkBufferLayers().size());
 
             ModelBlockRenderer.enableCaching();
             int minX = Integer.MAX_VALUE, minY = Integer.MAX_VALUE, minZ = Integer.MAX_VALUE;
@@ -771,7 +786,8 @@ public class BaseSchemaRenderer implements IDrawable {
         }
 
         protected BufferBuilder getOrBeginLayer(Map<RenderType, BufferBuilder> bufferLayers,
-                                                SectionBufferBuilderPack sectionBufferBuilderPack, RenderType renderType) {
+                                                SectionBufferBuilderPack sectionBufferBuilderPack,
+                                                RenderType renderType) {
             BufferBuilder builder = bufferLayers.get(renderType);
             if (builder == null) {
                 ByteBufferBuilder bytebufferbuilder = sectionBufferBuilderPack.buffer(renderType);
@@ -782,7 +798,8 @@ public class BaseSchemaRenderer implements IDrawable {
             return builder;
         }
 
-        protected CompletableFuture<Void> uploadChunkLayer(RenderCompileResults results, MeshData meshData, RenderType renderType) {
+        protected CompletableFuture<Void> uploadChunkLayer(RenderCompileResults results, MeshData meshData,
+                                                           RenderType renderType) {
             return CompletableFuture.runAsync(() -> {
                 VertexBuffer buffer = results.getOrCreateChunkBuffers().get(renderType);
                 if (!buffer.isInvalid()) {

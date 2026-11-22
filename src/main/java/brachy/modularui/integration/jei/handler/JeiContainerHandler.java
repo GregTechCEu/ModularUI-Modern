@@ -23,7 +23,8 @@ import java.util.Optional;
 
 public class JeiContainerHandler<T extends ModularContainerMenu> implements IUniversalRecipeTransferHandler<T> {
 
-    public static <T extends ModularContainerMenu> void register(Class<T> clz, IRecipeTransferRegistration registration) {
+    public static <T extends ModularContainerMenu> void register(Class<T> clz,
+                                                                 IRecipeTransferRegistration registration) {
         new JeiContainerHandler<>(clz, registration.getTransferHelper()).register(registration);
     }
 

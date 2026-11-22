@@ -18,13 +18,10 @@ import brachy.modularui.screen.ContainerScreenWrapper;
 import brachy.modularui.screen.ModularContainerMenu;
 import brachy.modularui.test.TestHandler;
 import brachy.modularui.theme.ThemeManager;
+import brachy.modularui.utils.CursorHandler;
 
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-
-import brachy.modularui.utils.CursorHandler;
-
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.api.distmarker.Dist;
@@ -36,12 +33,12 @@ import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
 import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
 import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
-
-import it.unimi.dsi.fastutil.floats.FloatUnaryOperator;
-import lombok.Getter;
-
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.level.LevelEvent;
+
+import com.mojang.blaze3d.systems.RenderSystem;
+import it.unimi.dsi.fastutil.floats.FloatUnaryOperator;
+import lombok.Getter;
 
 import java.util.function.Function;
 

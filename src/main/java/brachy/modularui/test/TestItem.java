@@ -38,20 +38,20 @@ public class TestItem extends Item implements IUIHolder<PlayerInventoryGuiData<?
         syncManager.registerSlotGroup("mixer_items", 2);
         ModularPanel<?> panel = ModularPanel.defaultPanel("knapping_gui").resizeableOnDrag(true);
         panel.child(Flow.col().margin(7)
-                        .child(new ParentWidget<>().widthRel(1f).expanded()
-                                .child(SlotGroupWidget.builder()
-                                        .row("I I")
-                                        .row("  I")
-                                        .row("   ")
-                                        .row(" I ")
-                                        .key('I', index -> new ItemSlot().slot(SyncHandlers.itemSlot(ihm, index)
-                                                .ignoreMaxStackSize(true)
-                                                .slotGroup("mixer_items")
-                                                // do not allow putting items which can hold other items into the item
-                                                // some mods don't do this on their backpacks, so it won't catch those cases
-                                                .filter(stack -> stack.getCapability(Capabilities.ItemHandler.ITEM) == null)))
-                                        .build()))
-                        .child(SlotGroupWidget.playerInventory(false)))
+                .child(new ParentWidget<>().widthRel(1f).expanded()
+                        .child(SlotGroupWidget.builder()
+                                .row("I I")
+                                .row("  I")
+                                .row("   ")
+                                .row(" I ")
+                                .key('I', index -> new ItemSlot().slot(SyncHandlers.itemSlot(ihm, index)
+                                        .ignoreMaxStackSize(true)
+                                        .slotGroup("mixer_items")
+                                        // do not allow putting items which can hold other items into the item
+                                        // some mods don't do this on their backpacks, so it won't catch those cases
+                                        .filter(stack -> stack.getCapability(Capabilities.ItemHandler.ITEM) == null)))
+                                .build()))
+                .child(SlotGroupWidget.playerInventory(false)))
                 .child(GuiTextures.ANIMATED_TEXTURE_TEST.asWidget().size(32).leftRel(1f).topRel(0f).margin(7));
 
         return panel;

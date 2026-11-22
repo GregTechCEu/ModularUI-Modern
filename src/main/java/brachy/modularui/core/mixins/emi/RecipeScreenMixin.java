@@ -16,10 +16,12 @@ import java.util.List;
 @Mixin(value = RecipeScreen.class, remap = false)
 public class RecipeScreenMixin {
 
-    @Shadow private List<WidgetGroup> currentPage;
+    @Shadow
+    private List<WidgetGroup> currentPage;
 
     @Inject(method = "mouseScrolled", at = @At("HEAD"), remap = true, cancellable = true)
-    private void modularui$mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY, CallbackInfoReturnable<Boolean> cir) {
+    private void modularui$mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY,
+                                         CallbackInfoReturnable<Boolean> cir) {
         for (WidgetGroup group : currentPage) {
             for (Widget widget : group.widgets) {
                 if (widget instanceof ModularUIEmiRecipe.UIWrapperWidget wrapperWidget) {
@@ -32,7 +34,8 @@ public class RecipeScreenMixin {
     }
 
     @Inject(method = "mouseReleased", at = @At("HEAD"), remap = true, cancellable = true)
-    private void modularui$mouseReleased(double mouseX, double mouseY, int button, CallbackInfoReturnable<Boolean> cir) {
+    private void modularui$mouseReleased(double mouseX, double mouseY, int button,
+                                         CallbackInfoReturnable<Boolean> cir) {
         for (WidgetGroup group : currentPage) {
             for (Widget widget : group.widgets) {
                 if (widget instanceof ModularUIEmiRecipe.UIWrapperWidget wrapperWidget) {
@@ -45,7 +48,8 @@ public class RecipeScreenMixin {
     }
 
     @Inject(method = "mouseDragged", at = @At("HEAD"), remap = true, cancellable = true)
-    private void modularui$mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY, CallbackInfoReturnable<Boolean> cir) {
+    private void modularui$mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY,
+                                        CallbackInfoReturnable<Boolean> cir) {
         for (WidgetGroup group : currentPage) {
             for (Widget widget : group.widgets) {
                 if (widget instanceof ModularUIEmiRecipe.UIWrapperWidget wrapperWidget) {
@@ -56,5 +60,4 @@ public class RecipeScreenMixin {
             }
         }
     }
-
 }

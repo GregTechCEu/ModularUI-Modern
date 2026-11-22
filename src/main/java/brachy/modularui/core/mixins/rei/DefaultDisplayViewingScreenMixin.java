@@ -1,7 +1,7 @@
 package brachy.modularui.core.mixins.rei;
 
-import brachy.modularui.integration.rei.recipe.ModularUIReiDisplay;
 import brachy.modularui.integration.rei.recipe.ModularUIReiCategory;
+import brachy.modularui.integration.rei.recipe.ModularUIReiDisplay;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -34,7 +34,9 @@ public abstract class DefaultDisplayViewingScreenMixin extends AbstractDisplayVi
         super(categoryMap, category);
     }
 
-    @WrapOperation(method = "lambda$checkExportDisplays$18", at = @At(value = "INVOKE", target = "Lme/shedaniel/rei/api/client/registry/display/DisplayCategory;getDisplayHeight()I"))
+    @WrapOperation(method = "lambda$checkExportDisplays$18",
+                   at = @At(value = "INVOKE",
+                            target = "Lme/shedaniel/rei/api/client/registry/display/DisplayCategory;getDisplayHeight()I"))
     private int modularui$forcePerDisplayHeightInExport(DisplayCategory<?> category,
                                                         Operation<Integer> original,
                                                         @Local(name = "display") Display display) {
@@ -42,7 +44,8 @@ public abstract class DefaultDisplayViewingScreenMixin extends AbstractDisplayVi
     }
 
     @Inject(method = "initDisplays",
-            at = @At(value = "INVOKE_ASSIGN", target = "Lme/shedaniel/rei/api/client/registry/display/DisplayCategory;getDisplayWidth(Lme/shedaniel/rei/api/common/display/Display;)I"))
+            at = @At(value = "INVOKE_ASSIGN",
+                     target = "Lme/shedaniel/rei/api/client/registry/display/DisplayCategory;getDisplayWidth(Lme/shedaniel/rei/api/common/display/Display;)I"))
     private void modularui$perDisplayHeight(CallbackInfo ci,
                                             @Local(name = "displayHeight") LocalIntRef displayHeight,
                                             @Local(name = "displaySupplier") Supplier<Display> displaySupplier) {
@@ -53,7 +56,8 @@ public abstract class DefaultDisplayViewingScreenMixin extends AbstractDisplayVi
     @Unique
     private static int modularui$calculateCustomDisplayHeight(DisplayCategory<?> category, Display display,
                                                               @Nullable ToIntFunction<DisplayCategory<?>> originalValue) {
-        if (category instanceof ModularUIReiCategory<?> muiCategory && display instanceof ModularUIReiDisplay muiDisplay) {
+        if (category instanceof ModularUIReiCategory<?> muiCategory &&
+                display instanceof ModularUIReiDisplay muiDisplay) {
             return ((ModularUIReiCategory<ModularUIReiDisplay>) muiCategory).getDisplayHeight(muiDisplay);
         } else {
             // if this isn't a MUI display, set it back to the original value

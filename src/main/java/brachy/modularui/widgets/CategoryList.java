@@ -20,7 +20,8 @@ import java.util.List;
 public class CategoryList extends AbstractParentWidget<IWidget, CategoryList> implements Interactable, ILayoutWidget {
 
     private final List<CategoryList> subCategories = new ArrayList<>();
-    @Getter private boolean expanded = false;
+    @Getter
+    private boolean expanded = false;
     private int totalHeight = 0;
     private IDrawable expandedOverlay;
     private IDrawable collapsedOverlay;

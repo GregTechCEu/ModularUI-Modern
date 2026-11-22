@@ -25,12 +25,12 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import com.mojang.blaze3d.platform.Lighting;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.items.IItemHandlerModifiable;
 
+import com.mojang.blaze3d.platform.Lighting;
+import com.mojang.blaze3d.systems.RenderSystem;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
@@ -42,7 +42,8 @@ public class ItemSlot extends Widget<ItemSlot> implements IVanillaSlot, Interact
 
     public static final int SIZE = 18;
 
-    @Getter private RecipeSlotRole recipeRole = RecipeSlotRole.RENDER_ONLY;
+    @Getter
+    private RecipeSlotRole recipeRole = RecipeSlotRole.RENDER_ONLY;
 
     public static ItemSlot create(boolean phantom) {
         return phantom ? new PhantomItemSlot() : new ItemSlot();
@@ -113,7 +114,8 @@ public class ItemSlot extends Widget<ItemSlot> implements IVanillaSlot, Interact
     @Override
     public void drawForeground(ModularGuiContext context) {
         RichTooltip tooltip = getTooltip();
-        if (tooltip != null && !context.getUISettings().drawTooltipExternally() && isHoveringFor(tooltip.showUpTimer())) {
+        if (tooltip != null && !context.getUISettings().drawTooltipExternally() &&
+                isHoveringFor(tooltip.showUpTimer())) {
             tooltip.draw(context, getSlot().getItem());
         }
     }
@@ -241,7 +243,8 @@ public class ItemSlot extends Widget<ItemSlot> implements IVanillaSlot, Interact
         String format = null;
 
         if (!getSyncHandler().isPhantom()) {
-            if (slot == acc.getClickedSlot() && !acc.getDraggingItem().isEmpty() && acc.getIsSplittingStack() && !slotStack.isEmpty()) {
+            if (slot == acc.getClickedSlot() && !acc.getDraggingItem().isEmpty() && acc.getIsSplittingStack() &&
+                    !slotStack.isEmpty()) {
                 slotStack = slotStack.copy();
                 slotStack.setCount(slotStack.getCount() / 2);
             } else if (acc.getIsQuickCrafting() && acc.getQuickCraftSlots().contains(slot) && !carried.isEmpty()) {
@@ -249,13 +252,15 @@ public class ItemSlot extends Widget<ItemSlot> implements IVanillaSlot, Interact
                     return;
                 }
 
-                if (AbstractContainerMenu.canItemQuickReplace(slot, carried, true) && getScreen().getContainer().canDragTo(slot)) {
+                if (AbstractContainerMenu.canItemQuickReplace(slot, carried, true) &&
+                        getScreen().getContainer().canDragTo(slot)) {
                     slotStack = carried.copy();
                     isDragPreview = true;
 
                     int maxSize = Math.min(slotStack.getMaxStackSize(), slot.getMaxStackSize(slotStack));
                     amount = slot.getItem().getCount();
-                    amount += AbstractContainerMenu.getQuickCraftPlaceCount(acc.getQuickCraftSlots(), acc.getQuickCraftingType(), slotStack);
+                    amount += AbstractContainerMenu.getQuickCraftPlaceCount(acc.getQuickCraftSlots(),
+                            acc.getQuickCraftingType(), slotStack);
                     if (amount > maxSize) {
                         amount = maxSize;
                         format = ChatFormatting.YELLOW.toString();

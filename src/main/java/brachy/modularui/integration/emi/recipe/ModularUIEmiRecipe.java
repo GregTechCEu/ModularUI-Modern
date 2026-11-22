@@ -37,12 +37,14 @@ import java.util.function.Supplier;
 public abstract class ModularUIEmiRecipe implements EmiRecipe {
 
     private static final String SCREEN_NAME_PREFIX = "emi_recipe_";
-    private static final LoadingCache<ModularUIEmiRecipe, ModularScreen> PREVIEW_SCREEN_CACHE = CacheBuilder.newBuilder()
+    private static final LoadingCache<ModularUIEmiRecipe, ModularScreen> PREVIEW_SCREEN_CACHE = CacheBuilder
+            .newBuilder()
             .expireAfterAccess(Duration.ofSeconds(60))
             .initialCapacity(8)
             .maximumSize(32)
             .softValues()
             .build(new CacheLoader<>() {
+
                 @Override
                 public ModularScreen load(ModularUIEmiRecipe key) {
                     return key.createScreen();
@@ -59,7 +61,8 @@ public abstract class ModularUIEmiRecipe implements EmiRecipe {
         return PREVIEW_SCREEN_CACHE.getUnchecked(recipe);
     }
 
-    @Getter private final ResourceLocation id;
+    @Getter
+    private final ResourceLocation id;
     private final Supplier<IWidget> recipeUI;
 
     private boolean sizeCalculated = false;
@@ -82,7 +85,8 @@ public abstract class ModularUIEmiRecipe implements EmiRecipe {
 
     /**
      * Calculates the size of the recipe if not already done.<br>
-     * This should be called in subclasses' constructors. Otherwise, the size of ALL the recipes in the same category are calculated
+     * This should be called in subclasses' constructors. Otherwise, the size of ALL the recipes in the same category
+     * are calculated
      * at once, which can make the game lag for a few seconds.
      */
     protected void calculateSize() {
@@ -160,7 +164,8 @@ public abstract class ModularUIEmiRecipe implements EmiRecipe {
     private boolean useScreenCacheForNextWidgetQuery = false;
 
     /**
-     * This is used to make EMI's recipe tooltip components use the screen cache because those normally recreate the widgets every frame
+     * This is used to make EMI's recipe tooltip components use the screen cache because those normally recreate the
+     * widgets every frame
      */
     @ApiStatus.Internal
     public final void useScreenCacheForNextWidgetQuery() {

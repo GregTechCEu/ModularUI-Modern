@@ -3,7 +3,6 @@ package brachy.modularui.integration.jei;
 import brachy.modularui.drawable.TooltipComponentIcon;
 import brachy.modularui.integration.recipeviewer.RecipeViewerSlotWidget;
 import brachy.modularui.integration.recipeviewer.entry.EntryList;
-
 import brachy.modularui.screen.viewport.ModularGuiContext;
 import brachy.modularui.theme.WidgetThemeEntry;
 import brachy.modularui.utils.TooltipLines;
@@ -27,9 +26,11 @@ import java.util.Optional;
  * Ingredient changes after building will only change the displayed ingredients.
  */
 @ApiStatus.Internal
-public class JeiRecipeViewerSlot<I, T> extends RecipeViewerSlotWidget<I, JeiRecipeViewerSlot<I, T>> implements ISlottedRecipeWidget {
+public class JeiRecipeViewerSlot<I, T> extends RecipeViewerSlotWidget<I, JeiRecipeViewerSlot<I, T>>
+                                implements ISlottedRecipeWidget {
 
-    @Getter private @Nullable IRecipeSlotDrawable slotWidget;
+    @Getter
+    private @Nullable IRecipeSlotDrawable slotWidget;
     private boolean configured;
     private boolean overrideDisplay;
 
@@ -97,17 +98,18 @@ public class JeiRecipeViewerSlot<I, T> extends RecipeViewerSlotWidget<I, JeiReci
         this.slotWidget.draw(context.getGraphics(), isHovering());
     }
 
-/*
-    @Override
-    public Result onMousePressed(int button) {
-        return this.slotWidget.mouseClicked(getContext().getMouseX(), getContext().getMouseY(), button) ? Result.SUCCESS : Result.ACCEPT;
-    }
-
-    @Override
-    public Result onKeyPressed(int keyCode, int scanCode, int modifiers) {
-        return this.slotWidget.keyPressed(keyCode, scanCode, modifiers) ? Result.SUCCESS : Result.ACCEPT;
-    }
-*/
+    /*
+     * @Override
+     * public Result onMousePressed(int button) {
+     * return this.slotWidget.mouseClicked(getContext().getMouseX(), getContext().getMouseY(), button) ? Result.SUCCESS
+     * : Result.ACCEPT;
+     * }
+     * 
+     * @Override
+     * public Result onKeyPressed(int keyCode, int scanCode, int modifiers) {
+     * return this.slotWidget.keyPressed(keyCode, scanCode, modifiers) ? Result.SUCCESS : Result.ACCEPT;
+     * }
+     */
 
     @Override
     public Optional<RecipeSlotUnderMouse> getSlotUnderMouse(double mouseX, double mouseY) {

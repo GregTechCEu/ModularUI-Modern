@@ -11,16 +11,13 @@ import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
-
-import com.google.gson.JsonObject;
-
-import com.google.gson.JsonParseException;
-
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.JsonOps;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.JsonOps;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -36,7 +33,8 @@ import java.util.List;
 public class ItemDrawable implements IDrawable {
 
     public static final MutableObjectCodec<ItemDrawable> CODEC = MutableObjectCodec.drawableBuilder(ItemDrawable::new)
-            .add("items", ItemDrawable::items, ItemDrawable::getItemList, CodecUtil.listLike(ItemStack.CODEC)).alias("item")
+            .add("items", ItemDrawable::items, ItemDrawable::getItemList, CodecUtil.listLike(ItemStack.CODEC))
+            .alias("item")
             .addOpt("cycleTime", ItemDrawable::cycleTime, ItemDrawable::cycleTime, Codec.INT, 1000)
             .build();
 

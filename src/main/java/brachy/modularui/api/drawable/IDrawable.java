@@ -14,14 +14,14 @@ import brachy.modularui.utils.serialization.codec.CodecUtil;
 import brachy.modularui.widget.Widget;
 import brachy.modularui.widget.sizer.Area;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
-import com.mojang.serialization.JsonOps;
-import com.mojang.serialization.MapCodec;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 import com.google.gson.JsonElement;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.JsonOps;
+import com.mojang.serialization.MapCodec;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -45,6 +45,7 @@ public interface IDrawable {
      * An empty drawable. Does nothing.
      */
     IDrawable EMPTY = new IDrawable() {
+
         @Override
         public void draw(GuiContext context, int x, int y, int width, int height, WidgetTheme widgetTheme) {}
 
@@ -58,6 +59,7 @@ public interface IDrawable {
      * An empty drawable used to mark hover textures as "should not be used"!
      */
     IDrawable NONE = new IDrawable() {
+
         @Override
         public void draw(GuiContext context, int x, int y, int width, int height, WidgetTheme widgetTheme) {}
 
@@ -68,7 +70,8 @@ public interface IDrawable {
     };
 
     CodecRegistry<IDrawable> CODECS = new CodecRegistry<>();
-    MapCodec<IDrawable> CODEC_DISPATCH = CodecUtil.dispatchNullable(Codec.STRING, IDrawable::getTypeName, CODECS::getNullable);
+    MapCodec<IDrawable> CODEC_DISPATCH = CodecUtil.dispatchNullable(Codec.STRING, IDrawable::getTypeName,
+            CODECS::getNullable);
     Codec<IDrawable> CODEC_EMPTY_NONE = Codec.STRING.flatXmap(s -> {
         if (s == null || s.equals("empty") || s.equals("null")) return DataResult.success(EMPTY);
         if (s.equals("none")) return DataResult.success(NONE);
@@ -168,7 +171,8 @@ public interface IDrawable {
      */
     @OnlyIn(Dist.CLIENT)
     default void drawAtZeroPadded(GuiContext context, Area area, WidgetTheme widgetTheme) {
-        draw(context, area.getPadding().left(), area.getPadding().top(), area.paddedWidth(), area.paddedHeight(), widgetTheme);
+        draw(context, area.getPadding().left(), area.getPadding().top(), area.paddedWidth(), area.paddedHeight(),
+                widgetTheme);
     }
 
     /**

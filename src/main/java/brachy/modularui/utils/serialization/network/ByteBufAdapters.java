@@ -22,16 +22,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-
 import com.mojang.serialization.Codec;
-import net.neoforged.neoforge.fluids.FluidStack;
-
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
-
 import io.netty.buffer.ByteBuf;
 import io.netty.handler.codec.DecoderException;
 import io.netty.handler.codec.EncoderException;
@@ -178,14 +175,16 @@ public class ByteBufAdapters {
         return makeAdapter(decoder, (buffer, value) -> memberEncoder.encode(value, buffer), comparator);
     }
 
-    public static <B extends ByteBuf, V> IByteBufAdapter<B, V> makeAdapterFromCodec(@NotNull Codec<V> codec, @NotNull EqualityTest<V> equals) {
+    public static <B extends ByteBuf, V> IByteBufAdapter<B, V> makeAdapterFromCodec(@NotNull Codec<V> codec,
+                                                                                    @NotNull EqualityTest<V> equals) {
         return new IByteBufAdapter<>() {
 
             private static final Gson GSON = new Gson();
 
             @Override
             public V decode(B buffer) {
-                JsonElement jsonelement = GsonHelper.fromJson(GSON, Utf8String.read(buffer, FriendlyByteBuf.MAX_STRING_LENGTH), JsonElement.class);
+                JsonElement jsonelement = GsonHelper.fromJson(GSON,
+                        Utf8String.read(buffer, FriendlyByteBuf.MAX_STRING_LENGTH), JsonElement.class);
                 DataResult<V> dataresult = codec.parse(JsonOps.COMPRESSED, jsonelement);
                 return dataresult.getOrThrow(p_272382_ -> new DecoderException("Failed to decode json: " + p_272382_));
             }
@@ -193,7 +192,10 @@ public class ByteBufAdapters {
             @Override
             public void encode(B buffer, V u) {
                 DataResult<JsonElement> dataresult = codec.encodeStart(JsonOps.COMPRESSED, u);
-                Utf8String.write(buffer, GSON.toJson(dataresult.getOrThrow(e -> new EncoderException("Failed to encode json: " + e + " " + u))), FriendlyByteBuf.MAX_STRING_LENGTH);
+                Utf8String.write(buffer,
+                        GSON.toJson(dataresult
+                                .getOrThrow(e -> new EncoderException("Failed to encode json: " + e + " " + u))),
+                        FriendlyByteBuf.MAX_STRING_LENGTH);
             }
 
             @Override

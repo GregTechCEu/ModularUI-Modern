@@ -1,15 +1,13 @@
 package brachy.modularui.core.mixins.common;
 
 import brachy.modularui.drawable.text.ModularComponent;
+import brachy.modularui.utils.serialization.codec.CodecUtil;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
 
-import brachy.modularui.utils.serialization.codec.CodecUtil;
-
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;

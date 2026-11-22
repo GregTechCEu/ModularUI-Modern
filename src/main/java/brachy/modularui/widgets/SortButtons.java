@@ -38,8 +38,11 @@ public class SortButtons extends Widget<SortButtons> {
         }
     }
 
-    @Getter private String slotGroupName;
-    @Getter @Setter private SlotGroup slotGroup;
+    @Getter
+    private String slotGroupName;
+    @Getter
+    @Setter
+    private SlotGroup slotGroup;
 
     private boolean horizontal = true;
     private final ButtonWidget<?> sortButton = new ButtonWidget<>();

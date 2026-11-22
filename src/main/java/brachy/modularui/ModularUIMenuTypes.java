@@ -11,11 +11,13 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ModularUIMenuTypes {
 
-    private static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(Registries.MENU, ModularUI.MOD_ID);
+    private static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(Registries.MENU,
+            ModularUI.MOD_ID);
 
-    public static final DeferredHolder<MenuType<?>, MenuType<ModularContainerMenu>> MODULAR_CONTAINER = MENU_TYPES.register(
-            "modular",
-            () -> IMenuTypeExtension.create(ModularContainerMenu::new));
+    public static final DeferredHolder<MenuType<?>, MenuType<ModularContainerMenu>> MODULAR_CONTAINER = MENU_TYPES
+            .register(
+                    "modular",
+                    () -> IMenuTypeExtension.create(ModularContainerMenu::new));
 
     public static void register(IEventBus modBus) {
         MENU_TYPES.register(modBus);

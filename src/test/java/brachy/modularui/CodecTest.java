@@ -17,12 +17,11 @@ import brachy.modularui.utils.serialization.json.JsonHelper;
 import brachy.modularui.widget.Widget;
 import brachy.modularui.widget.sizer.StandardResizer;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.JsonOps;
-
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.JsonOps;
 import org.junit.jupiter.api.Test;
 
 import java.util.Objects;
@@ -37,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class CodecTest {
 
     // TODO fix tests that attempt to load the mc server
-    //@Test
+    // @Test
     void resizer() {
         widgetTest(new Widget<>()
                 .name("cool name")
@@ -51,12 +50,13 @@ public class CodecTest {
                 .decoration());
     }
 
-    //@Test
+    // @Test
     void drawable() {
         drawableTest(IDrawable.EMPTY);
         drawableTest(IDrawable.NONE);
         decodeTest(new JsonPrimitive("null"), IDrawable.CODEC, IDrawable.EMPTY);
-        drawableTest(IDrawable.of(new Rectangle().color(Color.GREEN.main), GuiTextures.BOOKMARK, new Circle().color(Color.RED.main, Color.BLUE.main)));
+        drawableTest(IDrawable.of(new Rectangle().color(Color.GREEN.main), GuiTextures.BOOKMARK,
+                new Circle().color(Color.RED.main, Color.BLUE.main)));
     }
 
     @Test
@@ -64,7 +64,8 @@ public class CodecTest {
         // NOTE: integer colors do not work properly when they have an alpha value due to a Minecraft bug.
         // I fixed this in TextColorMixin, but mixins are not applied in testing.
         test(ModularComponent.CODEC.mutableCodec(), Text.str("Hello"), false);
-        test(ModularComponent.CODEC.mutableCodec(), Text.str("World").style(Text.UNDERLINE).color(Color.withAlpha(Color.GREEN.main, 0)), false);
+        test(ModularComponent.CODEC.mutableCodec(),
+                Text.str("World").style(Text.UNDERLINE).color(Color.withAlpha(Color.GREEN.main, 0)), false);
         test(ModularComponent.CODEC.mutableCodec(), Text.comp(
                 Text.str("Hello ").color(Color.withAlpha(Color.BLUE.main, 0)),
                 Text.lang("World").scale(1.5f)).alignment(Alignment.BottomCenter), false);
@@ -97,9 +98,10 @@ public class CodecTest {
         TestUtil.repeatRnd(10, CodecTest::testColorCMYK);
     }
 
-    //@Test
+    // @Test
     void widgetTheme() {
-        test(IThemeApi.FALLBACK.getCodec().codec(), WidgetTheme.darkTextNoShadow(1, 2, GuiTextures.MENU_BACKGROUND), false);
+        test(IThemeApi.FALLBACK.getCodec().codec(), WidgetTheme.darkTextNoShadow(1, 2, GuiTextures.MENU_BACKGROUND),
+                false);
     }
 
     private static void testColorHex(Random rnd) {

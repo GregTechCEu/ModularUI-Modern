@@ -1,7 +1,7 @@
 package brachy.modularui.api;
 
-import it.unimi.dsi.fastutil.objects.ObjectList;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 
 import java.util.List;
 import java.util.function.Predicate;

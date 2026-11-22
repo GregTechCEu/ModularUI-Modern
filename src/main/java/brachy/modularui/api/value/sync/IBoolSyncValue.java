@@ -9,7 +9,8 @@ import io.netty.buffer.ByteBuf;
  *
  * @param <T> value type
  */
-public interface IBoolSyncValue<B extends ByteBuf, T> extends IValueSyncHandler<B, T>, IBoolValue<T>, IIntSyncValue<B, T> {
+public interface IBoolSyncValue<B extends ByteBuf, T>
+                               extends IValueSyncHandler<B, T>, IBoolValue<T>, IIntSyncValue<B, T> {
 
     @Override
     default void setBoolValue(boolean val) {

@@ -15,26 +15,32 @@ import brachy.modularui.value.StringValue;
 import brachy.modularui.widgets.layout.Flow;
 import brachy.modularui.widgets.textfield.TextFieldWidget;
 
+import lombok.Getter;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.function.Consumer;
 import java.util.function.Supplier;
-import lombok.Getter;
 
 public class ColorPickerDialog extends Dialog<Integer, ColorPickerDialog> {
 
     private static final IDrawable handleBackground = new Rectangle().color(Color.WHITE.main);
 
-    @Getter private int color;
-    @Getter private int red;
-    @Getter private int green;
-    @Getter private int blue;
-    @Getter private double hue;
-    @Getter private double saturation;
+    @Getter
+    private int color;
+    @Getter
+    private int red;
+    @Getter
+    private int green;
+    @Getter
+    private int blue;
+    @Getter
+    private double hue;
+    @Getter
+    private double saturation;
     private double value;
 
     private int alpha;
-    @Getter private final boolean controlAlpha;
+    @Getter
+    private final boolean controlAlpha;
 
     private final Rectangle preview = new Rectangle();
     private final Rectangle sliderBackgroundR = new Rectangle();

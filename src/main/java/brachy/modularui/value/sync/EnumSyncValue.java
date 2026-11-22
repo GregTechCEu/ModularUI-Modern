@@ -16,7 +16,8 @@ import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class EnumSyncValue<T extends Enum<T>> extends ValueSyncHandler<ByteBuf, T, EnumSyncValue<T>> implements IEnumValue<T>, IIntSyncValue<ByteBuf, T> {
+public class EnumSyncValue<T extends Enum<T>> extends ValueSyncHandler<ByteBuf, T, EnumSyncValue<T>>
+                          implements IEnumValue<T>, IIntSyncValue<ByteBuf, T> {
 
     @Getter
     protected final Class<T> enumClass;

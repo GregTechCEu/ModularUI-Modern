@@ -3,7 +3,6 @@ package brachy.modularui.widgets;
 import brachy.modularui.api.ITheme;
 import brachy.modularui.drawable.GuiDraw;
 import brachy.modularui.integration.recipeviewer.RecipeSlotRole;
-import brachy.modularui.integration.recipeviewer.entry.EntryList;
 import brachy.modularui.integration.recipeviewer.entry.fluid.FluidStackList;
 import brachy.modularui.integration.recipeviewer.handlers.IngredientProvider;
 import brachy.modularui.screen.viewport.ModularGuiContext;
@@ -20,17 +19,21 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class AbstractFluidDisplayWidget<W extends AbstractFluidDisplayWidget<W>> extends Widget<W> implements IngredientProvider<FluidStack> {
+public abstract class AbstractFluidDisplayWidget<W extends AbstractFluidDisplayWidget<W>> extends Widget<W>
+                                                implements IngredientProvider<FluidStack> {
 
     public static final String UNIT_BUCKET = "B";
     public static final String UNIT_LITER = "L";
 
-    @Getter private final Box contentPadding = new Box().all(1);
+    @Getter
+    private final Box contentPadding = new Box().all(1);
     private String unit = UNIT_BUCKET;
-    @Getter private SIPrefix baseUnitPrefix = SIPrefix.Milli;
-    @Getter private boolean flipLighterThanAir = true;
-    @Getter private RecipeSlotRole recipeRole = RecipeSlotRole.RENDER_ONLY;
-
+    @Getter
+    private SIPrefix baseUnitPrefix = SIPrefix.Milli;
+    @Getter
+    private boolean flipLighterThanAir = true;
+    @Getter
+    private RecipeSlotRole recipeRole = RecipeSlotRole.RENDER_ONLY;
 
     protected AbstractFluidDisplayWidget() {
         size(18);
@@ -63,7 +66,8 @@ public abstract class AbstractFluidDisplayWidget<W extends AbstractFluidDisplayW
         super.drawOverlay(context, widgetTheme);
         FluidStack fluid = getFluidStack();
         if (!fluid.isEmpty() && displayAmountText()) {
-            String s = NumberFormat.format(getBaseUnitAmount(fluid.getAmount()), NumberFormat.AMOUNT_TEXT) + getBaseUnit();
+            String s = NumberFormat.format(getBaseUnitAmount(fluid.getAmount()), NumberFormat.AMOUNT_TEXT) +
+                    getBaseUnit();
             // mc doesn't consider the 1px border in item slots for amount text, but it looks weird when it touches the
             // left border, so we only apply padding there
             GuiDraw.drawScaledAlignedTextInBox(context, s, this.contentPadding.left(), 0,

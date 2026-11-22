@@ -11,18 +11,16 @@ import brachy.modularui.utils.serialization.codec.MutableObjectCodec;
 
 import net.minecraft.resources.FileToIdConverter;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.ExtraCodecs;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
-import com.mojang.serialization.MapCodec;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.MapCodec;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-import lombok.experimental.Tolerate;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
@@ -31,12 +29,15 @@ import java.util.Objects;
 @Accessors(fluent = true, chain = true)
 public class UITexture implements IDrawable {
 
-    public static final MapCodec<UITexture> CODEC_FROM_BUILDER = Builder.CODEC.flatXmap(Builder::buildForCodec, t -> DataResult.success(t.toBuilder()));
-    public static final Codec<UITexture> CODEC_FROM_NAME = Codec.stringResolver(TextureRegistry::getTextureId, TextureRegistry::getTexture);
+    public static final MapCodec<UITexture> CODEC_FROM_BUILDER = Builder.CODEC.flatXmap(Builder::buildForCodec,
+            t -> DataResult.success(t.toBuilder()));
+    public static final Codec<UITexture> CODEC_FROM_NAME = Codec.stringResolver(TextureRegistry::getTextureId,
+            TextureRegistry::getTexture);
     public static final MapCodec<UITexture> CODEC = IDrawable.CODECS.register("texture",
             CodecUtil.chainedMapCodec(CODEC_FROM_NAME.fieldOf("name"), CODEC_FROM_BUILDER));
 
-    public static final UITexture DEFAULT = fullImage(ResourceLocation.withDefaultNamespace("gui/options_background"), ColorType.DEFAULT);
+    public static final UITexture DEFAULT = fullImage(ResourceLocation.withDefaultNamespace("gui/options_background"),
+            ColorType.DEFAULT);
     public static final FileToIdConverter GUI_TEXTURE_ID_CONVERTER = new FileToIdConverter("textures/gui", ".png");
 
     private static final ResourceLocation ICONS_LOCATION = ModularUI.id("textures/gui/icons.png");
@@ -62,13 +63,16 @@ public class UITexture implements IDrawable {
     @ToString.Include
     @Getter
     public final ResourceLocation location;
-    @Getter public final float u0, v0, u1, v1;
+    @Getter
+    public final float u0, v0, u1, v1;
     @Getter
     @Nullable
     public final ColorType colorType;
-    @Getter public final boolean nonOpaque;
+    @Getter
+    public final boolean nonOpaque;
 
-    @Getter protected int colorOverride = 0;
+    @Getter
+    protected int colorOverride = 0;
 
     /**
      * Creates a drawable texture
@@ -95,7 +99,8 @@ public class UITexture implements IDrawable {
      * @param colorType a function to get which color from a widget theme should be used to color this texture.
      * @param nonOpaque whether the texture should draw with blend (if true) or not (if false)
      */
-    public UITexture(ResourceLocation location, float u0, float v0, float u1, float v1, @Nullable ColorType colorType, boolean nonOpaque) {
+    public UITexture(ResourceLocation location, float u0, float v0, float u1, float v1, @Nullable ColorType colorType,
+                     boolean nonOpaque) {
         this(location, u0, v0, u1, v1, colorType, nonOpaque, 0);
     }
 
@@ -107,11 +112,13 @@ public class UITexture implements IDrawable {
      * @param v0            y offset of the image (0-1)
      * @param u1            x end offset of the image (0-1)
      * @param v1            y end offset of the image (0-1)
-     * @param colorType     a function to get which color from a widget theme should be used to color this texture. Can be null.
+     * @param colorType     a function to get which color from a widget theme should be used to color this texture. Can
+     *                      be null.
      * @param nonOpaque     whether the texture should draw with blend (if true) or not (if false).
      * @param colorOverride color override for the texture in ARGB format. 0 means no override
      */
-    public UITexture(ResourceLocation location, float u0, float v0, float u1, float v1, @Nullable ColorType colorType, boolean nonOpaque, int colorOverride) {
+    public UITexture(ResourceLocation location, float u0, float v0, float u1, float v1, @Nullable ColorType colorType,
+                     boolean nonOpaque, int colorOverride) {
         this.colorType = colorType;
         boolean png = !location.getPath().endsWith(PNG_SUFFIX);
         boolean textures = !location.getPath().startsWith(TEXTURES_PREFIX);
@@ -237,7 +244,8 @@ public class UITexture implements IDrawable {
     }
 
     protected UITexture copy() {
-        return new UITexture(this.location, this.u0, this.v0, this.u1, this.v1, this.colorType, this.nonOpaque, this.colorOverride);
+        return new UITexture(this.location, this.u0, this.v0, this.u1, this.v1, this.colorType, this.nonOpaque,
+                this.colorOverride);
     }
 
     public UITexture withColorOverride(int color) {
@@ -275,19 +283,29 @@ public class UITexture implements IDrawable {
                 .addOpt("colorOverride", Builder::colorOverride, Builder::getColorOverride, Codec.INT, 0)
                 .build();
 
-        @Getter private ResourceLocation location;
+        @Getter
+        private ResourceLocation location;
         @Getter
         @Setter
         private int iw = -1, ih = -1;
-        @Getter private int x, y, w, h;
-        @Getter private float u0 = 0, v0 = 0, u1 = 1, v1 = 1;
-        @Getter private Mode mode = Mode.FULL;
-        @Getter private int bl = 0, bt = 0, br = 0, bb = 0;
-        @Getter private String name;
-        @Getter private boolean tiled = false;
-        @Getter private ColorType colorType = null;
-        @Getter private boolean nonOpaque = false;
-        @Getter private int colorOverride = 0;
+        @Getter
+        private int x, y, w, h;
+        @Getter
+        private float u0 = 0, v0 = 0, u1 = 1, v1 = 1;
+        @Getter
+        private Mode mode = Mode.FULL;
+        @Getter
+        private int bl = 0, bt = 0, br = 0, bb = 0;
+        @Getter
+        private String name;
+        @Getter
+        private boolean tiled = false;
+        @Getter
+        private ColorType colorType = null;
+        @Getter
+        private boolean nonOpaque = false;
+        @Getter
+        private int colorOverride = 0;
 
         /**
          * @param loc location of the image to draw
@@ -553,7 +571,8 @@ public class UITexture implements IDrawable {
 
         private DataResult<UITexture> buildForCodec() {
             // no error throwing and no drawable registration
-            return create().map(texture -> this.colorOverride != 0 ? texture.withColorOverride(this.colorOverride) : texture);
+            return create()
+                    .map(texture -> this.colorOverride != 0 ? texture.withColorOverride(this.colorOverride) : texture);
         }
 
         private DataResult<UITexture> create() {
@@ -567,9 +586,11 @@ public class UITexture implements IDrawable {
                 this.v1 = 1;
                 this.mode = Mode.RELATIVE;
             } else if (this.mode == Mode.PIXEL) {
-                if (this.iw <= 0 || this.ih <= 0) return DataResult.error(() -> "Image size must be > 0 for sub area via xywh or ltrb");
+                if (this.iw <= 0 || this.ih <= 0)
+                    return DataResult.error(() -> "Image size must be > 0 for sub area via xywh or ltrb");
                 if (this.x < 0 || this.y < 0 || this.w > this.iw || this.h > this.ih) {
-                    return DataResult.error(() -> "X and Y must be > 0 and W and H must by smaller than the specified image size");
+                    return DataResult.error(
+                            () -> "X and Y must be > 0 and W and H must by smaller than the specified image size");
                 }
                 float tw = 1f / this.iw, th = 1f / this.ih;
                 this.u0 = this.x * tw;
@@ -586,7 +607,8 @@ public class UITexture implements IDrawable {
                     if (this.iw <= 0 || this.ih <= 0) {
                         return DataResult.error(() -> "Image size must be > 0 for adaptable textures (border > 0)");
                     }
-                    return DataResult.success(new AdaptableUITexture(this.location, this.u0, this.v0, this.u1, this.v1, this.colorType,
+                    return DataResult.success(new AdaptableUITexture(this.location, this.u0, this.v0, this.u1, this.v1,
+                            this.colorType,
                             this.nonOpaque, 0, this.iw, this.ih, this.bl, this.bt, this.br, this.bb, this.tiled));
                 }
                 if (this.tiled) {
@@ -596,7 +618,8 @@ public class UITexture implements IDrawable {
                     return DataResult.success(new TiledUITexture(this.location, this.u0, this.v0, this.u1, this.v1,
                             this.colorType, this.nonOpaque, 0, this.iw, this.ih));
                 }
-                return DataResult.success(new UITexture(this.location, this.u0, this.v0, this.u1, this.v1, this.colorType, this.nonOpaque));
+                return DataResult.success(new UITexture(this.location, this.u0, this.v0, this.u1, this.v1,
+                        this.colorType, this.nonOpaque));
             }
             return DataResult.error(() -> "Unknown error");
         }

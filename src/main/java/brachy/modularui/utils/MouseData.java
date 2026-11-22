@@ -3,10 +3,10 @@ package brachy.modularui.utils;
 import brachy.modularui.api.widget.Interactable;
 
 import net.minecraft.network.VarInt;
-import com.mojang.blaze3d.platform.InputConstants;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import io.netty.buffer.ByteBuf;
 
 public record MouseData(Dist side, int mouseButton, boolean shift, boolean ctrl, boolean alt) {

@@ -16,7 +16,8 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class GenericSetSyncHandler<B extends ByteBuf, T> extends GenericCollectionSyncHandler<B, T, Set<T>, GenericSetSyncHandler<B, T>> {
+public class GenericSetSyncHandler<B extends ByteBuf, T>
+                                  extends GenericCollectionSyncHandler<B, T, Set<T>, GenericSetSyncHandler<B, T>> {
 
     private final Set<T> cache = new ObjectOpenHashSet<T>();
 
@@ -64,7 +65,8 @@ public class GenericSetSyncHandler<B extends ByteBuf, T> extends GenericCollecti
     }
 
     /**
-     * Allows safe modification of the cached value. Normally modifying the cached value can cause the value to never be synced.
+     * Allows safe modification of the cached value. Normally modifying the cached value can cause the value to never be
+     * synced.
      * This method forces a sync after the modification.
      *
      * @param consumer function that operates on the current cached value
@@ -74,8 +76,10 @@ public class GenericSetSyncHandler<B extends ByteBuf, T> extends GenericCollecti
     }
 
     /**
-     * Allows safe modification of the cached value. Normally modifying the cached value can cause the value to never be synced.
-     * This method can automatically sync the cache after the modification. Be careful with potential issues when the sync arg is false.
+     * Allows safe modification of the cached value. Normally modifying the cached value can cause the value to never be
+     * synced.
+     * This method can automatically sync the cache after the modification. Be careful with potential issues when the
+     * sync arg is false.
      *
      * @param consumer function that operates on the current cached value
      */
@@ -88,7 +92,8 @@ public class GenericSetSyncHandler<B extends ByteBuf, T> extends GenericCollecti
         return new Builder<>();
     }
 
-    public static class Builder<B extends ByteBuf, T> extends GenericCollectionSyncHandler.Builder<B, T, Set<T>, Builder<B, T>> {
+    public static class Builder<B extends ByteBuf, T>
+                               extends GenericCollectionSyncHandler.Builder<B, T, Set<T>, Builder<B, T>> {
 
         public GenericSetSyncHandler<B, T> build() {
             if (this.getter == null) throw new NullPointerException("Getter in GenericSetSyncHandler must not be null");

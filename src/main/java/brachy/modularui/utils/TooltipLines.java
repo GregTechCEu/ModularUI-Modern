@@ -12,6 +12,7 @@ import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
+
 import com.mojang.datafixers.util.Either;
 
 import java.util.AbstractList;

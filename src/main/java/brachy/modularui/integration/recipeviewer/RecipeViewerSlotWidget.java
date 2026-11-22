@@ -7,8 +7,6 @@ import brachy.modularui.integration.recipeviewer.entry.fluid.FluidStackList;
 import brachy.modularui.integration.recipeviewer.entry.item.ItemStackList;
 import brachy.modularui.integration.recipeviewer.handlers.IngredientProvider;
 import brachy.modularui.integration.recipeviewer.handlers.RecipeViewerHandler;
-import brachy.modularui.screen.viewport.ModularGuiContext;
-import brachy.modularui.theme.WidgetThemeEntry;
 import brachy.modularui.widget.Widget;
 
 import net.minecraft.world.item.ItemStack;
@@ -23,17 +21,23 @@ import java.util.function.UnaryOperator;
 
 @Accessors(fluent = true)
 @ApiStatus.Experimental
-public abstract class RecipeViewerSlotWidget<I, W extends RecipeViewerSlotWidget<I, W>> extends Widget<W> implements Interactable {
+public abstract class RecipeViewerSlotWidget<I, W extends RecipeViewerSlotWidget<I, W>> extends Widget<W>
+                                            implements Interactable {
 
-    @Getter protected RecipeSlotRole recipeSlotRole = RecipeSlotRole.RENDER_ONLY;
+    @Getter
+    protected RecipeSlotRole recipeSlotRole = RecipeSlotRole.RENDER_ONLY;
     protected EntryList<I> entries;
-    @Getter @Setter protected float chance = 1f;
-    @Getter @Setter protected UnaryOperator<I> renderMappingFunction = UnaryOperator.identity();
+    @Getter
+    @Setter
+    protected float chance = 1f;
+    @Getter
+    @Setter
+    protected UnaryOperator<I> renderMappingFunction = UnaryOperator.identity();
 
     protected final Class<I> ingredientClass;
 
     public RecipeViewerSlotWidget(Class<I> ingredientClass) {
-       this.ingredientClass = ingredientClass;
+        this.ingredientClass = ingredientClass;
     }
 
     public W recipeSlotRole(RecipeSlotRole recipeSlotRole) {
@@ -60,7 +64,8 @@ public abstract class RecipeViewerSlotWidget<I, W extends RecipeViewerSlotWidget
         } else if (stack.getClass() == FluidStack.class) {
             return value((EntryList<I>) FluidStackList.of((FluidStack) stack));
         } else {
-            throw new IllegalArgumentException("Cannot use value(stack) with non-standard stack types! Use value(entryList) instead.");
+            throw new IllegalArgumentException(
+                    "Cannot use value(stack) with non-standard stack types! Use value(entryList) instead.");
         }
     }
 

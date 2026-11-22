@@ -10,8 +10,6 @@ import brachy.modularui.theme.WidgetTheme;
 import brachy.modularui.utils.Alignment;
 import brachy.modularui.utils.serialization.codec.MutableObjectCodec;
 
-import com.demonwav.mcdev.annotations.Translatable;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
@@ -19,6 +17,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
+import com.demonwav.mcdev.annotations.Translatable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -157,7 +156,8 @@ public interface Text extends IDrawable {
     }
 
     @OnlyIn(Dist.CLIENT)
-    default void drawAligned(GuiContext context, int x, int y, int width, int height, WidgetTheme widgetTheme, Alignment alignment) {
+    default void drawAligned(GuiContext context, int x, int y, int width, int height, WidgetTheme widgetTheme,
+                             Alignment alignment) {
         renderer.setColor(widgetTheme.getTextColor());
         renderer.setShadow(widgetTheme.isTextShadow());
         renderer.setAlignment(alignment, width, height);
@@ -201,9 +201,11 @@ public interface Text extends IDrawable {
 
     ModularComponent withStyle();
 
-    /*default AnimatedText withAnimation() {
-        return new AnimatedText(this);
-    }*/
+    /*
+     * default AnimatedText withAnimation() {
+     * return new AnimatedText(this);
+     * }
+     */
 
     /**
      * Set text formatting to this key. If {@link Text#RESET} is used, then that's applied first and then all other

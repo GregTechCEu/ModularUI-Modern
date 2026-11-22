@@ -87,7 +87,8 @@ public class TreeUtil {
      * @param includeSelf true if the consumer should also consume the parent
      * @return true if the iteration was not terminated by the consumer
      */
-    public static <T extends ITreeNode<T>> boolean foreachChildBFS(T parent, Predicate<T> consumer, boolean includeSelf) {
+    public static <T extends ITreeNode<T>> boolean foreachChildBFS(T parent, Predicate<T> consumer,
+                                                                   boolean includeSelf) {
         if (includeSelf && !consumer.test(parent)) return false;
         return parent.visitAllChildrenBFS(consumer);
     }
@@ -127,7 +128,8 @@ public class TreeUtil {
      * @param includeSelf true if the consumer should also consume the parent
      * @return the first resulting value of the consumer or null of it always returned null
      */
-    public static <T extends ITreeNode<T>, V> @Nullable V foreachChildWithResult(T parent, Function<T, V> consumer, boolean includeSelf) {
+    public static <T extends ITreeNode<T>, V> @Nullable V foreachChildWithResult(T parent, Function<T, V> consumer,
+                                                                                 boolean includeSelf) {
         if (includeSelf) {
             V t = consumer.apply(parent);
             if (t != null) return t;
@@ -333,7 +335,8 @@ public class TreeUtil {
 
     @Nullable
     @SuppressWarnings("unchecked")
-    public static <T extends ITreeNode<T>, R extends ITreeNode<T>> R findParent(T parent, Class<R> type, @Nullable Predicate<R> test) {
+    public static <T extends ITreeNode<T>, R extends ITreeNode<T>> R findParent(T parent, Class<R> type,
+                                                                                @Nullable Predicate<R> test) {
         while (parent != null) {
             if (type.isAssignableFrom(parent.getClass()) && (test == null || test.test((R) parent))) {
                 return (R) parent;

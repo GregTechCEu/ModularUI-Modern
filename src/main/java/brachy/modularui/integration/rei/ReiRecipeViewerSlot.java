@@ -1,15 +1,14 @@
 package brachy.modularui.integration.rei;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.world.item.Item;
-
 import brachy.modularui.core.mixins.rei.EntryWidgetAccessor;
 import brachy.modularui.drawable.TooltipComponentIcon;
 import brachy.modularui.integration.recipeviewer.RecipeSlotRole;
 import brachy.modularui.integration.recipeviewer.RecipeViewerSlotWidget;
 import brachy.modularui.screen.viewport.ModularGuiContext;
-
 import brachy.modularui.theme.WidgetThemeEntry;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.world.item.Item;
 
 import lombok.Getter;
 import me.shedaniel.math.Point;
@@ -24,7 +23,8 @@ public class ReiRecipeViewerSlot<I> extends RecipeViewerSlotWidget<I, ReiRecipeV
 
     private static final Point ONE = new Point(1, 1);
 
-    @Getter private Slot slotWidget;
+    @Getter
+    private Slot slotWidget;
 
     public ReiRecipeViewerSlot(Class<I> ingredientClass) {
         super(ingredientClass);
@@ -33,7 +33,8 @@ public class ReiRecipeViewerSlot<I> extends RecipeViewerSlotWidget<I, ReiRecipeV
         this.tooltipAutoUpdate(true);
         this.tooltipDynamic(r -> {
             if (slotWidget != null) {
-                Tooltip tooltip = slotWidget.getCurrentTooltip(TooltipContext.ofMouse(Item.TooltipContext.of(Minecraft.getInstance().level)));
+                Tooltip tooltip = slotWidget.getCurrentTooltip(
+                        TooltipContext.ofMouse(Item.TooltipContext.of(Minecraft.getInstance().level)));
                 if (tooltip == null) return;
                 tooltip.entries().forEach(e -> {
                     if (e.isText()) {
@@ -63,15 +64,18 @@ public class ReiRecipeViewerSlot<I> extends RecipeViewerSlotWidget<I, ReiRecipeV
 
     @Override
     public void draw(ModularGuiContext context, WidgetThemeEntry<?> widgetTheme) {
-        this.slotWidget.render(context.getGraphics(), context.getMouseX(), context.getMouseY(), context.getRenderPartialTicks());
+        this.slotWidget.render(context.getGraphics(), context.getMouseX(), context.getMouseY(),
+                context.getRenderPartialTicks());
         if (this.isHovering() && slotWidget instanceof EntryWidgetAccessor accessor) {
-            accessor.modularui$invokeDrawHighlighted(context.getGraphics(), context.getMouseX(), context.getMouseY(), context.getRenderPartialTicks());
+            accessor.modularui$invokeDrawHighlighted(context.getGraphics(), context.getMouseX(), context.getMouseY(),
+                    context.getRenderPartialTicks());
         }
     }
 
     @Override
     public Result onMousePressed(int button) {
-        return this.slotWidget.mouseClicked(getContext().getMouseX(), getContext().getMouseY(), button) ? Result.SUCCESS : Result.ACCEPT;
+        return this.slotWidget.mouseClicked(getContext().getMouseX(), getContext().getMouseY(), button) ?
+                Result.SUCCESS : Result.ACCEPT;
     }
 
     @Override

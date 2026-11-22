@@ -117,7 +117,8 @@ public class DebugOverlay extends CustomModularScreen {
                                                         .child(toggleOption(10, "Any", "showParent"))
                                                         .child(toggleOption(11, "Pos", "showParentPos"))
                                                         .child(toggleOption(12, "Size", "showParentSize"))
-                                                        .child(toggleOption(13, "Widget Theme", "showParentWidgetTheme"))
+                                                        .child(toggleOption(13, "Widget Theme",
+                                                                "showParentWidgetTheme"))
                                                         .child(toggleOption(14, "Outline", "showParentOutline")))))));
     }
 

@@ -53,7 +53,9 @@ public class ComposedLine implements ITextLine {
                 }
                 x += w;
             } else if (o != null) {
-                throw new IllegalArgumentException("ComposedLine objects must either be a FormattedCharSequence or an IIcon, but found a " + o.getClass().getSimpleName() + "!");
+                throw new IllegalArgumentException(
+                        "ComposedLine objects must either be a FormattedCharSequence or an IIcon, but found a " +
+                                o.getClass().getSimpleName() + "!");
             }
         }
     }

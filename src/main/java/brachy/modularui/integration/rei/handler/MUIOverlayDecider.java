@@ -39,8 +39,8 @@ public class MUIOverlayDecider implements OverlayDecider {
             return InteractionResult.PASS;
         }
         ModularScreen modularScreen = muiScreen.screen();
-        return modularScreen.getContext().getRecipeViewerSettings().isEnabled(modularScreen) ? InteractionResult.SUCCESS : InteractionResult.FAIL;
-
+        return modularScreen.getContext().getRecipeViewerSettings().isEnabled(modularScreen) ?
+                InteractionResult.SUCCESS : InteractionResult.FAIL;
     }
 
     @Override

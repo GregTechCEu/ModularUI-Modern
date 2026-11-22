@@ -9,7 +9,7 @@ import brachy.modularui.api.widget.IWidget;
  * @param <W> type of this widget
  */
 public class ParentWidget<W extends ParentWidget<W>> extends AbstractParentWidget<IWidget, W>
-        implements IParentWidget<IWidget, W> {
+                         implements IParentWidget<IWidget, W> {
 
     public boolean addChild(IWidget child, int index) {
         return super.addChild(child, index);

@@ -2,7 +2,6 @@ package brachy.modularui.utils.serialization.codec;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
-
 import it.unimi.dsi.fastutil.objects.Object2ReferenceOpenHashMap;
 import org.jetbrains.annotations.Nullable;
 

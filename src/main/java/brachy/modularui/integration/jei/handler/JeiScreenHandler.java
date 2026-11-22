@@ -36,7 +36,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class JeiScreenHandler<T extends Screen & IMuiScreen> extends RecipeViewerHandler
-        implements IGhostIngredientHandler<T>, IScreenHandler<T> {
+                             implements IGhostIngredientHandler<T>, IScreenHandler<T> {
 
     private static final Map<Class<?>, JeiScreenHandler<?>> CACHE = new Reference2ReferenceOpenHashMap<>();
 
@@ -97,7 +97,8 @@ public class JeiScreenHandler<T extends Screen & IMuiScreen> extends RecipeViewe
     }
 
     @Override
-    public Optional<IClickableIngredient<?>> getClickableIngredientUnderMouse(IClickableIngredientFactory factory, T screen,
+    public Optional<IClickableIngredient<?>> getClickableIngredientUnderMouse(IClickableIngredientFactory factory,
+                                                                              T screen,
                                                                               double mouseX, double mouseY) {
         IWidget hovered = screen.screen().getContext().getTopHovered();
         if (hovered instanceof IngredientProvider<?> provider) {
@@ -116,7 +117,8 @@ public class JeiScreenHandler<T extends Screen & IMuiScreen> extends RecipeViewe
         return provider.renderMappingFunction().apply(provider.getIngredients().getStacks().get(0));
     }
 
-    private <I> Optional<IClickableIngredient<?>> createClickableIngredient(IClickableIngredientFactory factory, I ingredient,
+    private <I> Optional<IClickableIngredient<?>> createClickableIngredient(IClickableIngredientFactory factory,
+                                                                            I ingredient,
                                                                             Rectangle area) {
         Optional<IIngredientType<I>> type = ModularUIJeiPlugin.getJeiHelpers().getIngredientManager()
                 .getIngredientTypeChecked(ingredient);
@@ -162,10 +164,13 @@ public class JeiScreenHandler<T extends Screen & IMuiScreen> extends RecipeViewe
         return new JeiRecipeViewerSlot<>(ingredientClass);
     }
 
-    public static class ContainerScreen<M extends AbstractContainerMenu, T extends AbstractContainerScreen<M> & IMuiScreen> extends JeiScreenHandler<T> implements IGuiContainerHandler<T> {
+    public static class ContainerScreen<M extends AbstractContainerMenu,
+            T extends AbstractContainerScreen<M> & IMuiScreen> extends JeiScreenHandler<T>
+                                       implements IGuiContainerHandler<T> {
 
         @SuppressWarnings("unchecked")
-        public static <M extends AbstractContainerMenu, T extends AbstractContainerScreen<M> & IMuiScreen> ContainerScreen<M, T> ofContainer(Class<T> clazz) {
+        public static <M extends AbstractContainerMenu,
+                T extends AbstractContainerScreen<M> & IMuiScreen> ContainerScreen<M, T> ofContainer(Class<T> clazz) {
             return (ContainerScreen<M, T>) CACHE.computeIfAbsent(clazz, clz -> new ContainerScreen<>((Class<T>) clz));
         }
 

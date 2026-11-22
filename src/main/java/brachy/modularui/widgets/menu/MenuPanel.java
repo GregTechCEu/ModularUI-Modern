@@ -45,7 +45,7 @@ public class MenuPanel extends ModularPanel<MenuPanel> {
         return true;
     }
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public void closeAllMenus(boolean soft, boolean requireNoHover) {
         // need to collect menus first instead of closing while iterating to avoid CME
         List<Menu> menus = WidgetTree.flatListByType(this, Menu.class);

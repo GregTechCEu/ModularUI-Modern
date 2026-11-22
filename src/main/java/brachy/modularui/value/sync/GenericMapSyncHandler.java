@@ -17,7 +17,8 @@ import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class GenericMapSyncHandler<B extends ByteBuf, K, V> extends ValueSyncHandler<B, Map<K, V>, GenericMapSyncHandler<B, K, V>> {
+public class GenericMapSyncHandler<B extends ByteBuf, K, V>
+                                  extends ValueSyncHandler<B, Map<K, V>, GenericMapSyncHandler<B, K, V>> {
 
     private final Supplier<Map<K, V>> getter;
     private final Consumer<Map<K, V>> setter;
@@ -129,7 +130,8 @@ public class GenericMapSyncHandler<B extends ByteBuf, K, V> extends ValueSyncHan
     }
 
     /**
-     * Allows safe modification of the cached value. Normally modifying the cached value can cause the value to never be synced.
+     * Allows safe modification of the cached value. Normally modifying the cached value can cause the value to never be
+     * synced.
      * This method forces a sync after the modification.
      *
      * @param consumer function that operates on the current cached value
@@ -139,8 +141,10 @@ public class GenericMapSyncHandler<B extends ByteBuf, K, V> extends ValueSyncHan
     }
 
     /**
-     * Allows safe modification of the cached value. Normally modifying the cached value can cause the value to never be synced.
-     * This method can automatically sync the cache after the modification. Be careful with potential issues when the sync arg is false.
+     * Allows safe modification of the cached value. Normally modifying the cached value can cause the value to never be
+     * synced.
+     * This method can automatically sync the cache after the modification. Be careful with potential issues when the
+     * sync arg is false.
      *
      * @param consumer function that operates on the current cached value
      */

@@ -39,14 +39,21 @@ import java.util.regex.Pattern;
 @Accessors(chain = true)
 public class TextFieldWidget extends BaseTextFieldWidget<TextFieldWidget> {
 
-    @Getter private IStringValue<?> stringValue;
+    @Getter
+    private IStringValue<?> stringValue;
     private Function<String, String> validator = val -> val;
-    @Getter private boolean numbers = false;
-    @Getter private String mathFailMessage = null;
-    @Getter private double defaultNumber = 0;
-    @Getter private boolean tooltipOverride = false;
-    @Getter private boolean autoUpdateOnChange = false;
-    @Getter private boolean acceptsExpression = true;
+    @Getter
+    private boolean numbers = false;
+    @Getter
+    private String mathFailMessage = null;
+    @Getter
+    private double defaultNumber = 0;
+    @Getter
+    private boolean tooltipOverride = false;
+    @Getter
+    private boolean autoUpdateOnChange = false;
+    @Getter
+    private boolean acceptsExpression = true;
 
     public double parse(String num) {
         if (!this.acceptsExpression) {
@@ -115,7 +122,8 @@ public class TextFieldWidget extends BaseTextFieldWidget<TextFieldWidget> {
     @Override
     public void drawForeground(ModularGuiContext context) {
         if (hasTooltip() && !context.getUISettings().drawTooltipExternally() &&
-                (tooltipOverride || getScrollData().isScrollBarActive(getScrollArea())) && isHoveringFor(getTooltip().showUpTimer())) {
+                (tooltipOverride || getScrollData().isScrollBarActive(getScrollArea())) &&
+                isHoveringFor(getTooltip().showUpTimer())) {
             getTooltip().draw(getContext());
         }
     }
@@ -159,7 +167,8 @@ public class TextFieldWidget extends BaseTextFieldWidget<TextFieldWidget> {
         super.onTextChanged();
         if (this.autoUpdateOnChange) {
             String text = this.validator.apply(getText());
-            this.stringValue.setStringValue(this.numbers ? format.parse(text, new ParsePosition(0)).toString() : getText());
+            this.stringValue
+                    .setStringValue(this.numbers ? format.parse(text, new ParsePosition(0)).toString() : getText());
         }
     }
 
@@ -271,7 +280,8 @@ public class TextFieldWidget extends BaseTextFieldWidget<TextFieldWidget> {
     }
 
     /**
-     * Normally, Tooltips on text field widgets are used to display the contents of the widget when the scrollbar is active.
+     * Normally, Tooltips on text field widgets are used to display the contents of the widget when the scrollbar is
+     * active.
      * This value is an override, that allows the methods provided by {@link ITooltip} to be used.<br>
      * Every method that adds a tooltip from {@link ITooltip} is overridden to enable the {@link #tooltipOverride}.
      *

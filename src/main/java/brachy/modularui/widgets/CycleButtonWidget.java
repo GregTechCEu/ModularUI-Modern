@@ -9,10 +9,12 @@ import brachy.modularui.screen.RichTooltip;
 import java.util.function.Consumer;
 
 /**
- * A button which cycles between multiple states by clicking on it. Background, overlay and tooltip can be supplied perstate.
+ * A button which cycles between multiple states by clicking on it. Background, overlay and tooltip can be supplied
+ * perstate.
  * <p>
  * Note that you need to set the amount of states before setting any state backgrounds etc. The state count is
- * automatically set, if the passed {@link IIntValue} is a {@link IEnumValue IEnumValue} or a {@link IBoolValue IBoolValue}.
+ * automatically set, if the passed {@link IIntValue} is a {@link IEnumValue IEnumValue} or a {@link IBoolValue
+ * IBoolValue}.
  * </p>
  *
  * @see ToggleButton

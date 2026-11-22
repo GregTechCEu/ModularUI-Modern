@@ -4,9 +4,9 @@ import brachy.modularui.api.drawable.ITextLine;
 import brachy.modularui.screen.viewport.GuiContext;
 
 import net.minecraft.client.gui.Font;
+
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
-
 import lombok.Getter;
 
 public class Spacer implements ITextLine {

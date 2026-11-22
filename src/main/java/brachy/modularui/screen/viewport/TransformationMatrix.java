@@ -65,7 +65,8 @@ public class TransformationMatrix {
         return construct(viewport, area, parent, true);
     }
 
-    private TransformationMatrix construct(IViewport viewport, Area area, @Nullable Matrix4f parent, boolean isViewport) {
+    private TransformationMatrix construct(IViewport viewport, Area area, @Nullable Matrix4f parent,
+                                           boolean isViewport) {
         checkInUse();
         this.wrapped = null;
         this.viewport = viewport;

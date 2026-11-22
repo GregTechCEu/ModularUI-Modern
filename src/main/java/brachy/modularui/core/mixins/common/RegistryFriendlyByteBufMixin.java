@@ -8,5 +8,4 @@ import org.spongepowered.asm.mixin.Mixin;
 
 // implement IRegistryFriendlyByteBufExtension on RegistryFriendlyByteBuf at runtime
 @Mixin(RegistryFriendlyByteBuf.class)
-public class RegistryFriendlyByteBufMixin implements IRegistryFriendlyByteBufExtension {
-}
+public class RegistryFriendlyByteBufMixin implements IRegistryFriendlyByteBufExtension {}
