@@ -72,7 +72,14 @@ public class ListWidget<I extends IWidget, W extends ListWidget<I, W>> extends A
     }
 
     @Override
-    public void draw(ModularGuiContext context, WidgetThemeEntry<?> widgetTheme) {
+    public void preDraw(ModularGuiContext context, boolean transformed) {
+        super.preDraw(context, transformed);
+        if (transformed) {
+            drawSeparators(context, getWidgetThemeEntry(getTheme()));
+        }
+    }
+
+    protected void drawSeparators(ModularGuiContext context, WidgetThemeEntry<?> widgetTheme) {
         if (this.childSeparator == null || this.separatorPositions.isEmpty()) return;
         GuiAxis axis = this.scrollData.getAxis();
         int x = getArea().getPadding().left(), y = getArea().getPadding().top(), w, h;
