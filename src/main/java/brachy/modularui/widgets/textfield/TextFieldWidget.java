@@ -140,22 +140,16 @@ public class TextFieldWidget extends BaseTextFieldWidget<TextFieldWidget> {
     }
 
     public void setText(@NotNull String text) {
-        if (this.handler.getText().isEmpty()) {
-            this.handler.getText().add(text);
-        } else {
-            this.handler.getText().set(0, text);
-        }
-        this.handler.clampCursors();
+        this.handler.setLine(0, text);
     }
 
     @Override
     public void onRemoveFocus(ModularGuiContext context) {
         super.onRemoveFocus(context);
         if (this.handler.getText().isEmpty()) {
-            this.handler.getText().add(this.validator.apply(""));
+            this.handler.setLine(0, this.validator.apply(""));
         } else if (this.handler.getText().size() == 1) {
-            this.handler.getText().set(0, this.validator.apply(this.handler.getText().get(0)));
-            this.handler.clampCursors();
+            this.handler.setLine(0, this.validator.apply(this.handler.getText().get(0)));
             markTooltipDirty();
         } else {
             throw new IllegalStateException("TextFieldWidget can only have one line!");

@@ -14,6 +14,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -24,8 +26,8 @@ public class TextFieldHandler {
 
     private static final Joiner JOINER = Joiner.on('\n');
 
-    @Getter
     private final List<String> text = new ArrayList<>();
+    private final List<String> textView = Collections.unmodifiableList(this.text);
     private final Point cursor = new Point(), cursorEnd = new Point();
     private final BaseTextFieldWidget<?> textFieldWidget;
     @Setter
@@ -136,7 +138,34 @@ public class TextFieldHandler {
     }
 
     /**
-     * Clamps both cursors to the current text. Must be called after the text list was modified externally.
+     * @return an unmodifiable view of the lines of text. Use {@link #setText(Collection)}, {@link #setText(String)} or
+     *         {@link #setLine(int, String)} to change the text.
+     */
+    public List<String> getText() {
+        return this.textView;
+    }
+
+    public void setText(Collection<String> lines) {
+        this.text.clear();
+        this.text.addAll(lines);
+        clampCursors();
+    }
+
+    public void setText(String text) {
+        setText(Arrays.asList(text.split("\n", -1)));
+    }
+
+    public void setLine(int line, String text) {
+        if (line == this.text.size()) {
+            this.text.add(text);
+        } else {
+            this.text.set(line, text);
+        }
+        clampCursors();
+    }
+
+    /**
+     * Clamps both cursors to the current text.
      */
     public void clampCursors() {
         clampCursor(this.cursor);
