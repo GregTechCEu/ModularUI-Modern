@@ -135,6 +135,24 @@ public class TextFieldHandler {
         setOffsetCursor(cursor);
     }
 
+    /**
+     * Clamps both cursors to the current text. Must be called after the text list was modified externally.
+     */
+    public void clampCursors() {
+        clampCursor(this.cursor);
+        clampCursor(this.cursorEnd);
+    }
+
+    private void clampCursor(Point point) {
+        if (this.text.isEmpty()) {
+            point.set(0, 0);
+            return;
+        }
+        int y = Math.max(0, Math.min(point.y, this.text.size() - 1));
+        int x = Math.max(0, Math.min(point.x, this.text.get(y).length()));
+        point.set(x, y);
+    }
+
     public void putMainCursorAtStart() {
         if (hasTextMarked() && getMainCursor() != getStartCursor()) {
             switchCursors();

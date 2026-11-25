@@ -145,6 +145,7 @@ public class TextFieldWidget extends BaseTextFieldWidget<TextFieldWidget> {
         } else {
             this.handler.getText().set(0, text);
         }
+        this.handler.clampCursors();
     }
 
     @Override
@@ -154,6 +155,7 @@ public class TextFieldWidget extends BaseTextFieldWidget<TextFieldWidget> {
             this.handler.getText().add(this.validator.apply(""));
         } else if (this.handler.getText().size() == 1) {
             this.handler.getText().set(0, this.validator.apply(this.handler.getText().get(0)));
+            this.handler.clampCursors();
             markTooltipDirty();
         } else {
             throw new IllegalStateException("TextFieldWidget can only have one line!");
